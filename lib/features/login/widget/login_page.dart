@@ -50,10 +50,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         body: json.encode({"email": email, "password": password}),
       );
 
-      setState(() {
-        _isLoading = false;
-      });
-
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data["status"] == "success") {
@@ -63,12 +59,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
           // 存储令牌
           await storeToken(authData);
-          // 使用 ProviderContainer 来管理 ref 生命周期
+          // 添加订阅信息并更新活动配置文件
           await _addSubscription(authData);
-          // 打印日志，确认执行到这里
-          print("Navigation to HomePage");
+          
           // 更新 authProvider 状态为已登录
           ref.read(authProvider.notifier).state = true;
+
+          // 打印日志，确认执行到这里
+          print("Navigation to HomePage");
+
           // 跳转到首页
           if (mounted) {
             print("Trying to navigate to HomePage");
@@ -84,6 +83,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     } catch (e) {
       print(e);
       _showErrorSnackbar(context, "An error occurred during login.");
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -141,6 +144,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       return null;
     }
   }
+
   Future<void> _clearSubscriptionData() async {
     // 获取 ProfileRepository 的实例
     final profileRepository = ref.read(profileRepositoryProvider).requireValue;
@@ -164,8 +168,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     // 清空活动配置文件
     ref.read(activeProfileProvider.notifier).update((state) => null);
   }
-
-
 
   void _showErrorSnackbar(BuildContext context, String message) {
     final snackBar = SnackBar(
