@@ -8,6 +8,8 @@ import 'package:hiddify/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+import 'package:hiddify/features/login/widget/auth_provider.dart'; // 导入新的登录页面
+
 part 'app_router.g.dart';
 
 bool _debugMobileRouter = false;
@@ -20,19 +22,9 @@ final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 @riverpod
 GoRouter router(RouterRef ref) {
   final notifier = ref.watch(routerListenableProvider.notifier);
-  final deepLink = ref.listen(
-    deepLinkNotifierProvider,
-    (_, next) async {
-      if (next case AsyncData(value: final link?)) {
-        await ref.state.push(AddProfileRoute(url: link.url).location);
-      }
-    },
-  );
-  final initialLink = deepLink.read();
-  String initialLocation = const HomeRoute().location;
-  if (initialLink case AsyncData(value: final link?)) {
-    initialLocation = AddProfileRoute(url: link.url).location;
-  }
+  final isLoggedIn = ref.watch(authProvider); // 获取登录状态
+
+  final initialLocation = isLoggedIn ? const HomeRoute().location : const LoginRoute().location;
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
@@ -41,9 +33,24 @@ GoRouter router(RouterRef ref) {
     routes: [
       if (useMobileRouter) $mobileWrapperRoute else $desktopWrapperRoute,
       $introRoute,
+      $loginRoute, // 确保登录路由包含在这里
     ],
     refreshListenable: notifier,
-    redirect: notifier.redirect,
+    redirect: (context, state) {
+      final isLoggingIn = state.uri.toString() == const LoginRoute().location;
+
+      if (!isLoggedIn && !isLoggingIn) {
+        // 如果用户未登录且当前不在登录页面，则重定向到登录页面
+        return const LoginRoute().location;
+      }
+
+      if (isLoggedIn && isLoggingIn) {
+        // 如果用户已登录且当前在登录页面，则重定向到主页
+        return const HomeRoute().location;
+      }
+
+      return null;
+    },
     observers: [
       SentryNavigatorObserver(),
     ],

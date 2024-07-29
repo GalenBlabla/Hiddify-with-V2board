@@ -17,6 +17,9 @@ import 'package:hiddify/features/settings/about/about_page.dart';
 import 'package:hiddify/features/settings/overview/settings_overview_page.dart';
 import 'package:hiddify/utils/utils.dart';
 
+import 'package:hiddify/features/login/widget/login_page.dart'; // 导入新的登录页面
+
+
 part 'routes.g.dart';
 
 GlobalKey<NavigatorState>? _dynamicRootKey = useMobileRouter ? rootNavigatorKey : null;
@@ -74,7 +77,7 @@ GlobalKey<NavigatorState>? _dynamicRootKey = useMobileRouter ? rootNavigatorKey 
     TypedGoRoute<ProxiesRoute>(
       path: "/proxies",
       name: ProxiesRoute.name,
-    ),
+    )
   ],
 )
 class MobileWrapperRoute extends ShellRouteData {
@@ -362,5 +365,22 @@ class AboutRoute extends GoRouteData {
       );
     }
     return const NoTransitionPage(name: name, child: AboutPage());
+  }
+}
+// 定义登录路由
+@TypedGoRoute<LoginRoute>(
+  path: "/login",
+  name: LoginRoute.name,
+)
+class LoginRoute extends GoRouteData {
+  const LoginRoute();
+  static const name = "Login";
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return MaterialPage(
+      name: name,
+      child: const LoginPage(),
+    );
   }
 }
