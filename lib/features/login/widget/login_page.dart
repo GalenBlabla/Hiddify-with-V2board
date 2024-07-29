@@ -10,6 +10,7 @@ import 'package:hiddify/features/profile/notifier/active_profile_notifier.dart';
 import 'package:hiddify/features/profile/notifier/profiles_update_notifier.dart';
 import 'package:hiddify/features/profile/data/profile_data_providers.dart';
 import 'package:hiddify/features/profile/model/profile_entity.dart';
+import 'package:hiddify/features/profile/overview/profiles_overview_notifier.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -40,6 +41,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final password = _passwordController.text;
 
     try {
+      // 清理之前的订阅信息
+      await _clearSubscriptionData();
       final url = Uri.parse("https://clarityvpn.xyz/api/v1/passport/auth/login");
       final response = await http.post(
         url,
@@ -60,12 +63,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
           // 存储令牌
           await storeToken(authData);
-          // 更新 authProvider 状态为已登录
-          ref.read(authProvider.notifier).state = true;
           // 使用 ProviderContainer 来管理 ref 生命周期
           await _addSubscription(authData);
           // 打印日志，确认执行到这里
           print("Navigation to HomePage");
+          // 更新 authProvider 状态为已登录
+          ref.read(authProvider.notifier).state = true;
           // 跳转到首页
           if (mounted) {
             print("Trying to navigate to HomePage");
@@ -138,6 +141,31 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       return null;
     }
   }
+  Future<void> _clearSubscriptionData() async {
+    // 获取 ProfileRepository 的实例
+    final profileRepository = ref.read(profileRepositoryProvider).requireValue;
+
+    // 获取所有订阅信息
+    final profilesResult = await profileRepository.watchAll().first;
+
+    // 遍历所有订阅并删除
+    profilesResult.fold(
+      (failure) {
+        // 处理获取订阅失败的情况
+        print('Error retrieving profiles: $failure');
+      },
+      (profiles) async {
+        for (final profile in profiles) {
+          await profileRepository.deleteById(profile.id).run();
+        }
+      },
+    );
+
+    // 清空活动配置文件
+    ref.read(activeProfileProvider.notifier).update((state) => null);
+  }
+
+
 
   void _showErrorSnackbar(BuildContext context, String message) {
     final snackBar = SnackBar(
