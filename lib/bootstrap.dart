@@ -27,7 +27,8 @@ import 'package:hiddify/singbox/service/singbox_service_provider.dart';
 import 'package:hiddify/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-
+import 'package:hiddify/features/login/widget/auth_provider.dart';
+import 'package:hiddify/storage/token_storage.dart';
 Future<void> lazyBootstrap(
   WidgetsBinding widgetsBinding,
   Environment env,
@@ -45,6 +46,16 @@ Future<void> lazyBootstrap(
       environmentProvider.overrideWithValue(env),
     ],
   );
+
+  // 尝试读取 token 并设置登录状态
+  final token = await getToken(); // 从 SharedPreferences 中获取 token
+  if (token != null) {
+    // 假设你有一个函数 validateToken(token) 来验证 token 的有效性
+    final isValid = await validateToken(token); 
+    if (isValid) {
+      container.read(authProvider.notifier).state = true; // 设置为已登录
+    }
+  }
 
   await _init(
     "directories",

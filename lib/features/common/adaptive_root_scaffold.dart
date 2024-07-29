@@ -6,6 +6,9 @@ import 'package:hiddify/core/router/router.dart';
 import 'package:hiddify/features/stats/widget/side_bar_stats_overview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+
+import 'package:hiddify/features/login/widget/auth_provider.dart'; // 确保引入 auth_provider 包
+
 abstract interface class RootScaffold {
   static final stateKey = GlobalKey<ScaffoldState>();
 
@@ -49,13 +52,22 @@ class AdaptiveRootScaffold extends HookConsumerWidget {
         icon: const Icon(FluentIcons.info_20_filled),
         label: t.about.pageTitle,
       ),
+      NavigationDestination(
+        icon: const Icon(FluentIcons.sign_out_20_filled),
+        label: "退出登录",
+      ),
     ];
 
     return _CustomAdaptiveScaffold(
       selectedIndex: selectedIndex,
       onSelectedIndexChange: (index) {
-        RootScaffold.stateKey.currentState?.closeDrawer();
-        switchTab(index, context);
+        if (index == destinations.length - 1) {
+          // 执行退出操作
+          logout(context, ref);
+        } else {
+          RootScaffold.stateKey.currentState?.closeDrawer();
+          switchTab(index, context);
+        }
       },
       destinations: destinations,
       drawerDestinationRange: useMobileRouter ? (2, null) : (0, null),
