@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'auth_provider.dart';
 import 'package:hiddify/storage/token_storage.dart';
 import 'package:hiddify/features/profile/notifier/profile_notifier.dart'; // 确保引用正确
-
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -54,6 +53,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         // 更新authProvider状态
         ref.read(authProvider.notifier).state = true;
 
+        // 获取订阅链接并添加订阅
+        String? subscriptionLink = await _getSubscriptionLink(authData);
+        if (subscriptionLink != null) {
+          await _addSubscription(subscriptionLink, ref);
+        }
+
         // 跳转到首页
         if (mounted) {
           context.go('/');
@@ -65,6 +70,35 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     } else {
       _showErrorSnackbar(context, "An error occurred: ${response.statusCode}");
     }
+  }
+
+  Future<String?> _getSubscriptionLink(String accessToken) async {
+    final url = Uri.parse("https://clarityvpn.xyz/api/v1/user/getSubscribe");
+    final response = await http.get(
+      url,
+      headers: {'Authorization': accessToken},
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data["status"] == "success") {
+        print("Subscription link retrieved successfully");
+        return data["data"]["subscribe_url"];
+      } else {
+        print("Failed to retrieve subscription link: ${data["message"]}");
+        return null;
+      }
+    } else {
+      print("Failed to retrieve subscription link: ${response.statusCode}");
+      return null;
+    }
+  }
+
+  Future<void> _addSubscription(String subscriptionLink, WidgetRef ref) async {
+    // 添加订阅链接到配置的逻辑
+    print("Adding subscription link: $subscriptionLink");
+    // 调用 AddProfile 提供者来添加订阅链接
+    ref.read(addProfileProvider.notifier).add(subscriptionLink);
   }
 
   void _showErrorSnackbar(BuildContext context, String message) {
