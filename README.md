@@ -7,3 +7,36 @@
 # What is V2Hiddify 
 
 V2Hiddify is derived from [Hiddify-Next](https://github.com/hiddify/hiddify-next). The purpose of this project is to develop a cross-platform client that can directly integrate with V2board (Xboard). Users can log in with their corresponding account from the VPN service provider to automatically subscribe and purchase packages.
+
+
+## Features
+
+- [x] **Login with Panel Account**: Allows users to log in using their panel account.
+- [ ] **Registration**: Provides a user registration feature.
+- [ ] **Forgot Password**: Offers password recovery functionality.
+- [x] **Automatic Subscription**: Automatically adds subscriptions after purchasing a package.
+- [ ] **Display Package Information**: Displays the user's current package information.
+- [ ] **Payment Integration**: Provides payment integration with payment platforms.
+- [ ] **Package Purchase**: Allows users to purchase different packages.
+- [ ] **Automatic Subscription After Purchase**: Automatically adds subscriptions after purchasing a package.
+- [ ] **Logout**: Allows users to log out.
+
+<style>
+  h1, h2 {
+    color: #2c3e50;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  ul {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+
+  ul li {
+    padding-bottom: 5px;
+  }
+</style>
