@@ -18,7 +18,7 @@ import 'package:hiddify/features/settings/overview/settings_overview_page.dart';
 import 'package:hiddify/utils/utils.dart';
 
 import 'package:hiddify/features/login/widget/login_page.dart'; // 导入新的登录页面
-
+import 'package:hiddify/features/purchase/purchase_page.dart'; 
 
 part 'routes.g.dart';
 
@@ -77,7 +77,11 @@ GlobalKey<NavigatorState>? _dynamicRootKey = useMobileRouter ? rootNavigatorKey 
     TypedGoRoute<ProxiesRoute>(
       path: "/proxies",
       name: ProxiesRoute.name,
-    )
+    ),
+    TypedGoRoute<PurchaseRoute>(
+      path: "/purchase",
+      name: PurchaseRoute.name,
+    ),
   ],
 )
 class MobileWrapperRoute extends ShellRouteData {
@@ -117,6 +121,10 @@ class MobileWrapperRoute extends ShellRouteData {
         ),
       ],
     ),
+    TypedGoRoute<PurchaseRoute>(
+      path: "/purchase",
+      name: PurchaseRoute.name,
+    ),
     TypedGoRoute<ProxiesRoute>(
       path: "/proxies",
       name: ProxiesRoute.name,
@@ -140,6 +148,7 @@ class MobileWrapperRoute extends ShellRouteData {
     ),
   ],
 )
+
 class DesktopWrapperRoute extends ShellRouteData {
   const DesktopWrapperRoute();
 
@@ -148,7 +157,21 @@ class DesktopWrapperRoute extends ShellRouteData {
     return AdaptiveRootScaffold(navigator);
   }
 }
+// 定义登录路由
+@TypedGoRoute<LoginRoute>(path: "/login",name: LoginRoute.name,)
+class LoginRoute extends GoRouteData {
+  const LoginRoute();
+  static const name = "Login";
 
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return MaterialPage(
+      fullscreenDialog: true,
+      name: name,
+      child: LoginPage(),
+    );
+  }
+}
 @TypedGoRoute<IntroRoute>(path: "/intro", name: IntroRoute.name)
 class IntroRoute extends GoRouteData {
   const IntroRoute();
@@ -189,7 +212,18 @@ class ProxiesRoute extends GoRouteData {
     );
   }
 }
+class PurchaseRoute extends GoRouteData {
+  const PurchaseRoute();
+  static const name = "Purchase";
 
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return const NoTransitionPage(
+      name: name,
+      child: PurchasePage(), // 确保 PurchasePage 是定义好的组件
+    );
+  }
+}
 class AddProfileRoute extends GoRouteData {
   const AddProfileRoute({this.url});
 
@@ -367,20 +401,4 @@ class AboutRoute extends GoRouteData {
     return const NoTransitionPage(name: name, child: AboutPage());
   }
 }
-// 定义登录路由
-@TypedGoRoute<LoginRoute>(
-  path: "/login",
-  name: LoginRoute.name,
-)
-class LoginRoute extends GoRouteData {
-  const LoginRoute();
-  static const name = "Login";
 
-  @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return MaterialPage(
-      name: name,
-      child: const LoginPage(),
-    );
-  }
-}

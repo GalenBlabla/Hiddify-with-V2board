@@ -37,6 +37,10 @@ class AdaptiveRootScaffold extends HookConsumerWidget {
         label: t.proxies.pageTitle,
       ),
       NavigationDestination(
+        icon: const Icon(FluentIcons.money_24_filled),
+        label: "购买套餐",
+      ),
+      NavigationDestination(
         icon: const Icon(FluentIcons.box_edit_20_filled),
         label: t.config.pageTitle,
       ),
@@ -70,8 +74,8 @@ class AdaptiveRootScaffold extends HookConsumerWidget {
         }
       },
       destinations: destinations,
-      drawerDestinationRange: useMobileRouter ? (2, null) : (0, null),
-      bottomDestinationRange: (0, 2),
+      drawerDestinationRange: useMobileRouter ? (3, null) : (0, null),
+      bottomDestinationRange: (0, 3),
       useBottomSheet: useMobileRouter,
       sidebarTrailing: const Expanded(
         child: Align(
