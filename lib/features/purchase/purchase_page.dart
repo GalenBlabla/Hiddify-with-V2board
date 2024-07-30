@@ -85,7 +85,7 @@ class PurchasePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("购买套餐"),
+        title: const Text("Purchase"),
         leading: IconButton(
           icon: const Icon(FluentIcons.navigation_24_filled),
           onPressed: () {
