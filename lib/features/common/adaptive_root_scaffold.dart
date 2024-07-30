@@ -41,6 +41,10 @@ class AdaptiveRootScaffold extends HookConsumerWidget {
         label: "Purchase",
       ),
       NavigationDestination(
+        icon: const Icon(FluentIcons.money_24_filled),
+        label: "UserInfo",
+      ),
+      NavigationDestination(
         icon: const Icon(FluentIcons.box_edit_20_filled),
         label: t.config.pageTitle,
       ),
@@ -74,8 +78,8 @@ class AdaptiveRootScaffold extends HookConsumerWidget {
         }
       },
       destinations: destinations,
-      drawerDestinationRange: useMobileRouter ? (3, null) : (0, null),
-      bottomDestinationRange: (0, 3),
+      drawerDestinationRange: useMobileRouter ? (4, null) : (0, null),
+      bottomDestinationRange: (0, 4),
       useBottomSheet: useMobileRouter,
       sidebarTrailing: const Expanded(
         child: Align(

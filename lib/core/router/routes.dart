@@ -19,6 +19,7 @@ import 'package:hiddify/utils/utils.dart';
 
 import 'package:hiddify/features/login/widget/login_page.dart'; // 导入新的登录页面
 import 'package:hiddify/features/purchase/purchase_page.dart'; 
+import 'package:hiddify/features/users/user_info_page.dart'; // 导入新的用户信息页面
 
 part 'routes.g.dart';
 
@@ -82,6 +83,10 @@ GlobalKey<NavigatorState>? _dynamicRootKey = useMobileRouter ? rootNavigatorKey 
       path: "/purchase",
       name: PurchaseRoute.name,
     ),
+    TypedGoRoute<UserInfoRoute>(
+      path: "/userinfo",
+      name: UserInfoRoute.name,
+    ),
   ],
 )
 class MobileWrapperRoute extends ShellRouteData {
@@ -124,6 +129,10 @@ class MobileWrapperRoute extends ShellRouteData {
     TypedGoRoute<PurchaseRoute>(
       path: "/purchase",
       name: PurchaseRoute.name,
+    ),
+    TypedGoRoute<UserInfoRoute>(
+      path: "/userinfo",
+      name: UserInfoRoute.name,
     ),
     TypedGoRoute<ProxiesRoute>(
       path: "/proxies",
@@ -221,6 +230,18 @@ class PurchaseRoute extends GoRouteData {
     return const NoTransitionPage(
       name: name,
       child: PurchasePage(), // 确保 PurchasePage 是定义好的组件
+    );
+  }
+}
+class UserInfoRoute extends GoRouteData {
+  const UserInfoRoute();
+  static const name = "UserInfo";
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return const NoTransitionPage(
+      name: name,
+      child: UserInfoPage(), // 确保 UserInfoPage 是定义好的组件
     );
   }
 }
