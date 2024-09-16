@@ -15,7 +15,7 @@ on:
 env:
   IS_GITHUB_ACTIONS: 1
   CHANNEL: "${{ inputs.channel }}"
-  FLUTTER_VERSION: '3.22.2'
+  FLUTTER_VERSION: '3.24.0'
   NDK_VERSION: r26d
   UPLOAD_ARTIFACT: "${{ inputs.upload-artifact }}"
   TAG_NAME: "${{ inputs.tag-name }}"
@@ -28,6 +28,7 @@ env:
   TARGET_NAME_dmg: "Hiddify-MacOS"
   TARGET_NAME_pkg: "Hiddify-MacOS-Installer"
   TARGET_NAME_ipa: "Hiddify-iOS"
+  
 
 jobs:
   test:
@@ -83,7 +84,7 @@ jobs:
             targets: dmg,pkg
             
           # - platform: ios
-          #   os: macos-13
+          #   os: macos-14
           #   aarch: universal
           #   filename: hiddify-ios
           #   targets: ipa
@@ -91,9 +92,10 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+
       - name: Import Apple Codesign Certificates
         if: ${{ inputs.upload-artifact && startsWith(matrix.os,'macos') }}
-        uses: apple-actions/import-codesign-certs@v2
+        uses: apple-actions/import-codesign-certs@v3
         with: 
             p12-file-base64: "${{ secrets.APPLE_CERTIFICATE_P12 }}"
             p12-password: "${{ secrets.APPLE_CERTIFICATE_P12_PASSWORD }}"
@@ -103,7 +105,10 @@ jobs:
         run: |
            mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
            echo "${{secrets.APPLE_MOBILE_PROVISIONING_PROFILES_TARGZ_BASE64}}"|base64 --decode | tar xz -C ~/Library/MobileDevice/Provisioning\ Profiles
-        #   # echo "${{secrets.APPLE_DEVLOP_PROVISIONING_PROFILES_TARGZ_BASE64}}"|base64 --decode | tar xz -C ~/Library/MobileDevice/Provisioning\ Profiles
+           ls ~/Library/MobileDevice/Provisioning\ Profiles
+        #   ls ~/Library/MobileDevice/Provisioning\ Profiles
+        #   echo "${{secrets.NEW_APPLE_MOBILE_PROVISIONING_PROFILES_TARXZ_BASE64}}"|base64 --decode | tar xJ -C ~/Library/MobileDevice/Provisioning\ Profiles
+        #   # echo "${{secrets.NEW_APPLE_MOBILE_PROVISIONING_PROFILES_TARGZ_BASE64_2}}"|base64 --decode | tar xz -C ~/Library/MobileDevice/Provisioning\ Profiles
           
 
 
@@ -272,7 +277,7 @@ jobs:
         if: ${{ always() && startsWith(matrix.os,'macos')}}
         run: |
           security delete-keychain $RUNNER_TEMP/app-signing.keychain-db ||echo ok
-          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision ||echo ok
+          rm ~/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision ||echo ok
   update-draft:
     permissions: write-all
     if: ${{ inputs.upload-artifact }}
@@ -413,6 +418,7 @@ jobs:
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           echo "${{secrets.APPLE_DIST_PROVISIONING_PROFILES_TARGZ_BASE64}}"|base64 --decode | tar xz -C ~/Library/MobileDevice/Provisioning\ Profiles
+        #echo "${{secrets.NEW_APPLE_STORE_PROVISIONING_PROFILES_TARXZ_BASE64}}"|base64 --decode | tar xJ -C ~/Library/MobileDevice/Provisioning\ Profiles
 
       - uses: Apple-Actions/upload-testflight-build@v1
         with:

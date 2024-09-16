@@ -138,6 +138,7 @@ class ConfigOptionsPage extends HookConsumerWidget {
                     title: t.config.logLevel,
                     presentChoice: (value) => value.name.toUpperCase(),
                   ),
+
                   const SettingsDivider(),
                   SettingsSection(t.config.section.route),
                   ChoicePreferenceWidget(
@@ -146,6 +147,7 @@ class ConfigOptionsPage extends HookConsumerWidget {
                     choices: Region.values,
                     title: t.settings.general.region,
                     presentChoice: (value) => value.present(t),
+                    onChanged: (val) => ref.watch(ConfigOptions.directDnsAddress.notifier).reset(),
                   ),
                   SwitchListTile(
                     title: Text(experimental(t.config.blockAds)),
@@ -355,6 +357,13 @@ class ConfigOptionsPage extends HookConsumerWidget {
                     validateInput: isPort,
                     digitsOnly: true,
                     inputToValue: int.tryParse,
+                  ),
+
+                  SwitchListTile(
+                    title: Text(experimental(t.config.useXrayCoreWhenPossible.Label)),
+                    subtitle: Text(t.config.useXrayCoreWhenPossible.Description),
+                    value: ref.watch(ConfigOptions.useXrayCoreWhenPossible),
+                    onChanged: ref.watch(ConfigOptions.useXrayCoreWhenPossible.notifier).update,
                   ),
                   const Gap(24),
                 ],

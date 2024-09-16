@@ -31,7 +31,10 @@ abstract class ConfigOptions {
     mapFrom: Region.values.byName,
     mapTo: (value) => value.name,
   );
-
+  static final useXrayCoreWhenPossible = PreferencesNotifier.create<bool, bool>(
+    "use-xray-core-when-possible",
+    false,
+  );
   static final blockAds = PreferencesNotifier.create<bool, bool>(
     "block-ads",
     false,
@@ -58,6 +61,17 @@ abstract class ConfigOptions {
   static final remoteDnsAddress = PreferencesNotifier.create<String, String>(
     "remote-dns-address",
     "udp://1.1.1.1",
+    possibleValues: List.of([
+      "local",
+      "udp://223.5.5.5",
+      "udp://1.1.1.1",
+      "udp://1.1.1.2",
+      "tcp://1.1.1.1",
+      "https://1.1.1.1/dns-query",
+      "https://sky.rethinkdns.com/dns-query",
+      "4.4.2.2",
+      "8.8.8.8",
+    ]),
     validator: (value) => value.isNotBlank,
   );
 
@@ -70,7 +84,19 @@ abstract class ConfigOptions {
 
   static final directDnsAddress = PreferencesNotifier.create<String, String>(
     "direct-dns-address",
-    "1.1.1.1",
+    "udp://1.1.1.1",
+    possibleValues: List.of([
+      "local",
+      "udp://223.5.5.5",
+      "udp://1.1.1.1",
+      "udp://1.1.1.2",
+      "tcp://1.1.1.1",
+      "https://1.1.1.1/dns-query",
+      "https://sky.rethinkdns.com/dns-query",
+      "4.4.2.2",
+      "8.8.8.8",
+    ]),
+    defaultValueFunction: (ref) => ref.read(region) == Region.cn ? "223.5.5.5" : "1.1.1.1",
     validator: (value) => value.isNotBlank,
   );
 
@@ -101,7 +127,7 @@ abstract class ConfigOptions {
 
   static final tunImplementation = PreferencesNotifier.create<TunImplementation, String>(
     "tun-implementation",
-    TunImplementation.mixed,
+    TunImplementation.gvisor,
     mapFrom: TunImplementation.values.byName,
     mapTo: (value) => value.name,
   );
@@ -112,7 +138,18 @@ abstract class ConfigOptions {
 
   static final connectionTestUrl = PreferencesNotifier.create<String, String>(
     "connection-test-url",
-    "http://connectivitycheck.gstatic.com/generate_204",
+    "http://cp.cloudflare.com",
+    possibleValues: List.of([
+      "http://connectivitycheck.gstatic.com/generate_204",
+      "http://www.gstatic.com/generate_204",
+      "https://www.gstatic.com/generate_204",
+      "http://cp.cloudflare.com",
+      "http://kernel.org",
+      "http://detectportal.firefox.com",
+      "http://captive.apple.com/hotspot-detect.html",
+      "https://1.1.1.1",
+      "http://1.1.1.1",
+    ]),
     validator: (value) => value.isNotBlank && isUrl(value),
   );
 
@@ -273,7 +310,7 @@ abstract class ConfigOptions {
   );
   static final warpNoiseMode = PreferencesNotifier.create<String, String>(
     "warp-noise-mode",
-    "m6",
+    "m4",
   );
 
   static final warpNoiseDelay = PreferencesNotifier.create<OptionalRange, String>(
@@ -327,6 +364,7 @@ abstract class ConfigOptions {
   static final Map<String, StateNotifierProvider<PreferencesNotifier, dynamic>> preferences = {
     "region": region,
     "block-ads": blockAds,
+    "use-xray-core-when-possible": useXrayCoreWhenPossible,
     "service-mode": serviceMode,
     "log-level": logLevel,
     "resolve-destination": resolveDestination,
@@ -414,6 +452,13 @@ abstract class ConfigOptions {
       //         outbound: RuleOutbound.bypass,
       //       ),
       //     ],
+      //   Region.id => [
+      //       const SingboxRule(
+      //         domains: "domain:.id,geosite:id",
+      //         ip: "geoip:id",
+      //         outbound: RuleOutbound.bypass,
+      //       ),
+      //     ],
       //   _ => <SingboxRule>[],
       // };
 
@@ -423,6 +468,7 @@ abstract class ConfigOptions {
       return SingboxConfigOption(
         region: ref.watch(region).name,
         blockAds: ref.watch(blockAds),
+        useXrayCoreWhenPossible: ref.watch(useXrayCoreWhenPossible),
         executeConfigAsIs: false,
         logLevel: ref.watch(logLevel),
         resolveDestination: ref.watch(resolveDestination),

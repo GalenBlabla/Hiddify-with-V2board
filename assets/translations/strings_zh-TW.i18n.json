@@ -178,6 +178,8 @@
         "cn": "中國 (cn)",
         "ru": "俄羅斯 (ru)",
         "af": "阿富汗 (af)",
+        "id": "印尼 (id)",
+        "tr": "土耳其 (tr) 🇹🇷",
         "other": "其他"
       },
       "themeMode": "主題模式",
@@ -358,9 +360,10 @@
     },
     "generateWarpConfig": "生成 WARP 配置檔案",
     "missingWarpConfig": "WARP 配置檔案缺失",
-    "warpConfigGenerated": "WARP 配置檔案已生成",
+    "warpConfigGenerated": "WARP 設定已生成",
     "pageTitle": "配置選項",
     "logLevel": "紀錄等級",
+    "blockAds": "阻止廣告",
     "resolveDestination": "解析目標地址",
     "ipv6Mode": "IPv6 路由",
     "ipv6Modes": {
@@ -378,7 +381,7 @@
     "localDnsPort": "本機 DNS 連接埠",
     "allowConnectionFromLan": "允許區域網路連線",
     "tunImplementation": "TUN 實現",
-    "mtu": "MTU",
+    "mtu": "封包大小 (MTU)",
     "connectionTestUrl": "連線測試網址",
     "urlTestInterval": "網址測試間隔",
     "enableClashApi": "啟用 Clash API",
@@ -410,6 +413,8 @@
     "warpCleanIp": "清理 IP",
     "warpPort": "連接埠",
     "warpNoise": "噪音計數",
+    "warpNoiseSize": "噪音大小",
+    "warpNoiseMode": "噪音模式",
     "warpNoiseDelay": "噪音延遲"
   }
 }

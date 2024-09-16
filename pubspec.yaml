@@ -1,11 +1,11 @@
 name: hiddify
 description: Cross Platform Multi Protocol Proxy Frontend.
 publish_to: "none"
-version: 1.7.0+10700
+version: 2.3.1+20301
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
-  flutter: ">=3.19.0 <3.22.3"
+  flutter: ">=3.24.0 <=3.24.3"
 
 dependencies:
   flutter:
@@ -20,17 +20,21 @@ dependencies:
     git:
       url: https://github.com/alex-relov/humanizer
       ref: up-version
+  # lucy_editor: ^1.0.5
+  # re_highlight: ^0.0.3
+  # json_editor_flutter: ^1.4.2
+
   slang: ^3.30.1
   slang_flutter: ^3.30.0
   fpdart: ^1.1.0
   freezed_annotation: ^2.4.1
-  json_annotation: ^4.8.1
+  json_annotation: ^4.9.0
   hooks_riverpod: ^2.4.10
   flutter_hooks: ^0.20.5
   riverpod_annotation: ^2.3.4
   rxdart: ^0.27.7
   drift: ^2.16.0
-  sqlite3_flutter_libs: ^0.5.20
+  sqlite3_flutter_libs: ^0.5.24
   shared_preferences: ^2.2.2
   dio: ^5.4.1
   ffi: ^2.1.2
@@ -83,7 +87,9 @@ dependencies:
   timezone_to_country: ^2.1.0
   json_path: ^0.7.1
   # permission_handler: ^11.3.0 # is not compatible with windows
-  flutter_easy_permission: ^1.1.2
+  #flutter_easy_permission: ^1.1.2
+  flutter_easy_permission: 
+     git: https://github.com/unger1984/flutter_easy_permission.git
   in_app_review: ^2.0.9
   # circle_flags: ^4.0.2
   circle_flags:
@@ -91,7 +97,7 @@ dependencies:
   protobuf: ^3.1.0
   grpc: ^3.2.4
   dynamic_color: ^1.7.0
-
+  flutter_typeahead: ^5.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -110,7 +116,7 @@ dev_dependencies:
 
 dependency_overrides:
   # drift & package_info_plus are not compatible
-  web: ^0.5.1
+  web: ^1.0.0
 
 flutter:
   uses-material-design: true
@@ -123,7 +129,9 @@ flutter:
     - assets/images/tray_icon_dark.ico
     - assets/images/tray_icon_dark.png
     - assets/images/tray_icon_connected.ico
+    - assets/images/tray_icon_connected.png
     - assets/images/tray_icon_disconnected.ico
+    - assets/images/tray_icon_disconnected.png
     - assets/images/connect_norouz.PNG
     - assets/images/disconnect_norouz.PNG
 
@@ -131,6 +139,9 @@ flutter:
     - family: Shabnam
       fonts:
         - asset: assets/fonts/Shabnam.ttf
+    # - family: Roboto
+    #   fonts:
+    #     - asset: assets/fonts/Roboto.ttf
     - family: Emoji
       fonts:
         - asset: assets/fonts/Emoji.ttf

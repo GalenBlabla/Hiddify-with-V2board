@@ -39,7 +39,7 @@ class AddProfileModal extends HookConsumerWidget {
         if (next case AsyncData(value: final _?)) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) {
-              if (context.mounted) context.pop();
+              if (context.mounted && context.canPop()) context.pop();
             },
           );
         }
@@ -244,6 +244,7 @@ class AddProfileModal extends HookConsumerWidget {
     final _warp = ref.read(warpOptionNotifierProvider.notifier);
     final _profile = ref.read(addProfileProvider.notifier);
     final consent = (_prefs.getBool(warpConsentGiven) ?? false);
+    final region = ref.read(ConfigOptions.region.notifier).raw();
     context.pop();
 
     final t = ref.read(translationsProvider);
@@ -255,28 +256,25 @@ class AddProfileModal extends HookConsumerWidget {
         builder: (context) => const WarpLicenseAgreementModal(),
       );
 
-      if (agreed ?? false) {
-        await _prefs.setBool(warpConsentGiven, true);
-        final toast = notification.showInfoToast(t.profile.add.addingWarpMsg, duration: const Duration(milliseconds: 100));
-        toast?.pause();
-        await _warp.generateWarpConfig();
-        toast?.start();
-      } else {
-        return;
-      }
+      if (agreed != true) return;
     }
+    await _prefs.setBool(warpConsentGiven, true);
+    var toast = notification.showInfoToast(t.profile.add.addingWarpMsg, duration: const Duration(milliseconds: 100));
+    toast?.pause();
+    await _warp.generateWarpConfig();
+    toast?.start();
 
     // final accountId = _prefs.getString("warp2-account-id");
     // final accessToken = _prefs.getString("warp2-access-token");
     // final hasWarp2Config = accountId != null && accessToken != null;
 
     // if (!hasWarp2Config || true) {
-    final toast = notification.showInfoToast(t.profile.add.addingWarpMsg, duration: const Duration(milliseconds: 100));
+    toast = notification.showInfoToast(t.profile.add.addingWarpMsg, duration: const Duration(milliseconds: 100));
     toast?.pause();
     await _warp.generateWarp2Config();
     toast?.start();
     // }
-    if (ref.read(ConfigOptions.region.notifier).raw() == "cn") {
+    if (region == "cn") {
       await _profile.add("#profile-title: Hiddify WARP\nwarp://p1@auto#National&&detour=warp://p2@auto#WoW"); //
     } else {
       await _profile.add("https://raw.githubusercontent.com/hiddify/hiddify-next/main/test.configs/warp"); //
