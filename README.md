@@ -13,6 +13,7 @@ V2Hiddify 是基于 [Hiddify-Next](https://github.com/hiddify/hiddify-next) 开�
 - [ ] **套餐购买**：允许用户购买不同的套餐。
 - [ ] **购买后自动订阅**：购买套餐后自动添加订阅。
 - [x] **退出登录**：允许用户退出登录。
+
 ## V2Hiddify 示例图片
 
 <p align="center">
@@ -21,3 +22,16 @@ V2Hiddify 是基于 [Hiddify-Next](https://github.com/hiddify/hiddify-next) 开�
   <img src="./images/purchase.jpg" alt="购买示例" width="200"/>
   <img src="./images/connect.jpg" alt="连接示例" width="200"/>
 </p>
+
+---
+
+## 打包平台需求介绍
+
+V2Hiddify 项目目前存在一个问题：对于不同的域名，需要分别打包客户端。为了简化这个过程，我计划开发一个自动打包平台。用户可以通过该平台输入目标面板的域名和面板名称（如 "Tomato"），平台会自动为该面板生成配置文件并完成打包。
+
+### 实现思路
+
+1. **前端用户输入**：用户在平台上输入域名和面板名称。
+2. **生成配置文件**：后端根据用户输入生成对应的配置文件（例如 `config.toml`）。
+3. **触发打包脚本**：后端调用打包脚本（如 `build.sh`），根据配置文件进行打包。
+4. **下载链接**：打包完成后，生成下载链接供用户下载。
