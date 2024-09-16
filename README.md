@@ -127,6 +127,7 @@ flutter run
   <img src="./images/purchase.jpg" alt="购买示例" width="200"/>
   <img src="./images/connect.jpg" alt="连接示例" width="200"/>
 </p>
+
 ---
 
 ## 打包平台需求介绍
