@@ -118,3 +118,12 @@ flutter run
 ---
 
 通过以上步骤，你可以定制并打包适合自己面板的 V2Hiddify 客户端，方便用户使用 VPN 服务。
+
+## V2Hiddify 示例图片
+
+<p align="center">
+  <img src="./images/loginin.jpg" alt="登录示例" width="200"/>
+  <img src="./images/sub.jpg" alt="订阅示例" width="200"/>
+  <img src="./images/purchase.jpg" alt="购买示例" width="200"/>
+  <img src="./images/connect.jpg" alt="连接示例" width="200"/>
+</p>
