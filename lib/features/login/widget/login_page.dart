@@ -43,7 +43,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     try {
       // 清理之前的订阅信息
       await _clearSubscriptionData();
-      final url = Uri.parse("https://clarityvpn.xyz/api/v1/passport/auth/login");
+      final url = Uri.parse("https://tomato.galen.life/api/v1/passport/auth/login");
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -124,7 +124,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   Future<String?> _getSubscriptionLink(String accessToken) async {
-    final url = Uri.parse("https://clarityvpn.xyz/api/v1/user/getSubscribe");
+    final url = Uri.parse("https://tomato.galen.life/api/v1/user/getSubscribe");
     final response = await http.get(
       url,
       headers: {'Authorization': accessToken},
@@ -196,7 +196,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Welcome to Clarity VPN',
+                  'Welcome to Tomato VPN',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,

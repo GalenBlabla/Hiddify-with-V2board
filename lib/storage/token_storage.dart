@@ -11,7 +11,7 @@ Future<void> storeToken(String token) async {
 Future<String?> getToken() async {
   final prefs = await SharedPreferences.getInstance();
   return prefs.getString('auth_token');
-} 
+}
 
 Future<void> deleteToken() async {
   final prefs = await SharedPreferences.getInstance();
@@ -20,7 +20,7 @@ Future<void> deleteToken() async {
 
 // 验证token的方法定义
 Future<bool> validateToken(String token) async {
-  final url = Uri.parse("https://clarityvpn.xyz/api/v1/user/getSubscribe");
+  final url = Uri.parse("https://tomato.galen.life/api/v1/user/getSubscribe");
   final response = await http.get(
     url,
     headers: {'Authorization': token},
