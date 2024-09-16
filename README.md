@@ -13,3 +13,7 @@ V2Hiddify 是基于 [Hiddify-Next](https://github.com/hiddify/hiddify-next) 开�
 - [ ] **套餐购买**：允许用户购买不同的套餐。
 - [ ] **购买后自动订阅**：购买套餐后自动添加订阅。
 - [x] **退出登录**：允许用户退出登录。
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
