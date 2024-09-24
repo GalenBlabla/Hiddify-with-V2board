@@ -1,4 +1,4 @@
-display_name: Hiddify
+display_name: Tomato
 package_name: hiddify
 maintainer:
   name: hiddify
@@ -11,12 +11,12 @@ essential: false
 icon: ./assets/images/source/ic_launcher_border.png
 
 postinstall_scripts:
-  - echo "Installed Hiddify"
+  - echo "Installed Tomato"
 postuninstall_scripts:
   - echo "Surprised Why?"
 
 keywords:
-  - Hiddify
+  - Tomato
   - Proxy
   - VPN
   - V2ray
@@ -25,7 +25,7 @@ keywords:
   - Psiphon
   - OpenVPN
 
-generic_name: Hiddify
+generic_name: Tomato
 
 categories:
   - Network

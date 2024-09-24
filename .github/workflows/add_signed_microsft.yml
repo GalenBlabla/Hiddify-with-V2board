@@ -22,4 +22,4 @@ jobs:
       with:
         store-id: 9pdfnl3qv2s5
         token: ${{ secrets.GITHUB_TOKEN }}
-        asset-name-pattern: Hiddify-Windows-Setup-x64		# Optional
+        asset-name-pattern: Tomato-Windows-Setup-x64		# Optional

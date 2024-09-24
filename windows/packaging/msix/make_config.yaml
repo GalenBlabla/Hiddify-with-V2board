@@ -1,6 +1,6 @@
-display_name: Hiddify
-publisher_display_name: Hiddify
-identity_name: Hiddify.HiddifyNext
+display_name: Tomato
+publisher_display_name: Tomato
+identity_name: Tomato.TomatoNext
 msix_version: 2.3.1.0
 logo_path: windows\runner\resources\app_icon.ico
 capabilities: internetClient, internetClientServer, privateNetworkClientServer

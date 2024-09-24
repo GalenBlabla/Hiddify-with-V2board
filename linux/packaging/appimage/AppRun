@@ -7,12 +7,12 @@ export LD_LIBRARY_PATH=usr/lib
 show_help() {
 cat << EOF
 Usage: ${0##*/} ...
-start Hiddify or HiddifyCli, when no parameter is given, Hiddify is executed.
+start Tomato or TomatoCli, when no parameter is given, Tomato is executed.
     -v              show version
 EOF
 }
 show_version() {
-    printf "Hiddify version "
+    printf "Tomato version "
     jq .version <./data/flutter_assets/version.json
 }
 # Initialize variables:
@@ -30,8 +30,8 @@ else
 # processing arguments
 
     case $1 in
-        HiddifyCli)  
-            exec ./HiddifyCli ${@:3}
+        TomatoCli)  
+            exec ./TomatoCli ${@:3}
             exit 0
             ;;
         h)

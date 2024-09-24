@@ -1,6 +1,6 @@
-# 什么是 V2Hiddify
+# 什么是 V2Tomato
 
-V2Hiddify 是基于 [Hiddify-Next](https://github.com/hiddify/hiddify-next) 开发的一个衍生项目。该项目的目的是开发一个跨平台客户端，可以直接与 V2board（Xboard）集成。用户可以使用 VPN 服务提供商的相应账户登录，自动订阅并购买套餐。
+V2Tomato 是基于 [Tomato-Next](https://github.com/hiddify/hiddify-next) 开发的一个衍生项目。该项目的目的是开发一个跨平台客户端，可以直接与 V2board（Xboard）集成。用户可以使用 VPN 服务提供商的相应账户登录，自动订阅并购买套餐。
 
 ## 功能
 
@@ -21,8 +21,8 @@ V2Hiddify 是基于 [Hiddify-Next](https://github.com/hiddify/hiddify-next) 开�
 首先，将项目仓库克隆到本地：
 
 ```bash
-git clone https://github.com/GalenBlabla/Hiddify-with-V2board.git
-cd Hiddify-with-V2board
+git clone https://github.com/GalenBlabla/Tomato-with-V2board.git
+cd Tomato-with-V2board
 ```
 
 ### 2. 依赖准备
@@ -117,9 +117,9 @@ flutter run
 
 ---
 
-通过以上步骤，你可以定制并打包适合自己面板的 V2Hiddify 客户端，方便用户使用 VPN 服务。
+通过以上步骤，你可以定制并打包适合自己面板的 V2Tomato 客户端，方便用户使用 VPN 服务。
 
-## V2Hiddify 示例图片
+## V2Tomato 示例图片
 
 <p align="center">
   <img src="./images/loginin.jpg" alt="登录示例" width="200"/>
@@ -132,7 +132,7 @@ flutter run
 
 ## 打包平台需求介绍
 
-V2Hiddify 项目目前存在一个问题：对于不同的域名，需要分别打包客户端。为了简化这个过程，我计划开发一个自动打包平台。用户可以通过该平台输入目标面板的域名（如 "tomato.vpn.com"）和面板名称（如 "Tomato"），平台会自动为该面板生成配置文件并完成打包。
+V2Tomato 项目目前存在一个问题：对于不同的域名，需要分别打包客户端。为了简化这个过程，我计划开发一个自动打包平台。用户可以通过该平台输入目标面板的域名（如 "tomato.vpn.com"）和面板名称（如 "Tomato"），平台会自动为该面板生成配置文件并完成打包。
 
 ### 实现思路
 

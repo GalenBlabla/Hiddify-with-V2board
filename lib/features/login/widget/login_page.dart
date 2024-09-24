@@ -178,7 +178,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -287,6 +287,28 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 20),
+                OutlinedButton(
+                  onPressed: () {
+                    // 跳转到注册页面的处理
+                    context.go('/register'); // 假设注册页面的路由为 /register
+                  },
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 16,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    'Register',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -294,4 +316,5 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       ),
     );
   }
+
 }

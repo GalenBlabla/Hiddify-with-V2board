@@ -16,8 +16,8 @@
 
 </div>
 
-## Что такое Hiddify App?
-Кроссплатформенный прокси-клиент на основе ядра [Sing-box](https://github.com/SagerNet/sing-box). Hiddify предлагает широкий спектр возможностей, таких как автоматический выбор узла, режим TUN, удалённые конфигурации (подписки). Приложение с открытым исходным кодом, без рекламы. Поддерживая широкий спектр протоколов, мы обеспечиваем безопасный и конфиденциальный доступ к свободному интернету.
+## Что такое Tomato App?
+Кроссплатформенный прокси-клиент на основе ядра [Sing-box](https://github.com/SagerNet/sing-box). Tomato предлагает широкий спектр возможностей, таких как автоматический выбор узла, режим TUN, удалённые конфигурации (подписки). Приложение с открытым исходным кодом, без рекламы. Поддерживая широкий спектр протоколов, мы обеспечиваем безопасный и конфиденциальный доступ к свободному интернету.
 
 <div align=center>
 <img width=90% alt="English Demo" src="https://github.com/hiddify/hiddify-next/assets/125398461/1b592bf9-b19f-4592-b02d-a3fa6216d257">
@@ -50,7 +50,7 @@
 
 ## 🛍️ Приобретите в магазинах
 <a href="https://play.google.com/store/apps/details?id=app.hiddify.com"><img height=50px src="https://github.com/hiddify/hiddify-next/blob/main/docs/google-play-badge.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="https://apps.microsoft.com/detail/Hiddify/9pdfnl3qv2s5?mode=mini" target="_blank"><img height=50px src="https://github.com/hiddify/hiddify-next/assets/125398461/620750bb-4459-41b5-9f86-ba82119345b8" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="https://apps.microsoft.com/detail/Tomato/9pdfnl3qv2s5?mode=mini" target="_blank"><img height=50px src="https://github.com/hiddify/hiddify-next/assets/125398461/620750bb-4459-41b5-9f86-ba82119345b8" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 ## 📥 Прямая загрузка
@@ -66,39 +66,39 @@
         <tr>
         <td>iOS</td>
             <td>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-iOS.ipa"><img src="https://img.shields.io/badge/IPA-Universal-c0c0c0.svg?logo=ios"></a>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-iOS.ipa"><img src="https://img.shields.io/badge/IPA-Universal-c0c0c0.svg?logo=ios"></a>
             </td>
         </tr>
         <tr>
         <td>Android</td>
             <td>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-Android-universal.apk"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-Android-arm64.apk"><img src="https://img.shields.io/badge/APK-ARMv8-168039.svg?logo=android"></a><br>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-Android-arm7.apk"><img src="https://img.shields.io/badge/APK-ARMv7-45bf55.svg?logo=android"></a><br>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-Android-x86_64.apk"><img src="https://img.shields.io/badge/APK-x64-96ed89.svg?logo=android"></a>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-Android-universal.apk"><img src="https://img.shields.io/badge/APK-Universal-044d29.svg?logo=android"></a><br>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-Android-arm64.apk"><img src="https://img.shields.io/badge/APK-ARMv8-168039.svg?logo=android"></a><br>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-Android-arm7.apk"><img src="https://img.shields.io/badge/APK-ARMv7-45bf55.svg?logo=android"></a><br>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-Android-x86_64.apk"><img src="https://img.shields.io/badge/APK-x64-96ed89.svg?logo=android"></a>
             </td>
         </tr>
         <tr>
             <td>Windows</td>
             <td>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-Windows-Setup-x64.Msix"><img src="https://img.shields.io/badge/OfficialSetup-x64-0078d7.svg?logo=windows"></a><br>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-Windows-Setup-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-2d7d9a.svg?logo=windows"></a><br>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-Windows-Portable-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-Windows-Setup-x64.Msix"><img src="https://img.shields.io/badge/OfficialSetup-x64-0078d7.svg?logo=windows"></a><br>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-Windows-Setup-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-2d7d9a.svg?logo=windows"></a><br>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-Windows-Portable-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-67b7d1.svg?logo=windows"></a>
             </td>
         </tr>
         <tr>
             <td>MacOS</td>
              <td>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-MacOS.dmg"><img src="https://img.shields.io/badge/DMG-Universal-ea005e.svg?logo=apple"></a><br>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-MacOS-Installer.pkg"><img src="https://img.shields.io/badge/PKG-Universal-bc544b.svg?logo=apple" /></a>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-MacOS.dmg"><img src="https://img.shields.io/badge/DMG-Universal-ea005e.svg?logo=apple"></a><br>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-MacOS-Installer.pkg"><img src="https://img.shields.io/badge/PKG-Universal-bc544b.svg?logo=apple" /></a>
             </td>
         </tr>
         <tr>
             <td>Linux</td>
             <td>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-Linux-x64.AppImage"><img src="https://img.shields.io/badge/AppImage-x64-f84e29.svg?logo=linux"> </a><br>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-Debian-x64.deb"><img src="https://img.shields.io/badge/DebPackage-x64-FF9966.svg?logo=debian"> </a><br>
-                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-rpm-x64.rpm"><img src="https://img.shields.io/badge/RpmPackage-x64-F1B42F.svg?logo=redhat"> </a>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-Linux-x64.AppImage"><img src="https://img.shields.io/badge/AppImage-x64-f84e29.svg?logo=linux"> </a><br>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-Debian-x64.deb"><img src="https://img.shields.io/badge/DebPackage-x64-FF9966.svg?logo=debian"> </a><br>
+                <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/Tomato-rpm-x64.rpm"><img src="https://img.shields.io/badge/RpmPackage-x64-F1B42F.svg?logo=redhat"> </a>
             </td>
         </tr>
     </tbody>
@@ -142,7 +142,7 @@
 
 <div align=center>
     
-<img alt="Star History Chart" width=50% src="https://api.star-history.com/svg?repos=Hiddify/hiddify-next&type=Date)](https://star-history.com/#Hiddify/hiddify-next&Date" />
+<img alt="Star History Chart" width=50% src="https://api.star-history.com/svg?repos=Tomato/hiddify-next&type=Date)](https://star-history.com/#Tomato/hiddify-next&Date" />
 
 </div>
 
@@ -151,7 +151,7 @@
 
 ## 👩‍🏫 Сотрудничество и контактная информация
 
-Hiddify - это проект, развиваемый сообществом. Если вас интересует возможность внести свой вклад, пожалуйста, ознакомьтесь с [руководством](./CONTRIBUTING.md).  Мы бы особенно оценили любую помощь в следующих областях: **Flutter, Go, iOS разработка (Swift), Android разработка (Kotlin).**
+Tomato - это проект, развиваемый сообществом. Если вас интересует возможность внести свой вклад, пожалуйста, ознакомьтесь с [руководством](./CONTRIBUTING.md).  Мы бы особенно оценили любую помощь в следующих областях: **Flutter, Go, iOS разработка (Swift), Android разработка (Kotlin).**
 
 
 <div align=center>

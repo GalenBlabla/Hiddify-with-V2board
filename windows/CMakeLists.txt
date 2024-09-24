@@ -4,7 +4,7 @@ project(hiddify LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "Hiddify")
+set(BINARY_NAME "Tomato")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.
@@ -87,8 +87,8 @@ install(FILES "${FLUTTER_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
 install(FILES "../libcore/bin/libcore.dll" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
 COMPONENT Runtime RENAME libcore.dll)
 
-install(FILES "../libcore/bin/HiddifyCli.exe" DESTINATION "${CMAKE_INSTALL_PREFIX}"
-COMPONENT Runtime RENAME HiddifyCli.exe)
+install(FILES "../libcore/bin/TomatoCli.exe" DESTINATION "${CMAKE_INSTALL_PREFIX}"
+COMPONENT Runtime RENAME TomatoCli.exe)
 
 
 if(PLUGIN_BUNDLED_LIBRARIES)

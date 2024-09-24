@@ -18,6 +18,7 @@ import 'package:hiddify/features/settings/overview/settings_overview_page.dart';
 import 'package:hiddify/utils/utils.dart';
 
 import 'package:hiddify/features/login/widget/login_page.dart'; // 导入新的登录页面
+import 'package:hiddify/features/login/widget/register_page.dart'; // 导入新的登录页面
 import 'package:hiddify/features/purchase/purchase_page.dart'; 
 
 part 'routes.g.dart';
@@ -169,6 +170,24 @@ class LoginRoute extends GoRouteData {
       fullscreenDialog: true,
       name: name,
       child: LoginPage(),
+    );
+  }
+}
+// 定义注册路由
+@TypedGoRoute<RegisterRoute>(
+  path: "/register",
+  name: RegisterRoute.name,
+)
+class RegisterRoute extends GoRouteData {
+  const RegisterRoute();
+  static const name = "Register";
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return MaterialPage(
+      fullscreenDialog: true,
+      name: name,
+      child: RegisterPage(),
     );
   }
 }

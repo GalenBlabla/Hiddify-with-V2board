@@ -24,7 +24,8 @@ GoRouter router(RouterRef ref) {
   final notifier = ref.watch(routerListenableProvider.notifier);
   final isLoggedIn = ref.watch(authProvider); // 获取登录状态
 
-  final initialLocation = isLoggedIn ? const HomeRoute().location : const LoginRoute().location;
+  final initialLocation =
+      isLoggedIn ? const HomeRoute().location : const LoginRoute().location;
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
@@ -33,14 +34,17 @@ GoRouter router(RouterRef ref) {
     routes: [
       if (useMobileRouter) $mobileWrapperRoute else $desktopWrapperRoute,
       $introRoute,
-      $loginRoute, // 确保登录路由包含在这里
+      $loginRoute,
+      $registerRoute, // 确保注册路由包含在这里
     ],
     refreshListenable: notifier,
     redirect: (context, state) {
       final isLoggingIn = state.uri.toString() == const LoginRoute().location;
+      final isRegistering =
+          state.uri.toString() == const RegisterRoute().location; // 检查注册路由
 
-      if (!isLoggedIn && !isLoggingIn) {
-        // 如果用户未登录且当前不在登录页面，则重定向到登录页面
+      if (!isLoggedIn && !isLoggingIn && !isRegistering) {
+        // 如果用户未登录且当前不在登录或注册页面，则重定向到登录页面
         return const LoginRoute().location;
       }
 
@@ -60,7 +64,6 @@ GoRouter router(RouterRef ref) {
 final tabLocations = [
   const HomeRoute().location,
   const ProxiesRoute().location,
-
   const PurchaseRoute().location,
   const ConfigOptionsRoute().location,
   const SettingsRoute().location,

@@ -65,7 +65,8 @@ class AddProfileModal extends HookConsumerWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             // temporary solution, aspect ratio widget relies on height and in a row there no height!
-            final buttonWidth = constraints.maxWidth / 2 - (buttonsPadding + (buttonsGap / 2));
+            final buttonWidth =
+                constraints.maxWidth / 2 - (buttonsPadding + (buttonsGap / 2));
 
             return AnimatedCrossFade(
               firstChild: SizedBox(
@@ -99,7 +100,8 @@ class AddProfileModal extends HookConsumerWidget {
               secondChild: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: buttonsPadding),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: buttonsPadding),
                     child: Row(
                       children: [
                         _Button(
@@ -108,9 +110,13 @@ class AddProfileModal extends HookConsumerWidget {
                           icon: FluentIcons.clipboard_paste_24_regular,
                           size: buttonWidth,
                           onTap: () async {
-                            final captureResult = await Clipboard.getData(Clipboard.kTextPlain).then((value) => value?.text ?? '');
+                            final captureResult =
+                                await Clipboard.getData(Clipboard.kTextPlain)
+                                    .then((value) => value?.text ?? '');
                             if (addProfileState.isLoading) return;
-                            ref.read(addProfileProvider.notifier).add(captureResult);
+                            ref
+                                .read(addProfileProvider.notifier)
+                                .add(captureResult);
                           },
                         ),
                         const Gap(buttonsGap),
@@ -121,7 +127,8 @@ class AddProfileModal extends HookConsumerWidget {
                             icon: FluentIcons.qr_code_24_regular,
                             size: buttonWidth,
                             onTap: () async {
-                              final cr = await QRCodeScannerScreen().open(context);
+                              final cr =
+                                  await QRCodeScannerScreen().open(context);
 
                               if (cr == null) return;
                               if (addProfileState.isLoading) return;
@@ -175,7 +182,8 @@ class AddProfileModal extends HookConsumerWidget {
                                     const SizedBox(width: 8),
                                     Text(
                                       t.profile.add.addWarp,
-                                      style: theme.textTheme.labelLarge?.copyWith(
+                                      style:
+                                          theme.textTheme.labelLarge?.copyWith(
                                         color: theme.colorScheme.primary,
                                       ),
                                     ),
@@ -185,7 +193,9 @@ class AddProfileModal extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        if (!PlatformUtils.isDesktop) const SizedBox(height: 16), // Spacing between the buttons
+                        if (!PlatformUtils.isDesktop)
+                          const SizedBox(
+                              height: 16), // Spacing between the buttons
                         if (!PlatformUtils.isDesktop)
                           Semantics(
                             button: true,
@@ -214,7 +224,8 @@ class AddProfileModal extends HookConsumerWidget {
                                       const SizedBox(width: 8),
                                       Text(
                                         t.profile.add.manually,
-                                        style: theme.textTheme.labelLarge?.copyWith(
+                                        style: theme.textTheme.labelLarge
+                                            ?.copyWith(
                                           color: theme.colorScheme.primary,
                                         ),
                                       ),
@@ -230,7 +241,9 @@ class AddProfileModal extends HookConsumerWidget {
                   const Gap(24),
                 ],
               ),
-              crossFadeState: addProfileState.isLoading ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+              crossFadeState: addProfileState.isLoading
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
               duration: const Duration(milliseconds: 250),
             );
           },
@@ -259,7 +272,8 @@ class AddProfileModal extends HookConsumerWidget {
       if (agreed != true) return;
     }
     await _prefs.setBool(warpConsentGiven, true);
-    var toast = notification.showInfoToast(t.profile.add.addingWarpMsg, duration: const Duration(milliseconds: 100));
+    var toast = notification.showInfoToast(t.profile.add.addingWarpMsg,
+        duration: const Duration(milliseconds: 100));
     toast?.pause();
     await _warp.generateWarpConfig();
     toast?.start();
@@ -269,15 +283,18 @@ class AddProfileModal extends HookConsumerWidget {
     // final hasWarp2Config = accountId != null && accessToken != null;
 
     // if (!hasWarp2Config || true) {
-    toast = notification.showInfoToast(t.profile.add.addingWarpMsg, duration: const Duration(milliseconds: 100));
+    toast = notification.showInfoToast(t.profile.add.addingWarpMsg,
+        duration: const Duration(milliseconds: 100));
     toast?.pause();
     await _warp.generateWarp2Config();
     toast?.start();
     // }
     if (region == "cn") {
-      await _profile.add("#profile-title: Hiddify WARP\nwarp://p1@auto#National&&detour=warp://p2@auto#WoW"); //
+      await _profile.add(
+          "#profile-title: Tomato WARP\nwarp://p1@auto#National&&detour=warp://p2@auto#WoW"); //
     } else {
-      await _profile.add("https://raw.githubusercontent.com/hiddify/hiddify-next/main/test.configs/warp"); //
+      await _profile.add(
+          "https://raw.githubusercontent.com/hiddify/hiddify-next/main/test.configs/warp"); //
     }
   }
 }
