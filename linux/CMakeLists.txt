@@ -112,7 +112,7 @@ install(FILES "../libcore/bin/lib/libcore.so" DESTINATION "${INSTALL_BUNDLE_LIB_
   COMPONENT Runtime)
 
 install(
-  FILES "../libcore/bin/TomatoCli" 
+  FILES "../libcore/bin/HiddifyCli" 
   DESTINATION "${CMAKE_INSTALL_PREFIX}"
   PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ
   COMPONENT Runtime

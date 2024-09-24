@@ -22,7 +22,7 @@ class WindowNotifier extends _$WindowNotifier with AppLogger {
 
     // if (Platform.isWindows) {
     //   loggy.debug("ensuring single instance");
-    //   await WindowsSingleInstance.ensureSingleInstance([], "Tomato");
+    //   await WindowsSingleInstance.ensureSingleInstance([], "Hiddify");
     // }
 
     await windowManager.ensureInitialized();

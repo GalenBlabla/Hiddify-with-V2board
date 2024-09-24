@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-     name: "Tomato Packages",
+     name: "Hiddify Packages",
      platforms: [
         // Minimum platform version
          .iOS(.v13)

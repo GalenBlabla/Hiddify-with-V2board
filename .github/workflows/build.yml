@@ -19,15 +19,15 @@ env:
   NDK_VERSION: r26d
   UPLOAD_ARTIFACT: "${{ inputs.upload-artifact }}"
   TAG_NAME: "${{ inputs.tag-name }}"
-  TARGET_NAME_AppImage: "Tomato-Linux-x64"
-  TARGET_NAME_deb: "Tomato-Debian-x64"
-  TARGET_NAME_rpm: "Tomato-rpm-x64"
-  TARGET_NAME_apk: "Tomato-Android"
-  TARGET_NAME_aab: "Tomato-Android"
-  #TARGET_NAME_exe: "Tomato-Windows-x64"
-  TARGET_NAME_dmg: "Tomato-MacOS"
-  TARGET_NAME_pkg: "Tomato-MacOS-Installer"
-  TARGET_NAME_ipa: "Tomato-iOS"
+  TARGET_NAME_AppImage: "Hiddify-Linux-x64"
+  TARGET_NAME_deb: "Hiddify-Debian-x64"
+  TARGET_NAME_rpm: "Hiddify-rpm-x64"
+  TARGET_NAME_apk: "Hiddify-Android"
+  TARGET_NAME_aab: "Hiddify-Android"
+  #TARGET_NAME_exe: "Hiddify-Windows-x64"
+  TARGET_NAME_dmg: "Hiddify-MacOS"
+  TARGET_NAME_pkg: "Hiddify-MacOS-Installer"
+  TARGET_NAME_ipa: "Hiddify-iOS"
   
 
 jobs:
@@ -193,7 +193,7 @@ jobs:
           folder: 'dist'
           timestamp-server: 'http://timestamp.digicert.com'
           recursive: true
-          description: 'Tomato'
+          description: 'Hiddify'
 
       - name: Copy to out Windows
         if: matrix.platform == 'windows'
@@ -422,7 +422,7 @@ jobs:
 
       - uses: Apple-Actions/upload-testflight-build@v1
         with:
-          app-path: 'out/Tomato-iOS.ipa' 
+          app-path: 'out/Hiddify-iOS.ipa' 
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}

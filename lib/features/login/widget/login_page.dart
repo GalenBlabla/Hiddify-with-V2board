@@ -43,7 +43,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     try {
       // 清理之前的订阅信息
       await _clearSubscriptionData();
-      final url = Uri.parse("https://tomato.galen.life/api/v1/passport/auth/login");
+      final url =
+          Uri.parse("https://tomato.galen.life/api/v1/passport/auth/login");
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -61,7 +62,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           await storeToken(authData);
           // 添加订阅信息并更新活动配置文件
           await _addSubscription(authData);
-          
+
           // 更新 authProvider 状态为已登录
           ref.read(authProvider.notifier).state = true;
 
@@ -78,7 +79,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           _showErrorSnackbar(context, data["message"]);
         }
       } else {
-        _showErrorSnackbar(context, "An error occurred: ${response.statusCode}");
+        _showErrorSnackbar(
+            context, "An error occurred: ${response.statusCode}");
       }
     } catch (e) {
       print(e);
@@ -102,11 +104,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       await ref.read(addProfileProvider.notifier).add(subscriptionLink);
 
       // 获取新添加的配置文件并设置为活动配置文件
-      final profileRepository = await ref.read(profileRepositoryProvider.future);
+      final profileRepository =
+          await ref.read(profileRepositoryProvider.future);
       final profilesResult = await profileRepository.watchAll().first;
       final profiles = profilesResult.getOrElse((_) => []);
       final newProfile = profiles.firstWhere(
-        (profile) => profile is RemoteProfileEntity && profile.url == subscriptionLink,
+        (profile) =>
+            profile is RemoteProfileEntity && profile.url == subscriptionLink,
         orElse: () {
           if (profiles.isNotEmpty) {
             return profiles[0];
@@ -119,7 +123,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       ref.read(activeProfileProvider.notifier).update((_) => newProfile);
     } catch (e) {
       print(e);
-      _showErrorSnackbar(context, "An error occurred while adding the subscription.");
+      _showErrorSnackbar(
+          context, "An error occurred while adding the subscription.");
     }
   }
 
@@ -178,7 +183,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -196,7 +201,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Welcome to Tomato VPN',
+                  'Welcome to Hiddify VPN',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -316,5 +321,4 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       ),
     );
   }
-
 }

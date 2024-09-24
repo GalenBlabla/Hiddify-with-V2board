@@ -4,7 +4,7 @@ on:
     types: [released]
 
 env:
-    IDENTIFIER: ${{ endsWith(github.event.release.tag_name, 'dev') && 'Tomato.Next.Beta' || 'Tomato.Next' }}
+    IDENTIFIER: ${{ endsWith(github.event.release.tag_name, 'dev') && 'Hiddify.Next.Beta' || 'Hiddify.Next' }}
 
 jobs:
   publish:

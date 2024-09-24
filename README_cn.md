@@ -6,9 +6,9 @@
 
 
 
-# V2Tomato
+# V2Hiddify
 
-V2Tomato 是基于 [Tomato-Next](https://github.com/hiddify/hiddify-next) 开发的。该项目的目的是开发一款可以直接对接 V2board (Xboard) 的跨平台客户端。用户可以使用相应机场的账户登录，以自动完成订阅和购买套餐。
+V2Hiddify 是基于 [Hiddify-Next](https://github.com/hiddify/hiddify-next) 开发的。该项目的目的是开发一款可以直接对接 V2board (Xboard) 的跨平台客户端。用户可以使用相应机场的账户登录，以自动完成订阅和购买套餐。
 
 
 

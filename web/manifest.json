@@ -1,11 +1,11 @@
 {
-    "name": "Tomato",
-    "short_name": "Tomato",
+    "name": "Hiddify",
+    "short_name": "Hiddify",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Tomato",
+    "description": "Hiddify",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

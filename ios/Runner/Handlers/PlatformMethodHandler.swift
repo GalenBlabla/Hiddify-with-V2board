@@ -2,7 +2,7 @@
 //  PlatformMethodHandler.swift
 //  Runner
 //
-//  Created by Tomato on 12/27/23.
+//  Created by Hiddify on 12/27/23.
 //
 
 import Flutter

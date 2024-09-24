@@ -1,9 +1,9 @@
-display_name: Tomato
+display_name: Hiddify
 
 icon: ..\..\assets\images\windows.ico
 
 keywords:
-  - Tomato
+  - Hiddify
   - Proxy
   - VPN
   - V2ray
@@ -12,7 +12,7 @@ keywords:
   - Psiphon
   - OpenVPN
 
-generic_name: Tomato
+generic_name: Hiddify
 
 actions:
   - name: Start

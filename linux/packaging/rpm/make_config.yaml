@@ -1,4 +1,4 @@
-display_name: Tomato
+display_name: Hiddify
 url: https://github.com/hiddify/hiddify-next/
 license: Other
 
@@ -12,7 +12,7 @@ essential: false
 icon: ./assets/images/source/ic_launcher_border.png
 
 keywords:
-  - Tomato
+  - Hiddify
   - Proxy
   - VPN
   - V2ray
@@ -21,7 +21,7 @@ keywords:
   - Psiphon
   - OpenVPN
 
-generic_name: Tomato
+generic_name: Hiddify
 
 group: Applications/Internet
 
