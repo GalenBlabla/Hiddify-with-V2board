@@ -5,7 +5,7 @@ V2Hiddify 是基于 [Hiddify-Next](https://github.com/hiddify/hiddify-next) 开�
 ## 功能
 
 - [x] **使用面板账户登录**：允许用户使用面板账户登录。
-- [ ] **注册功能**：提供用户注册功能。
+- [x] **注册功能**：提供用户注册功能。
 - [ ] **忘记密码**：提供密码恢复功能。
 - [x] **自动订阅**：购买套餐后自动添加订阅。
 - [x] **显示套餐信息**：显示用户当前的套餐信息。
@@ -89,7 +89,25 @@ flutter run
 
 ### 5. 打包应用
 
-根据需要打包相应平台的应用：
+根据需要打包相应平台的应用：  
+在打包之前我们需要进入 `android` 目录下，找到 `gradle.properties` 文件，修改里面的代理 IP 和端口为自己的：
+
+  ```properties
+  org.gradle.jvmargs=-Xmx4048m -Dfile.encoding=UTF-8
+  android.useAndroidX=true
+  android.enableJetifier=true
+
+  # HTTP 代理设置
+  systemProp.http.proxyHost=192.168.28.36
+  systemProp.http.proxyPort=7890
+
+  # HTTPS 代理设置
+  systemProp.https.proxyHost=192.168.28.36
+  systemProp.https.proxyPort=7890
+
+  # 不使用代理的主机（可选）
+  systemProp.http.nonProxyHosts=localhost|127.0.0.1
+  ```
 
 - Android 打包：
 
