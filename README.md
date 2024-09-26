@@ -187,12 +187,15 @@ V2Hiddify 项目目前存在一个问题：对于不同的域名，需要分别�
 
 ### 如何贡献
 
-Fork 仓库：点击右上角的 `Fork` 按钮，将本仓库复制到你的 GitHub 账户中。  
-创建分支：在你的仓库中创建一个新的分支用于你的改动。 ```bash git checkout -b feature/your-feature-name ```  
-进行修改：在你的分支中进行修改、添加新功能或修复问题。  
-提交更改：将你的修改提交到你的分支中。 ```bash git add . git commit -m "描述你的更改内容" ```  
-推送到 GitHub：将你的分支推送到你 Fork 的仓库中。 ```bash git push origin feature/your-feature-name ```  
-创建 Pull Request：在 GitHub 页面上打开你的仓库，点击 `New Pull Request` 按钮，并填写相关信息。请简要描述你的更改以及它们的作用。  
+1.Fork 仓库：点击右上角的 `Fork` 按钮，将本仓库复制到你的 GitHub 账户中。  
+2.创建分支：在你的仓库中创建一个新的分支用于你的改动。  
+``` git checkout -b feature/your-feature-name ```  
+3.进行修改：在你的分支中进行修改、添加新功能或修复问题。  
+4.提交更改：将你的修改提交到你的分支中。  
+``` git add . git commit -m "描述你的更改内容" ```  
+5.推送到 GitHub：将你的分支推送到你 Fork 的仓库中。  
+``` git push origin feature/your-feature-name ```  
+6.创建 Pull Request：在 GitHub 页面上打开你的仓库，点击 `New Pull Request` 按钮，并填写相关信息。请简要描述你的更改以及它们的作用。  
 ### 注意事项
 
 - 请确保你的代码风格与项目一致。 
