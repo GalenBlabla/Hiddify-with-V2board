@@ -139,11 +139,20 @@ flutter run
 
 ## V2Hiddify 示例图片
 
+### 中文界面
 <p align="center">
-  <img src="./images/loginin.jpg" alt="登录示例" width="200"/>
-  <img src="./images/sub.jpg" alt="订阅示例" width="200"/>
-  <img src="./images/purchase.jpg" alt="购买示例" width="200"/>
-  <img src="./images/connect.jpg" alt="连接示例" width="200"/>
+  <img src="./images/login_zh.jpg" alt="登录示例 ZH" width="200"/>
+  <img src="./images/home_zh.jpg" alt="主页示例 ZH" width="200"/>
+  <img src="./images/plan_zh.jpg" alt="套餐示例 ZH" width="200"/>
+  <img src="./images/connect_zh.jpg" alt="连接示例 ZH" width="200"/>
+</p>
+
+### English Interface
+<p align="center">
+  <img src="./images/login_en.jpg" alt="Login Example EN" width="200"/>
+  <img src="./images/home_en.jpg" alt="Home Example EN" width="200"/>
+  <img src="./images/plan_en.jpg" alt="Plan Example EN" width="200"/>
+  <img src="./images/connect_en.jpg" alt="Connect Example EN" width="200"/>
 </p>
 
 ---

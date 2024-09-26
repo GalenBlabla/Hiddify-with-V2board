@@ -90,8 +90,7 @@ class HomePage extends HookConsumerWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "当前账户没有可用订阅，请前往套餐购买页面，购买相应套餐后使用。",
+                              Text(t.home.noSubscriptionMsg,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
@@ -101,7 +100,7 @@ class HomePage extends HookConsumerWidget {
                                   // 导航到套餐购买页面
                                   const PurchaseRoute().push(context);
                                 },
-                                child: const Text("前往购买套餐"),
+                                child: Text(t.home.goToPurchasePage),
                               ),
                             ],
                           ),
