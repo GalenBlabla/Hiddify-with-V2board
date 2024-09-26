@@ -103,7 +103,7 @@ flutter run
 ### 5. 打包应用
 
 根据需要打包相应平台的应用：  
-在打包之前我们需要进入 `android` 目录下，找到 `gradle.properties` 文件，修改里面的代理 IP 和端口为自己的：
+在打包之前我们需要进入 `android` 目录下，找到 `gradle.properties` 文件，修改里面的代理 IP 和端口为自己的,如果无需代理，删除systemProp开头的5行即可：
 
   ```properties
   org.gradle.jvmargs=-Xmx4048m -Dfile.encoding=UTF-8
