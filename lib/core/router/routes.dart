@@ -17,10 +17,10 @@ import 'package:hiddify/features/settings/about/about_page.dart';
 import 'package:hiddify/features/settings/overview/settings_overview_page.dart';
 import 'package:hiddify/utils/utils.dart';
 
-import 'package:hiddify/features/login/widget/login_page.dart'; // 导入新的登录页面
-import 'package:hiddify/features/login/widget/register_page.dart'; // 导入新的登录页面
+import 'package:hiddify/features/login/widget/login_page.dart'; 
+import 'package:hiddify/features/login/widget/register_page.dart';
 import 'package:hiddify/features/purchase/purchase_page.dart'; 
-
+import 'package:hiddify/features/login/widget/forgot_passwd.dart';
 part 'routes.g.dart';
 
 GlobalKey<NavigatorState>? _dynamicRootKey = useMobileRouter ? rootNavigatorKey : null;
@@ -191,6 +191,26 @@ class RegisterRoute extends GoRouteData {
     );
   }
 }
+
+// 定义忘记密码路由
+@TypedGoRoute<ForgetPasswordRoute>(
+  path: "/forget-password",
+  name: ForgetPasswordRoute.name,
+)
+class ForgetPasswordRoute extends GoRouteData {
+  const ForgetPasswordRoute();
+  static const name = "ForgetPassword";
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return MaterialPage(
+      fullscreenDialog: true,
+      name: name,
+      child: ForgetPasswordPage(), // 忘记密码页面的实现
+    );
+  }
+}
+
 @TypedGoRoute<IntroRoute>(path: "/intro", name: IntroRoute.name)
 class IntroRoute extends GoRouteData {
   const IntroRoute();

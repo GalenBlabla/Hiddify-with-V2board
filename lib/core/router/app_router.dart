@@ -35,21 +35,23 @@ GoRouter router(RouterRef ref) {
       if (useMobileRouter) $mobileWrapperRoute else $desktopWrapperRoute,
       $introRoute,
       $loginRoute,
-      $registerRoute, // 确保注册路由包含在这里
+      $registerRoute,
+      $forgetPasswordRoute,
     ],
     refreshListenable: notifier,
     redirect: (context, state) {
       final isLoggingIn = state.uri.toString() == const LoginRoute().location;
       final isRegistering =
           state.uri.toString() == const RegisterRoute().location; // 检查注册路由
-
-      if (!isLoggedIn && !isLoggingIn && !isRegistering) {
+      final isForgettingPassword =
+          state.uri.toString() == const ForgetPasswordRoute().location;
+      if (!isLoggedIn && !isLoggingIn && !isRegistering &&
+          !isForgettingPassword) {
         // 如果用户未登录且当前不在登录或注册页面，则重定向到登录页面
         return const LoginRoute().location;
       }
 
-      if (isLoggedIn && isLoggingIn) {
-        // 如果用户已登录且当前在登录页面，则重定向到主页
+      if (isLoggedIn && (isLoggingIn || isRegistering)) {
         return const HomeRoute().location;
       }
 
