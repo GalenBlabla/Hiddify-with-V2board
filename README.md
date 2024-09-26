@@ -103,7 +103,7 @@ flutter run
 ### 5. 打包应用
 
 根据需要打包相应平台的应用：  
-在打包之前我们需要进入 `android` 目录下，找到 `gradle.properties` 文件，修改里面的代理 IP 和端口为自己的,如果无需代理，删除systemProp开头的5行即可：
+在打包之前我需要进入 `android` 目录下，找到 `gradle.properties` 文件，修改里面的代理 IP 和端口为自己的,如果无需代理，删除systemProp开头的5行即可：
 
   ```properties
   org.gradle.jvmargs=-Xmx4048m -Dfile.encoding=UTF-8
@@ -180,3 +180,25 @@ V2Hiddify 项目目前存在一个问题：对于不同的域名，需要分别�
 2. **生成配置文件**：后端根据用户输入生成对应的配置文件（例如 `config.toml`）。
 3. **触发打包脚本**：后端调用打包脚本（如 `build.sh`），根据配置文件进行打包。
 4. **下载链接**：打包完成后，生成下载链接供用户下载。
+---
+## 欢迎提交 Pull Request 🎉
+
+非常感谢你对本项目的关注！欢迎所有形式的贡献，无论是修复 bug、改进文档，还是增加新功能。如果你有好的想法或发现需要改进的地方，欢迎提交 PR！
+
+### 如何贡献
+
+Fork 仓库：点击右上角的 `Fork` 按钮，将本仓库复制到你的 GitHub 账户中。  
+创建分支：在你的仓库中创建一个新的分支用于你的改动。 ```\bash git checkout -b feature/your-feature-name ```  
+进行修改：在你的分支中进行修改、添加新功能或修复问题。  
+提交更改：将你的修改提交到你的分支中。 ```\bash git add . git commit -m "描述你的更改内容" ```  
+推送到 GitHub：将你的分支推送到你 Fork 的仓库中。 ```\bash git push origin feature/your-feature-name ```  
+创建 Pull Request：在 GitHub 页面上打开你的仓库，点击 `New Pull Request` 按钮，并填写相关信息。请简要描述你的更改以及它们的作用。  
+### 注意事项
+
+- 请确保你的代码风格与项目一致。 
+- 请确保所有单元测试通过，并尽量增加新的测试以覆盖你的更改。
+- 在提交 PR 之前，请先同步主仓库的最新代码。
+
+### 我期待你的贡献！
+
+如果你有任何疑问或需要帮助，请随时在 Issue 中提问。我会尽快回复并协助你解决问题。感谢你的支持和贡献！🚀
