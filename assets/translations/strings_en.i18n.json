@@ -51,8 +51,10 @@
     "goToLogin": "Please log in again"
   },
   "userInfo": {
-    "pageTitle": "User",
+    "pageTitle": "User Information",
     "balance": "Balance",
+    "onlyForConsumption": "Only for Consumption",
+    "commissionBalance": "Remaining Commission",
     "currency": "CNY",
     "transferEnable": "Data Traffic",
     "plan": "Plan",
@@ -64,7 +66,19 @@
     "resetSubscription": "Reset Subscription",
     "subscriptionResetSuccess": "Subscription link has been successfully reset and updated.",
     "subscriptionResetError": "Failed to reset subscription:",
-    "noSubscriptionLink": "No subscription link found."
+    "noSubscriptionLink": "No subscription link found.",
+    "accountStatus": "Account Status",
+    "banned": "Banned",
+    "active": "Active"
+  },
+  "inviteCode": {
+    "inviteCodeListTitle": "Invite Code List",
+    "fetchInviteCodesError": "Failed to load invite codes: ",
+    "noInviteCodes": "No invite codes available",
+    "copyToClipboard": "Copy to clipboard",
+    "copiedInviteCode": "Invite code copied: ",
+    "generateInviteCode": "Generate Invite Code",
+    "inviteCodeGenerateError": "Failed To Generate Invite Code"
   },
   "logout": {
     "buttonText": "Logout",

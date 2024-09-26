@@ -1,15 +1,14 @@
-// 文件路径: lib/features/v2board/models/user_info_model.dart
 class UserInfo {
   final String email;
   final double transferEnable;
   final int lastLoginAt;
   final int createdAt;
-  final bool banned;
+  final bool banned; // 账户状态, true: 被封禁, false: 正常
   final bool remindExpire;
   final bool remindTraffic;
   final int? expiredAt;
-  final double balance;
-  final double commissionBalance;
+  final double balance; // 消费余额
+  final double commissionBalance; // 剩余佣金余额
   final int planId;
   final double? discount;
   final double? commissionRate;

@@ -1,4 +1,5 @@
 // 文件路径: lib/features/login/service/auth_service.dart
+import 'package:hiddify/features/panel/v2board/models/invite_code_model.dart';
 import 'package:hiddify/features/panel/v2board/models/plan_model.dart';
 import 'package:hiddify/features/panel/v2board/models/user_info_model.dart';
 import 'package:http/http.dart' as http;
@@ -7,7 +8,12 @@ import 'dart:convert';
 
 class AuthService {
   static const _baseUrl = "https://tomato.galen.life";
+  static const _inviteLinkBase = "$_baseUrl/#/register?code=";
 
+  // 获取完整邀请码链接的方法
+  static String getInviteLink(String code) {
+    return '$_inviteLinkBase$code';
+  }
   // 统一的 POST 请求方法
   Future<Map<String, dynamic>> _postRequest(
       String endpoint, Map<String, dynamic> body,
@@ -41,7 +47,40 @@ class AuthService {
       throw Exception("Request to $endpoint failed: ${response.statusCode}");
     }
   }
+    // 生成邀请码的方法
+  Future<bool> generateInviteCode(String accessToken) async {
+    final url = Uri.parse("$_baseUrl/api/v1/user/invite/save");
+    final response = await http.get(
+      url,
+      headers: {'Authorization': accessToken},
+    );
 
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data["status"] == "success") {
+        return true; // 生成成功
+      } else {
+        throw Exception("Failed to generate invite code: ${data["message"]}");
+      }
+    } else {
+      throw Exception(
+          "Request to generate invite code failed: ${response.statusCode}");
+    }
+  }
+
+  // 获取邀请码数据
+  Future<List<InviteCode>> fetchInviteCodes(String accessToken) async {
+    final result = await _getRequest("/api/v1/user/invite/fetch", headers: {
+      'Authorization': accessToken,
+    });
+
+    if (result["status"] == "success") {
+      final codes = result["data"]["codes"] as List;
+      return codes.map((json) => InviteCode.fromJson(json)).toList();
+    } else {
+      throw Exception("Failed to retrieve invite codes: ${result["message"]}");
+    }
+  }
   // 登录请求
   Future<Map<String, dynamic>> login(String email, String password) async {
     return await _postRequest(
