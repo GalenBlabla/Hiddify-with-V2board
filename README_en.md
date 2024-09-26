@@ -12,7 +12,7 @@ V2Hiddify is a derivative project developed based on [Hiddify-Next](https://gith
 - [x] **Display plan information**: Displays the user's current plan information.
 - [ ] **Payment integration**: Provides integration with payment platforms.
 - [ ] **Plan purchase**: Allows users to purchase different plans.
-- [ ] **Automatic subscription after purchase**: Automatically adds subscription after purchasing a plan.
+- [x] **Automatic subscription after purchase**: Automatically adds subscription after purchasing a plan.
 - [x] **Logout**: Allows users to log out.
 - [x] **Language localization support**: Supports Chinese and English localization.
 
