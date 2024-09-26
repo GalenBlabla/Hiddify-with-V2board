@@ -51,10 +51,10 @@
     "goToLogin": "Please log in again"
   },
   "userInfo": {
-    "pageTitle": "User Information",
+    "pageTitle": "User",
     "balance": "Balance",
     "onlyForConsumption": "Only for Consumption",
-    "commissionBalance": "Remaining Commission",
+    "commissionBalance": "Commission",
     "currency": "CNY",
     "transferEnable": "Data Traffic",
     "plan": "Plan",
@@ -72,18 +72,18 @@
     "active": "Active"
   },
   "inviteCode": {
-    "inviteCodeListTitle": "Invite Code List",
+    "inviteCodeListTitle": "Invite Codes",
     "fetchInviteCodesError": "Failed to load invite codes: ",
     "noInviteCodes": "No invite codes available",
     "copyToClipboard": "Copy to clipboard",
     "copiedInviteCode": "Invite code copied: ",
-    "generateInviteCode": "Generate Invite Code",
+    "generateInviteCode": "Generate",
     "inviteCodeGenerateError": "Failed To Generate Invite Code"
   },
   "transferDialog": {
     "transferTitle": "Transfer Promotion Commission to Balance",
     "transferHint": "Transferred balance can only be used for consumption.",
-    "currentBalance": "Current Promotion Commission Balance",
+    "currentBalance": "Current Balance",
     "transferAmount": "Transfer Amount",
     "transferSuccess": "Commission transferred successfully!",
     "transferError": "Commission transfer failed",
