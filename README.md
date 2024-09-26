@@ -95,10 +95,10 @@ flutter run
     ```
    你仍然可以使用全局替换的方式更改你看到的目标文字，虽然这样可能会带来未知的错误。
 
-   ~~搜索项目中所有 `Hiddify VPN` 的地方，并替换为你的机场名称。例如，如果你的机场名字是 `SuperVPN`，可以用以下命令替换：~~
+   ~~搜索项目中所有 `V2Hiddify` 的地方，并替换为你的机场名称。例如，如果你的机场名字是 `SuperVPN`，可以用以下命令替换：~~
 
 
-   ~~grep -rl 'Hiddify VPN' lib/ | xargs sed -i 's/Hiddify VPN/SuperVPN/g'~~
+   ~~grep -rl 'V2Hiddify' lib/ | xargs sed -i 's/V2Hiddify/SuperVPN/g'~~
 
 ### 5. 打包应用
 
@@ -172,7 +172,7 @@ flutter run
 
 ## 打包平台需求介绍
 
-V2Hiddify 项目目前存在一个问题：对于不同的域名，需要分别打包客户端。为了简化这个过程，我计划开发一个自动打包平台。用户可以通过该平台输入目标面板的域名（如 "tomato.vpn.com"）和面板名称（如 "Hiddify"），平台会自动为该面板生成配置文件并完成打包。
+V2Hiddify 项目目前存在一个问题：对于不同的域名，需要分别打包客户端。为了简化这个过程，我计划开发一个自动打包平台。用户可以通过该平台输入目标面板的域名（如 "https://tomato.galen.life"）和面板名称（如 "V2Hiddify"），平台会自动为该面板生成配置文件并完成打包。
 
 ### 实现思路
 
