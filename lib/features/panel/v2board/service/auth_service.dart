@@ -1,5 +1,6 @@
 // 文件路径: lib/features/login/service/auth_service.dart
 import 'package:hiddify/features/panel/v2board/models/plan_model.dart';
+import 'package:hiddify/features/panel/v2board/models/user_info_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -147,6 +148,19 @@ class AuthService {
     } else {
       // 处理其他可能的错误
       return false;
+    }
+  }
+
+    // 获取用户信息
+  Future<UserInfo?> fetchUserInfo(String accessToken) async {
+    final result = await _getRequest("/api/v1/user/info", headers: {
+      'Authorization': accessToken,
+    });
+
+    if (result["status"] == "success") {
+      return UserInfo.fromJson(result["data"]);
+    } else {
+      throw Exception("Failed to retrieve user info: ${result["message"]}");
     }
   }
 }

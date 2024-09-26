@@ -36,7 +36,7 @@
     "goToPurchasePage": "Go to Purchase Page"
   },
   "purchase": {
-    "pageTitle": "Purchase Plans",
+    "pageTitle": "Plans",
     "noAccessToken": "No access token found. Please log in again.",
     "fetchPlansError": "Failed to load plans: ",
     "noPlans": "No available plans",
@@ -50,8 +50,23 @@
     "noSubscriptionLink": "Unable to retrieve subscription link",
     "goToLogin": "Please log in again"
   },
+  "userInfo": {
+    "pageTitle": "User",
+    "balance": "Balance",
+    "currency": "CNY",
+    "transferEnable": "Data Traffic",
+    "plan": "Plan",
+    "expiredAt": "Expires At",
+    "lastLogin": "Last Login",
+    "noData": "No data available",
+    "noAccessToken": "No access token found.",
+    "fetchUserInfoError": "Failed to load user information:"
+  },
   "logout": {
-    "buttonText": "Logout"
+    "buttonText": "Logout",
+    "confirmationMessage": "Are you sure you want to log out of your account?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Logout"
   },
   "login": {
     "welcome": "Welcome to V2Hiddify",

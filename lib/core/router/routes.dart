@@ -8,6 +8,7 @@ import 'package:hiddify/features/config_option/widget/quick_settings_modal.dart'
 import 'package:hiddify/features/home/widget/home_page.dart';
 import 'package:hiddify/features/intro/widget/intro_page.dart';
 import 'package:hiddify/features/log/overview/logs_overview_page.dart';
+import 'package:hiddify/features/panel/v2board/widget/user_info_page.dart';
 import 'package:hiddify/features/per_app_proxy/overview/per_app_proxy_page.dart';
 import 'package:hiddify/features/profile/add/add_profile_modal.dart';
 import 'package:hiddify/features/profile/details/profile_details_page.dart';
@@ -83,6 +84,10 @@ GlobalKey<NavigatorState>? _dynamicRootKey = useMobileRouter ? rootNavigatorKey 
       path: "/purchase",
       name: PurchaseRoute.name,
     ),
+    TypedGoRoute<UserInfoRoute>(
+      path: "/user-info",
+      name: UserInfoRoute.name,
+    ),
   ],
 )
 class MobileWrapperRoute extends ShellRouteData {
@@ -125,6 +130,10 @@ class MobileWrapperRoute extends ShellRouteData {
     TypedGoRoute<PurchaseRoute>(
       path: "/purchase",
       name: PurchaseRoute.name,
+    ),
+    TypedGoRoute<UserInfoRoute>(
+      path: "/user-info",
+      name: UserInfoRoute.name,
     ),
     TypedGoRoute<ProxiesRoute>(
       path: "/proxies",
@@ -263,6 +272,21 @@ class PurchaseRoute extends GoRouteData {
     );
   }
 }
+
+class UserInfoRoute extends GoRouteData {
+  const UserInfoRoute();
+  static const name = "UserInfo";
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return const NoTransitionPage(
+      name: name,
+      child: UserInfoPage(), // 确保 UserInfoPage 已定义
+    );
+  }
+}
+
+
 class AddProfileRoute extends GoRouteData {
   const AddProfileRoute({this.url});
 

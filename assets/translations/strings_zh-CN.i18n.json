@@ -36,7 +36,7 @@
     "goToPurchasePage": "前往购买套餐"
   },
   "purchase": {
-    "pageTitle": "套餐购买",
+    "pageTitle": "套餐",
     "noAccessToken": "未找到访问令牌，请重新登录。",
     "fetchPlansError": "加载失败: ",
     "noPlans": "没有可用的套餐",
@@ -50,8 +50,23 @@
     "noSubscriptionLink": "无法获取订阅链接",
     "goToLogin": "请重新登录"
   },
+  "userInfo": {
+    "pageTitle": "我的",
+    "balance": "余额",
+    "currency": "元",
+    "transferEnable": "数据流量",
+    "plan": "套餐",
+    "expiredAt": "到期时间",
+    "lastLogin": "最后登录时间",
+    "noData": "暂无数据",
+    "noAccessToken": "未找到访问令牌。",
+    "fetchUserInfoError": "加载用户信息失败:"
+  },
   "logout": {
-    "buttonText": "登出"
+    "buttonText": "登出",
+    "confirmationMessage": "是否确定登出当前账号？",
+    "cancelButton": "取消",
+    "confirmButton": "登出"
   },
   "login": {
     "welcome": "欢迎使用",

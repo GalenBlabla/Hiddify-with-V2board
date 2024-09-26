@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:hiddify/core/localization/translations.dart';
 import 'package:hiddify/core/router/router.dart';
+import 'package:hiddify/features/panel/v2board/common/logout_dialog.dart';
 import 'package:hiddify/features/stats/widget/side_bar_stats_overview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -41,6 +42,10 @@ class AdaptiveRootScaffold extends HookConsumerWidget {
         label: t.purchase.pageTitle,
       ),
       NavigationDestination(
+        icon: const Icon(FluentIcons.person_20_filled), 
+        label: t.userInfo.pageTitle, 
+      ),
+      NavigationDestination(
         icon: const Icon(FluentIcons.box_edit_20_filled),
         label: t.config.pageTitle,
       ),
@@ -66,16 +71,19 @@ class AdaptiveRootScaffold extends HookConsumerWidget {
       selectedIndex: selectedIndex,
       onSelectedIndexChange: (index) {
         if (index == destinations.length - 1) {
-          // 执行退出操作
-          logout(context, ref);
+          // 显示登出对话框
+          showDialog(
+            context: context,
+            builder: (context) => const LogoutDialog(), // 使用 LogoutDialog 组件
+          );
         } else {
           RootScaffold.stateKey.currentState?.closeDrawer();
           switchTab(index, context);
         }
       },
       destinations: destinations,
-      drawerDestinationRange: useMobileRouter ? (3, null) : (0, null),
-      bottomDestinationRange: (0, 3),
+      drawerDestinationRange: useMobileRouter ? (4, null) : (0, null),
+      bottomDestinationRange: (0, 4),
       useBottomSheet: useMobileRouter,
       sidebarTrailing: const Expanded(
         child: Align(
