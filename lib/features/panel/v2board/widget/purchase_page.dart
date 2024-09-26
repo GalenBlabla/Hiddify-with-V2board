@@ -3,11 +3,14 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:hiddify/features/panel/v2board/models/plan_model.dart';
 import 'package:hiddify/features/panel/v2board/storage/token_storage.dart';
 import 'package:hiddify/features/panel/v2board/service/auth_service.dart';
+import 'package:hiddify/features/profile/data/profile_data_providers.dart';
+import 'package:hiddify/features/profile/model/profile_entity.dart';
+import 'package:hiddify/features/profile/notifier/active_profile_notifier.dart';
+import 'package:hiddify/features/profile/notifier/profile_notifier.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hiddify/core/localization/translations.dart'; 
 
 class PurchasePage extends ConsumerWidget {
-  // 改为 ConsumerWidget
   const PurchasePage({super.key});
 
   // 通过存储的令牌获取套餐数据
@@ -21,10 +24,55 @@ class PurchasePage extends ConsumerWidget {
     return await AuthService().fetchPlanData(accessToken);
   }
 
+  // 添加新订阅到配置文件的方法
+  Future<void> _addSubscription(
+      BuildContext context, String accessToken, WidgetRef ref) async {
+    try {
+      // 获取订阅链接
+      final subscriptionLink =
+          await AuthService().getSubscriptionLink(accessToken);
+      if (subscriptionLink == null) {
+        _showSnackbar(context, '无法获取订阅链接');
+        return;
+      }
+
+      // 打印订阅链接
+      print("Adding subscription link: $subscriptionLink");
+
+      // 添加新的订阅链接到配置文件
+      await ref.read(addProfileProvider.notifier).add(subscriptionLink);
+
+      // 获取新添加的配置文件并设置为活动配置文件
+      final profileRepository =
+          await ref.read(profileRepositoryProvider.future);
+      final profilesResult = await profileRepository.watchAll().first;
+      final profiles = profilesResult.getOrElse((_) => []);
+      final newProfile = profiles.firstWhere(
+        (profile) =>
+            profile is RemoteProfileEntity && profile.url == subscriptionLink,
+        orElse: () {
+          if (profiles.isNotEmpty) {
+            return profiles[0];
+          } else {
+            throw Exception("No profiles available");
+          }
+        },
+      );
+
+      // 更新活跃配置文件状态
+      ref.read(activeProfileProvider.notifier).update((_) => newProfile);
+
+      // 显示成功的提示信息
+      _showSnackbar(context, '成功添加订阅并设置为活动配置文件！');
+    } catch (e) {
+      print(e);
+      _showSnackbar(context, "添加订阅时发生错误: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 添加 WidgetRef 参数
-    final t = ref.watch(translationsProvider); 
+    final t = ref.watch(translationsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -51,12 +99,11 @@ class PurchasePage extends ConsumerWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(
-                child: Text(
-                    '${t.purchase.fetchPlansError} ${snapshot.error}'));
+                child: Text('${t.purchase.fetchPlansError} ${snapshot.error}'));
           } else if (snapshot.hasData && snapshot.data != null) {
             final plans = snapshot.data!;
             if (plans.isEmpty) {
-              return Center(child: Text(t.purchase.noPlans)); 
+              return Center(child: Text(t.purchase.noPlans));
             }
             return ListView.builder(
               padding: const EdgeInsets.all(8),
@@ -83,7 +130,7 @@ class PurchasePage extends ConsumerWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          plan.content ?? t.purchase.noData, 
+                          plan.content ?? t.purchase.noData,
                           style: const TextStyle(fontSize: 14),
                         ),
                         const SizedBox(height: 8),
@@ -94,7 +141,7 @@ class PurchasePage extends ConsumerWidget {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: t.purchase.priceLabel, 
+                                    text: t.purchase.priceLabel,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -102,11 +149,11 @@ class PurchasePage extends ConsumerWidget {
                                   ),
                                   TextSpan(
                                     text:
-                                        '${plan.onetimePrice ?? t.purchase.noData}', 
+                                        '${plan.onetimePrice ?? t.purchase.noData}',
                                     style: const TextStyle(
-                                      fontSize: 20, 
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.red, 
+                                      color: Colors.red,
                                     ),
                                   ),
                                   TextSpan(
@@ -120,12 +167,17 @@ class PurchasePage extends ConsumerWidget {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: () {
-                                // 在这里添加购买逻辑
-                                print(
-                                    'User wants to subscribe to plan: ${plan.name}');
-                                _showSnackbar(context,
-                                    "${t.purchase.subscribeSuccess} ${plan.name}");
+                              onPressed: () async {
+                                // 获取存储的 AccessToken
+                                final accessToken = await getToken();
+                                if (accessToken == null) {
+                                  _showSnackbar(context, '无法获取访问令牌，请重新登录');
+                                  return;
+                                }
+
+                                // 支付成功后添加订阅信息
+                                await _addSubscription(
+                                    context, accessToken, ref);
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
@@ -134,7 +186,7 @@ class PurchasePage extends ConsumerWidget {
                                 ),
                               ),
                               child: Text(
-                                t.purchase.subscribe, 
+                                t.purchase.subscribe,
                                 style: const TextStyle(color: Colors.white),
                               ),
                             ),
