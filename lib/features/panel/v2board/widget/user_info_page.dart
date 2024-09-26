@@ -335,8 +335,7 @@ void _showWithdrawDialog(
     );
   }
 
-// 构建账户余额信息卡片
-  Widget _buildAccountBalanceCard(
+Widget _buildAccountBalanceCard(
       UserInfo userInfo, Translations t, BuildContext context, WidgetRef ref) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8), // 卡片间距
@@ -344,21 +343,35 @@ void _showWithdrawDialog(
       elevation: 4, // 阴影效果
       child: Column(
         children: [
-          ListTile(
-            leading: const Icon(FluentIcons.wallet_24_filled), // 图标
-            title: Text(
-                '${t.userInfo.balance} (${t.userInfo.onlyForConsumption})'),
-            subtitle: Text(
-                '${(userInfo.balance / 100).toStringAsFixed(2)} ${t.userInfo.currency}'), // 余额除以100并保留两位小数
+          Container(
+            height: 96, // 调整为原来的两倍高度
+            padding: const EdgeInsets.symmetric(vertical: 16), // 增加内边距
+            child: ListTile(
+              leading: const Icon(FluentIcons.wallet_24_filled), // 图标
+              title: Text(
+                  '${t.userInfo.balance} (${t.userInfo.onlyForConsumption})'),
+              subtitle: Text(
+                  '${(userInfo.balance / 100).toStringAsFixed(2)} ${t.userInfo.currency}'), // 余额除以100并保留两位小数
+            ),
           ),
           Divider(height: 1), // 分隔线
-          ListTile(
-            leading: const Icon(FluentIcons.gift_card_money_24_filled), // 图标
-            title: Text(t.userInfo.commissionBalance),
-            subtitle: Text(
-                '${(userInfo.commissionBalance / 100).toStringAsFixed(2)} ${t.userInfo.currency}'), // 佣金余额除以100并保留两位小数
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
+          Container(
+            height: 96, // 调整为原来的两倍高度
+            padding: const EdgeInsets.symmetric(vertical: 16), // 增加内边距
+            child: ListTile(
+              leading: const Icon(FluentIcons.gift_card_money_24_filled), // 图标
+              title: Text(t.userInfo.commissionBalance),
+              subtitle: Text(
+                  '${(userInfo.commissionBalance / 100).toStringAsFixed(2)} ${t.userInfo.currency}'), // 佣金余额除以100并保留两位小数
+            ),
+          ),
+          // 按钮容器
+          Container(
+            alignment: Alignment.centerRight, // 右对齐
+            padding: const EdgeInsets.symmetric(
+                vertical: 8, horizontal: 16), // 增加按钮容器的内边距
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end, // 按钮右对齐
               children: [
                 ElevatedButton(
                   onPressed: () =>
@@ -367,8 +380,8 @@ void _showWithdrawDialog(
                 ),
                 const SizedBox(width: 8), // 按钮间距
                 ElevatedButton(
-                  onPressed: () =>
-                      _showWithdrawDialog(context, ref, userInfo.commissionBalance), // 弹出提现弹窗（实现类似）
+                  onPressed: () => _showWithdrawDialog(
+                      context, ref, userInfo.commissionBalance), // 弹出提现弹窗
                   child: Text(t.transferDialog.withdraw), // 本地化“提现”按钮
                 ),
               ],
@@ -378,6 +391,7 @@ void _showWithdrawDialog(
       ),
     );
   }
+
 // 显示划转对话框的方法
   void _showTransferDialog(
       BuildContext context, WidgetRef ref, UserInfo userInfo) {
@@ -395,7 +409,10 @@ void _showWithdrawDialog(
               Text(t.transferDialog.transferHint), // 提示“划转后的余额仅用于消费使用”
               const SizedBox(height: 8),
               Text(
-                  '${t.transferDialog.currentBalance}: ${(userInfo.commissionBalance / 100).toStringAsFixed(2)} ${t.userInfo.currency}'), // 显示当前佣金余额
+                  '${t.transferDialog.currentBalance}: ${(userInfo.commissionBalance / 100).toStringAsFixed(2)} ${t.userInfo.currency}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ), // 显示当前佣金余额
+                  
               TextField(
                 controller: _amountController,
                 keyboardType: TextInputType.number,
