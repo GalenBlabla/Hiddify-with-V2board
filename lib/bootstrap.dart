@@ -27,8 +27,9 @@ import 'package:hiddify/singbox/service/singbox_service_provider.dart';
 import 'package:hiddify/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:hiddify/features/login/widget/auth_provider.dart';
-import 'package:hiddify/storage/token_storage.dart';
+import 'package:hiddify/features/v2board/service/auth_provider.dart';
+import 'package:hiddify/features/v2board/service/auth_service.dart';
+import 'package:hiddify/features/v2board/storage/token_storage.dart';
 Future<void> lazyBootstrap(
   WidgetsBinding widgetsBinding,
   Environment env,
@@ -38,7 +39,7 @@ Future<void> lazyBootstrap(
   LoggerController.preInit();
   FlutterError.onError = Logger.logFlutterError;
   WidgetsBinding.instance.platformDispatcher.onError = Logger.logPlatformDispatcherError;
-
+  final authService = AuthService();
   final stopWatch = Stopwatch()..start();
 
   final container = ProviderContainer(
@@ -50,8 +51,8 @@ Future<void> lazyBootstrap(
   // 尝试读取 token 并设置登录状态
   final token = await getToken(); // 从 SharedPreferences 中获取 token
   if (token != null) {
-    // 假设你有一个函数 validateToken(token) 来验证 token 的有效性
-    final isValid = await validateToken(token); 
+    // 调用 authService 实例上的 validateToken 方法
+    final isValid = await authService.validateToken(token);
     if (isValid) {
       container.read(authProvider.notifier).state = true; // 设置为已登录
     }

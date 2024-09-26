@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:go_router/go_router.dart';
+import 'package:hiddify/features/v2board/service/auth_service.dart';
 
-class RegisterPage extends ConsumerStatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class ForgetPasswordPage extends ConsumerStatefulWidget {
+  const ForgetPasswordPage({Key? key}) : super(key: key);
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _ForgetPasswordPageState createState() => _ForgetPasswordPageState();
 }
 
-class _RegisterPageState extends ConsumerState<RegisterPage> {
+class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _inviteCodeController = TextEditingController();
   final _emailCodeController = TextEditingController();
   bool _isLoading = false;
   bool _isCountingDown = false;
@@ -26,7 +24,6 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _inviteCodeController.dispose();
     _emailCodeController.dispose();
     super.dispose();
   }
@@ -52,28 +49,12 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     });
 
     try {
-      final url = Uri.parse(
-          "https://tomato.galen.life/api/v1/passport/comm/sendEmailVerify");
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: {'email': email},
-      );
+      final result = await AuthService().sendVerificationCode(email);
 
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        if (data["status"] == "success") {
-          _showSnackbar(context, "Verification code sent to $email");
-        } else {
-          _showSnackbar(context, data["message"]);
-        }
+      if (result["status"] == "success") {
+        _showSnackbar(context, "Verification code sent to $email");
       } else {
-        final errorData = json.decode(response.body);
-        _showSnackbar(
-            context, errorData["message"] ?? "Error sending verification code");
+        _showSnackbar(context, result["message"]);
       }
     } catch (e) {
       _showSnackbar(context, "An error occurred: $e");
@@ -92,7 +73,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     });
   }
 
-  Future<void> _register(BuildContext context) async {
+  Future<void> _resetPassword(BuildContext context) async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -103,38 +84,17 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
-    final inviteCode = _inviteCodeController.text.trim();
     final emailCode = _emailCodeController.text.trim();
 
     try {
-      final url =
-          Uri.parse("https://tomato.galen.life/api/v1/passport/auth/register");
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          "email": email,
-          "password": password,
-          "invite_code": inviteCode,
-          "email_code": emailCode,
-        }),
-      );
+      final result =
+          await AuthService().resetPassword(email, password, emailCode);
 
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        if (data["status"] == "success") {
-          _showSnackbar(context, "Registration successful");
-          context.go('/login'); // 假设登录页面的路由为 /login
-        } else {
-          _showSnackbar(context, data["message"]);
-        }
+      if (result["status"] == "success") {
+        _showSnackbar(context, "Password reset successful");
+        context.go('/login');
       } else {
-        final errorData = json.decode(response.body);
-        _showSnackbar(
-            context, errorData["message"] ?? "Error during registration");
+        _showSnackbar(context, result["message"]);
       }
     } catch (e) {
       _showSnackbar(context, "An error occurred: $e");
@@ -148,8 +108,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Register'),
-              leading: IconButton(
+      appBar: AppBar(
+        title: const Text('Forget Password'),
+        leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             context.go('/login'); // 返回登录页面
@@ -164,7 +125,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
             children: [
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Email'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email';
@@ -174,15 +135,12 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
               ),
               TextFormField(
                 controller: _passwordController,
-                obscureText: _obscurePassword,
                 decoration: InputDecoration(
-                  labelText: "Password",
+                  labelText: 'New Password',
                   suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscurePassword
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                    ),
+                    icon: Icon(_obscurePassword
+                        ? Icons.visibility
+                        : Icons.visibility_off),
                     onPressed: () {
                       setState(() {
                         _obscurePassword = !_obscurePassword;
@@ -190,17 +148,13 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     },
                   ),
                 ),
+                obscureText: _obscurePassword,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
+                    return 'Please enter your new password';
                   }
                   return null;
                 },
-              ),
-              TextFormField(
-                controller: _inviteCodeController,
-                decoration:
-                    InputDecoration(labelText: 'Invite Code (optional)'),
               ),
               TextFormField(
                 controller: _emailCodeController,
@@ -222,9 +176,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _isLoading ? null : () => _register(context),
-                child:
-                    _isLoading ? CircularProgressIndicator() : Text('Register'),
+                onPressed: _isLoading ? null : () => _resetPassword(context),
+                child: _isLoading
+                    ? const CircularProgressIndicator()
+                    : const Text('Reset Password'),
               ),
             ],
           ),

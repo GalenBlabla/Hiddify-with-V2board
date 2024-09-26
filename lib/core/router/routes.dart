@@ -17,10 +17,10 @@ import 'package:hiddify/features/settings/about/about_page.dart';
 import 'package:hiddify/features/settings/overview/settings_overview_page.dart';
 import 'package:hiddify/utils/utils.dart';
 
-import 'package:hiddify/features/login/widget/login_page.dart'; 
-import 'package:hiddify/features/login/widget/register_page.dart';
-import 'package:hiddify/features/purchase/purchase_page.dart'; 
-import 'package:hiddify/features/login/widget/forgot_passwd.dart';
+import 'package:hiddify/features/v2board/widget/login_page.dart'; 
+import 'package:hiddify/features/v2board/widget/register_page.dart';
+import 'package:hiddify/features/v2board/widget/purchase_page.dart'; 
+import 'package:hiddify/features/v2board/widget/forgot_passwd_page.dart';
 part 'routes.g.dart';
 
 GlobalKey<NavigatorState>? _dynamicRootKey = useMobileRouter ? rootNavigatorKey : null;

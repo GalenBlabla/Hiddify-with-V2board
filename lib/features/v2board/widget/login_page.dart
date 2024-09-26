@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'auth_provider.dart';
-import 'package:hiddify/storage/token_storage.dart';
+import '../service/auth_provider.dart';
+import 'package:hiddify/features/v2board/storage/token_storage.dart';
 import 'package:hiddify/features/profile/notifier/profile_notifier.dart';
 import 'package:hiddify/features/profile/notifier/active_profile_notifier.dart';
-import 'package:hiddify/features/profile/notifier/profiles_update_notifier.dart';
 import 'package:hiddify/features/profile/data/profile_data_providers.dart';
 import 'package:hiddify/features/profile/model/profile_entity.dart';
-import 'package:hiddify/features/profile/overview/profiles_overview_notifier.dart';
+
+import 'package:hiddify/features/v2board/service/auth_service.dart'; // 导入 AuthService
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -41,46 +39,27 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final password = _passwordController.text;
 
     try {
-      // 清理之前的订阅信息
-      await _clearSubscriptionData();
-      final url =
-          Uri.parse("https://tomato.galen.life/api/v1/passport/auth/login");
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({"email": email, "password": password}),
-      );
+      // 使用 AuthService 进行登录请求
+      final result = await AuthService().login(email, password);
 
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        if (data["status"] == "success") {
-          final authData = data["data"]["auth_data"];
-          print("Login successful");
-          print("Access Token: $authData");
+      if (result["status"] == "success") {
+        final authData = result["data"]["auth_data"];
+        print("Login successful");
+        print("Access Token: $authData");
 
-          // 存储令牌
-          await storeToken(authData);
-          // 添加订阅信息并更新活动配置文件
-          await _addSubscription(authData);
+        // 存储令牌
+        await storeToken(authData);
+        // 添加订阅信息并更新活动配置文件
+        await _addSubscription(authData);
 
-          // 更新 authProvider 状态为已登录
-          ref.read(authProvider.notifier).state = true;
+        // 更新 authProvider 状态为已登录
+        ref.read(authProvider.notifier).state = true;
 
-          // 打印日志，确认执行到这里
-          print("Navigation to HomePage");
-
-          // 跳转到首页
-          if (mounted) {
-            print("Trying to navigate to HomePage");
-            context.go('/');
-            print("Navigated to HomePage");
-          }
-        } else {
-          _showErrorSnackbar(context, data["message"]);
+        if (mounted) {
+          context.go('/');
         }
       } else {
-        _showErrorSnackbar(
-            context, "An error occurred: ${response.statusCode}");
+        _showErrorSnackbar(context, result["message"]);
       }
     } catch (e) {
       print(e);
@@ -94,16 +73,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   Future<void> _addSubscription(String accessToken) async {
     try {
-      // 获取订阅链接
-      final subscriptionLink = await _getSubscriptionLink(accessToken);
+      final subscriptionLink =
+          await AuthService().getSubscriptionLink(accessToken);
       if (subscriptionLink == null) return;
 
       print("Adding subscription link: $subscriptionLink");
 
-      // 调用 AddProfile 提供者来添加订阅链接
       await ref.read(addProfileProvider.notifier).add(subscriptionLink);
 
-      // 获取新添加的配置文件并设置为活动配置文件
       final profileRepository =
           await ref.read(profileRepositoryProvider.future);
       final profilesResult = await profileRepository.watchAll().first;
@@ -128,52 +105,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     }
   }
 
-  Future<String?> _getSubscriptionLink(String accessToken) async {
-    final url = Uri.parse("https://tomato.galen.life/api/v1/user/getSubscribe");
-    final response = await http.get(
-      url,
-      headers: {'Authorization': accessToken},
-    );
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      if (data["status"] == "success") {
-        print("Subscription link retrieved successfully");
-        return data["data"]["subscribe_url"];
-      } else {
-        print("Failed to retrieve subscription link: ${data["message"]}");
-        return null;
-      }
-    } else {
-      print("Failed to retrieve subscription link: ${response.statusCode}");
-      return null;
-    }
-  }
-
-  Future<void> _clearSubscriptionData() async {
-    // 获取 ProfileRepository 的实例
-    final profileRepository = ref.read(profileRepositoryProvider).requireValue;
-
-    // 获取所有订阅信息
-    final profilesResult = await profileRepository.watchAll().first;
-
-    // 遍历所有订阅并删除
-    profilesResult.fold(
-      (failure) {
-        // 处理获取订阅失败的情况
-        print('Error retrieving profiles: $failure');
-      },
-      (profiles) async {
-        for (final profile in profiles) {
-          await profileRepository.deleteById(profile.id).run();
-        }
-      },
-    );
-
-    // 清空活动配置文件
-    ref.read(activeProfileProvider.notifier).update((state) => null);
-  }
-
   void _showErrorSnackbar(BuildContext context, String message) {
     final snackBar = SnackBar(
       content: Text(message),
@@ -183,7 +114,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: LayoutBuilder(
@@ -216,7 +147,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).primaryColor,
                         ),
-                        textAlign: TextAlign.center, // 文字居中
+                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
@@ -258,7 +189,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         const CircularProgressIndicator()
                       else
                         SizedBox(
-                          width: constraints.maxWidth > 600 ? 150 : constraints.maxWidth * 0.5, // 缩减 Login 按钮宽度
+                          width: constraints.maxWidth > 600
+                              ? 150
+                              : constraints.maxWidth * 0.5,
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
@@ -285,7 +218,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           ),
                         ),
                       const SizedBox(height: 20),
-                      // Forgot Password? 和 Register 按钮水平对齐在一行
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -303,7 +235,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           ),
                           TextButton(
                             onPressed: () {
-                              context.go('/register'); // 跳转到注册页面
+                              context.go('/register');
                             },
                             child: Text(
                               'Register',
