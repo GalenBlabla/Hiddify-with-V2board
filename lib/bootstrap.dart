@@ -27,9 +27,9 @@ import 'package:hiddify/singbox/service/singbox_service_provider.dart';
 import 'package:hiddify/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:hiddify/features/v2board/service/auth_provider.dart';
-import 'package:hiddify/features/v2board/service/auth_service.dart';
-import 'package:hiddify/features/v2board/storage/token_storage.dart';
+import 'package:hiddify/features/panel/v2board/service/auth_provider.dart';
+import 'package:hiddify/features/panel/v2board/service/auth_service.dart';
+import 'package:hiddify/features/panel/v2board/storage/token_storage.dart';
 Future<void> lazyBootstrap(
   WidgetsBinding widgetsBinding,
   Environment env,

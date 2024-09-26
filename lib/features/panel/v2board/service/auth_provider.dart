@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hiddify/features/v2board/storage/token_storage.dart';
+import 'package:hiddify/features/panel/v2board/storage/token_storage.dart';
 
 final authProvider = StateProvider<bool>((ref) {
   // 初始为未登录状态

@@ -3,12 +3,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hiddify/core/localization/translations.dart'; // 引入本地化
 import '../service/auth_provider.dart';
-import 'package:hiddify/features/v2board/storage/token_storage.dart';
+import 'package:hiddify/features/panel/v2board/storage/token_storage.dart';
 import 'package:hiddify/features/profile/notifier/profile_notifier.dart';
 import 'package:hiddify/features/profile/notifier/active_profile_notifier.dart';
 import 'package:hiddify/features/profile/data/profile_data_providers.dart';
 import 'package:hiddify/features/profile/model/profile_entity.dart';
-import 'package:hiddify/features/v2board/service/auth_service.dart'; // 导入 AuthService
+import 'package:hiddify/features/panel/v2board/service/auth_service.dart'; // 导入 AuthService
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -142,15 +142,34 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         color: Colors.blueAccent,
                       ),
                       const SizedBox(height: 20),
-                      Text(
-                        t.login.welcome, // 使用本地化文本
-                        style: TextStyle(
-                          fontSize: constraints.maxWidth > 600 ? 32 : 24,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: t.login.welcome, // 第一段本地化文本
+                              style: TextStyle(
+                                fontSize: constraints.maxWidth > 600 ? 32 : 24,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            TextSpan(
+                              text: ' ', // 添加一个空格来分隔两段文字
+                            ),
+                            TextSpan(
+                              text: t.general.appTitle, // 第二段本地化文本
+                              style: TextStyle(
+                                fontSize: constraints.maxWidth > 600 ? 32 : 24,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ],
+                          
                         ),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.center, // 设置文本居中
                       ),
+
                       const SizedBox(height: 20),
                       TextFormField(
                         controller: _usernameController,

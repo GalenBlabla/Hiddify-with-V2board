@@ -7,7 +7,7 @@ import 'package:hiddify/utils/utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-import 'package:hiddify/features/v2board/service/auth_provider.dart'; // 导入新的登录页面
+import 'package:hiddify/features/panel/v2board/service/auth_provider.dart'; // 导入新的登录页面
 
 part 'app_router.g.dart';
 

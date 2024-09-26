@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:hiddify/features/v2board/models/plan_model.dart';
-import 'package:hiddify/features/v2board/storage/token_storage.dart';
-import 'package:hiddify/features/v2board/service/auth_service.dart';
+import 'package:hiddify/features/panel/v2board/models/plan_model.dart';
+import 'package:hiddify/features/panel/v2board/storage/token_storage.dart';
+import 'package:hiddify/features/panel/v2board/service/auth_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart'; // 引入 Riverpod 库
 import 'package:hiddify/core/localization/translations.dart'; // 引入本地化支持
 

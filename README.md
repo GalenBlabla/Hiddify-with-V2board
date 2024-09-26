@@ -73,19 +73,32 @@ flutter run
 
 1. **替换面板域名**：
 
-   搜索项目中所有 `https://tomato.galen.life` 的地方，并替换为你的面板域名。例如，如果你的面板域名是 `https://example.com`，你可以用以下命令快速替换：
+   打开```lib/features/panel/v2board/service/auth_service.dart``` 替换_baseUrl为目标面板地址。
+   ~~搜索项目中所有 `https://tomato.galen.life` 的地方，并替换为你的面板域名。例如，如果你的面板域名是 `https://example.com`，你可以用以下命令快速替换：~~
 
-   ```bash
-   grep -rl 'https://tomato.galen.life' lib/ | xargs sed -i 's#https://tomato.galen.life#https://example.com#g'
-   ```
+   ~~grep -rl 'https://tomato.galen.life' lib/ | xargs sed -i 's#https://tomato.galen.life#https://example.com#g'~~
 
 2. **替换机场名字**：
 
-   搜索项目中所有 `Hiddify VPN` 的地方，并替换为你的机场名称。例如，如果你的机场名字是 `SuperVPN`，可以用以下命令替换：
+   应用内，找到语言包```assets/translations/strings_zh-CN.i18n.json```（中文举例），修改第三行```"appTitle": "V2Hiddify"```。V2Hiddify就是程序应用内的名字以及欢迎界面的名字。
+   应用外，也就是应用本身的名字，需要在对应平台文件中修改，安卓示例：
+    #### 修改 `AndroidManifest.xml`
 
-   ```bash
-   grep -rl 'Hiddify VPN' lib/ | xargs sed -i 's/Hiddify VPN/SuperVPN/g'
-   ```
+    在 `android/app/src/main/AndroidManifest.xml` 文件中，找到 `<application>` 标签中的 `android:label` 属性并修改它：
+
+    ```xml
+    <application
+        android:name=".Application"
+        android:banner="@mipmap/ic_banner"
+        android:icon="@mipmap/ic_launcher"
+        android:label="V2Hiddify"
+    ```
+   你仍然可以使用全局替换的方式更改你看到的目标文字，虽然这样可能会带来未知的错误。
+
+   ~~搜索项目中所有 `Hiddify VPN` 的地方，并替换为你的机场名称。例如，如果你的机场名字是 `SuperVPN`，可以用以下命令替换：~~
+
+
+   ~~grep -rl 'Hiddify VPN' lib/ | xargs sed -i 's/Hiddify VPN/SuperVPN/g'~~
 
 ### 5. 打包应用
 

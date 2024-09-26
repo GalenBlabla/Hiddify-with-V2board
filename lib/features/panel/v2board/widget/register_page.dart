@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hiddify/features/v2board/service/auth_service.dart';
+import 'package:hiddify/features/panel/v2board/service/auth_service.dart';
 import 'package:hiddify/core/localization/translations.dart'; // 导入本地化支持
 
-class ForgetPasswordPage extends ConsumerStatefulWidget {
-  const ForgetPasswordPage({Key? key}) : super(key: key);
+class RegisterPage extends ConsumerStatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _ForgetPasswordPageState createState() => _ForgetPasswordPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
+class _RegisterPageState extends ConsumerState<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _inviteCodeController = TextEditingController();
   final _emailCodeController = TextEditingController();
   bool _isLoading = false;
   bool _isCountingDown = false;
@@ -25,6 +26,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _inviteCodeController.dispose();
     _emailCodeController.dispose();
     super.dispose();
   }
@@ -38,10 +40,10 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
   }
 
   Future<void> _sendVerificationCode() async {
-    final t = ref.watch(translationsProvider); // 获取翻译实例
+    final t = ref.watch(translationsProvider); // 获取本地化对象
     final email = _emailController.text.trim();
     if (email.isEmpty) {
-      _showSnackbar(context, t.forgetPassword.emailEmptyError);
+      _showSnackbar(context, t.register.emailEmptyError); // 使用本地化错误信息
       return;
     }
 
@@ -51,15 +53,16 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
     });
 
     try {
-      final result = await AuthService().sendVerificationCode(email);
+      final response = await AuthService().sendVerificationCode(email);
 
-      if (result["status"] == "success") {
-        _showSnackbar(context, "${t.forgetPassword.codeSentSuccess} $email");
+      if (response["status"] == "success") {
+        _showSnackbar(
+            context, "${t.register.codeSentSuccess} $email"); // 使用本地化信息
       } else {
-        _showSnackbar(context, result["message"]);
+        _showSnackbar(context, response["message"]);
       }
     } catch (e) {
-      _showSnackbar(context, "${t.forgetPassword.errorOccurred} $e");
+      _showSnackbar(context, "${t.register.errorOccurred} $e"); // 使用本地化错误信息
     }
 
     // 倒计时逻辑
@@ -75,8 +78,8 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
     });
   }
 
-  Future<void> _resetPassword(BuildContext context) async {
-    final t = ref.watch(translationsProvider); // 获取翻译实例
+  Future<void> _register(BuildContext context) async {
+    final t = ref.watch(translationsProvider); // 获取本地化对象
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -87,21 +90,21 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
 
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
+    final inviteCode = _inviteCodeController.text.trim();
     final emailCode = _emailCodeController.text.trim();
 
     try {
       final result =
-          await AuthService().resetPassword(email, password, emailCode);
+          await AuthService().register(email, password, inviteCode, emailCode);
 
       if (result["status"] == "success") {
-        _showSnackbar(context, t.forgetPassword.resetSuccess);
-        context.go('/login');
+        _showSnackbar(context, t.register.registrationSuccess); // 使用本地化信息
+        context.go('/login'); // 假设登录页面的路由为 /login
       } else {
-        _showSnackbar(
-            context, result["message"] ?? t.forgetPassword.passwordResetError);
+        _showSnackbar(context, result["message"]);
       }
     } catch (e) {
-      _showSnackbar(context, "${t.forgetPassword.errorOccurred} $e");
+      _showSnackbar(context, "${t.register.errorOccurred} $e"); // 使用本地化错误信息
     } finally {
       setState(() {
         _isLoading = false;
@@ -111,11 +114,10 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final t = ref.watch(translationsProvider); // 获取翻译实例
-
+    final t = ref.watch(translationsProvider); // 获取本地化对象
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.forgetPassword.pageTitle), // 使用本地化的页面标题
+        title: Text(t.register.pageTitle), // 使用本地化的页面标题
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -132,22 +134,26 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                    labelText: t.forgetPassword.email), // 使用本地化标签
+                  labelText: t.register.email, // 使用本地化标签
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return t.forgetPassword.emailEmptyError; // 使用本地化错误信息
+                    return t.register.emailEmptyError; // 使用本地化错误信息
                   }
                   return null;
                 },
               ),
               TextFormField(
                 controller: _passwordController,
+                obscureText: _obscurePassword,
                 decoration: InputDecoration(
-                  labelText: t.forgetPassword.newPassword, // 使用本地化标签
+                  labelText: t.register.password, // 使用本地化标签
                   suffixIcon: IconButton(
-                    icon: Icon(_obscurePassword
-                        ? Icons.visibility
-                        : Icons.visibility_off),
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
                     onPressed: () {
                       setState(() {
                         _obscurePassword = !_obscurePassword;
@@ -155,39 +161,43 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
                     },
                   ),
                 ),
-                obscureText: _obscurePassword,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return t.forgetPassword.passwordEmptyError; // 使用本地化错误信息
+                    return t.register.passwordEmptyError; // 使用本地化错误信息
                   }
                   return null;
                 },
               ),
               TextFormField(
+                controller: _inviteCodeController,
+                decoration: InputDecoration(
+                  labelText: t.register.inviteCode, // 使用本地化标签
+                ),
+              ),
+              TextFormField(
                 controller: _emailCodeController,
                 decoration: InputDecoration(
-                  labelText: t.forgetPassword.verificationCode, // 使用本地化标签
+                  labelText: t.register.verificationCode, // 使用本地化标签
                   suffixIcon: _isCountingDown
                       ? Text('$_countdownTime s')
                       : TextButton(
                           onPressed: _sendVerificationCode,
-                          child: Text(t.forgetPassword.sendCode), // 使用本地化文本
+                          child: Text(t.register.sendCode), // 使用本地化文本
                         ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return t
-                        .forgetPassword.verificationCodeEmptyError; // 使用本地化错误信息
+                    return t.register.verificationCodeEmptyError; // 使用本地化错误信息
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _isLoading ? null : () => _resetPassword(context),
+                onPressed: _isLoading ? null : () => _register(context),
                 child: _isLoading
                     ? const CircularProgressIndicator()
-                    : Text(t.forgetPassword.resetPassword), // 使用本地化文本
+                    : Text(t.register.register), // 使用本地化文本
               ),
             ],
           ),

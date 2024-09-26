@@ -50,7 +50,7 @@
     "buttonText": "登出"
   },
   "login": {
-    "welcome": "欢迎使用 V2Hiddify",
+    "welcome": "欢迎使用",
     "username": "用户名",
     "password": "密码",
     "loginButton": "登录",

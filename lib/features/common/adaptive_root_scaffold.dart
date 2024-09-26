@@ -7,7 +7,7 @@ import 'package:hiddify/features/stats/widget/side_bar_stats_overview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 
-import 'package:hiddify/features/v2board/service/auth_provider.dart'; // 确保引入 auth_provider 包
+import 'package:hiddify/features/panel/v2board/service/auth_provider.dart'; // 确保引入 auth_provider 包
 
 abstract interface class RootScaffold {
   static final stateKey = GlobalKey<ScaffoldState>();

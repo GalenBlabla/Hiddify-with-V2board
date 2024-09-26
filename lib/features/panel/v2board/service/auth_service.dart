@@ -1,5 +1,5 @@
 // 文件路径: lib/features/login/service/auth_service.dart
-import 'package:hiddify/features/v2board/models/plan_model.dart';
+import 'package:hiddify/features/panel/v2board/models/plan_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
