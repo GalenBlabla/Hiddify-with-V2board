@@ -69,19 +69,19 @@ flutter run
 
 ### 4. 替换面板域名和机场名字
 
-在 `lib` 目录下进行以下替换操作：
+在项目目录下进行以下替换操作：
 
 1. **替换面板域名**：
 
-   打开```lib/features/panel/v2board/service/auth_service.dart``` 替换_baseUrl为目标面板地址。
+   打开```lib/features/panel/v2board/service/auth_service.dart``` 替换_baseUrl为目标面板地址。  
    ~~搜索项目中所有 `https://tomato.galen.life` 的地方，并替换为你的面板域名。例如，如果你的面板域名是 `https://example.com`，你可以用以下命令快速替换：~~
 
    ~~grep -rl 'https://tomato.galen.life' lib/ | xargs sed -i 's#https://tomato.galen.life#https://example.com#g'~~
 
 2. **替换机场名字**：
 
-   应用内，找到语言包```assets/translations/strings_zh-CN.i18n.json```（中文举例），修改第三行```"appTitle": "V2Hiddify"```。V2Hiddify就是程序应用内的名字以及欢迎界面的名字。
-   应用外，也就是应用本身的名字，需要在对应平台文件中修改，安卓示例：
+   应用内，找到语言包```assets/translations/strings_zh-CN.i18n.json```（中文举例），修改第三行```"appTitle": "V2Hiddify"```。V2Hiddify就是程序应用内的名字以及欢迎界面的名字。  
+   应用外，也就是应用本身的名字，需要在对应平台文件中修改，安卓示例：  
     #### 修改 `AndroidManifest.xml`
 
     在 `android/app/src/main/AndroidManifest.xml` 文件中，找到 `<application>` 标签中的 `android:label` 属性并修改它：
