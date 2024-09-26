@@ -108,8 +108,15 @@ class UserInfoPage extends ConsumerWidget {
       _showSnackbar(context, "${t.inviteCode.inviteCodeGenerateError}: $e");
     }
   }
-  
-  @override
+  void _showSnackbar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: const Duration(seconds: 3),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+@override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = ref.watch(translationsProvider);
 
@@ -150,147 +157,30 @@ class UserInfoPage extends ConsumerWidget {
                     Text('${t.userInfo.fetchUserInfoError} ${snapshot.error}'));
           } else if (snapshot.hasData && snapshot.data != null) {
             final userInfo = snapshot.data!;
-            return ListView(
+            return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
-              children: [
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(userInfo.avatarUrl),
-                  ),
-                  title: Text(userInfo.email),
-                  subtitle: Text('UUID: ${userInfo.uuid}'),
-                ),
-                const Divider(),
-                ListTile(
-                  title: Text(
-                      '${t.userInfo.balance} (${t.userInfo.onlyForConsumption})'),
-                  subtitle: Text('${userInfo.balance} ${t.userInfo.currency}'),
-                ),
-                ListTile(
-                  title: Text(t.userInfo.commissionBalance),
-                  subtitle: Text(
-                      '${userInfo.commissionBalance} ${t.userInfo.currency}'),
-                ),
-                ListTile(
-                  title: Text(t.userInfo.transferEnable),
-                  subtitle: Text(
-                      '${(userInfo.transferEnable / (1024 * 1024 * 1024)).toStringAsFixed(2)} GB'),
-                ),
-                ListTile(
-                  title: Text(t.userInfo.plan),
-                  subtitle: Text(userInfo.planId.toString()),
-                ),
-                if (userInfo.expiredAt != null)
-                  ListTile(
-                    title: Text(t.userInfo.expiredAt),
-                    subtitle: Text(DateTime.fromMillisecondsSinceEpoch(
-                            userInfo.expiredAt! * 1000)
-                        .toLocal()
-                        .toString()),
-                  ),
-                ListTile(
-                  title: Text(t.userInfo.lastLogin),
-                  subtitle: Text(DateTime.fromMillisecondsSinceEpoch(
-                          userInfo.lastLoginAt * 1000)
-                      .toLocal()
-                      .toString()),
-                ),
-                ListTile(
-                  title: Text(t.userInfo.accountStatus),
-                  subtitle: Text(
-                      userInfo.banned ? t.userInfo.banned : t.userInfo.active),
-                ),
-                const Divider(), // 分隔符
-                // 邀请码列表标题
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        t.inviteCode.inviteCodeListTitle, // 邀请码列表标题
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          // 调用生成邀请码的逻辑
-                          _generateInviteCode(context, ref);
-                        },
-                        icon: const Icon(FluentIcons.add_24_filled), // 图标
-                        label: Text(t.inviteCode.generateInviteCode), // 本地化按钮文本
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // 显示邀请码列表
-                FutureBuilder<List<InviteCode>>(
-                  future: getToken().then((token) {
-                    if (token == null) {
-                      _showSnackbar(context, t.userInfo.noAccessToken);
-                      return [];
-                    }
-                    return _fetchInviteCodes(token);
-                  }),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(
-                          child: Text(
-                              '${t.inviteCode.fetchInviteCodesError} ${snapshot.error}'));
-                    } else if (snapshot.hasData && snapshot.data != null) {
-                      final inviteCodes = snapshot.data!;
-                      if (inviteCodes.isEmpty) {
-                        return Center(child: Text(t.inviteCode.noInviteCodes));
-                      }
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: inviteCodes.length,
-                        itemBuilder: (context, index) {
-                          final inviteCode = inviteCodes[index];
-                          final fullInviteLink =
-                              AuthService.getInviteLink(inviteCode.code);
-                          return ListTile(
-                            title: Text(inviteCode.code),
-                            trailing: IconButton(
-                              icon: const Icon(FluentIcons.copy_24_regular),
-                              onPressed: () {
-                                Clipboard.setData(ClipboardData(
-                                    text: fullInviteLink)); // 复制完整链接到剪贴板
-                                _showSnackbar(context,
-                                    '${t.inviteCode.copiedInviteCode} $fullInviteLink'); // 提示已复制链接
-                              },
-                              tooltip: t.inviteCode.copyToClipboard,
-                            ),
-                          );
-                        },
-                      );
-                    } else {
-                      return Center(child: Text(t.inviteCode.noInviteCodes));
-                    }
-                  },
-                ),
-              
-                const Divider(), // 分隔符
-                // 重置订阅按钮
-                ElevatedButton.icon(
-                  onPressed: () => _resetSubscription(context, ref),
-                  icon: const Icon(FluentIcons.arrow_clockwise_24_filled),
-                  label: Text(t.userInfo.resetSubscription),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
-                    backgroundColor: Colors.blue,
-                  ),
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 用户信息卡片
+                  _buildUserInfoCard(userInfo, t),
 
-              ],
+                  const SizedBox(height: 16), // 分隔
+
+                  // 账户余额信息卡片
+                  _buildAccountBalanceCard(userInfo, t),
+
+                  const SizedBox(height: 16), // 分隔
+
+                  // 邀请码列表卡片
+                  _buildInviteCodeSection(context, ref, t),
+
+                  const SizedBox(height: 16), // 分隔
+
+                  // 重置订阅按钮
+                  _buildResetSubscriptionButton(context, ref, t),
+                ],
+              ),
             );
           } else {
             return Center(child: Text(t.userInfo.noData));
@@ -300,11 +190,178 @@ class UserInfoPage extends ConsumerWidget {
     );
   }
 
-  void _showSnackbar(BuildContext context, String message) {
-    final snackBar = SnackBar(
-      content: Text(message),
-      duration: const Duration(seconds: 3),
+// 构建分区标题
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Text(
+        title,
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
     );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
+// 构建用户信息卡片
+  Widget _buildUserInfoCard(UserInfo userInfo, Translations t) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8), // 卡片间距
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(userInfo.avatarUrl),
+        ),
+        title: Text(userInfo.email), // 用户邮箱
+        subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, // 水平排列并两端对齐
+          children: [
+            if (userInfo.planId != null) // 如果套餐ID不为空
+              Expanded(
+                child: Text(
+                  '${t.userInfo.plan}: ${userInfo.planId}', // 套餐信息
+                  style: const TextStyle(fontSize: 12), // 字体缩小
+                ),
+              ),
+            Expanded(
+              child: Text(
+                '${t.userInfo.accountStatus}: ${userInfo.banned ? t.userInfo.banned : t.userInfo.active}', // 账户状态
+                style: const TextStyle(fontSize: 12), // 字体缩小
+                textAlign: TextAlign.end, // 文本右对齐
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+// 构建账户余额信息卡片
+  Widget _buildAccountBalanceCard(UserInfo userInfo, Translations t) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8), // 卡片间距
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 4, // 阴影效果
+      child: Column(
+        children: [
+          ListTile(
+            leading: const Icon(FluentIcons.wallet_24_filled), // 图标
+            title: Text(
+                '${t.userInfo.balance} (${t.userInfo.onlyForConsumption})'),
+            subtitle: Text(
+                '${(userInfo.balance / 100).toStringAsFixed(2)} ${t.userInfo.currency}'), // 余额除以100并保留两位小数
+          ),
+          Divider(height: 1), // 分隔线
+          ListTile(
+            leading: const Icon(FluentIcons.gift_card_money_24_filled), // 图标
+            title: Text(t.userInfo.commissionBalance),
+            subtitle: Text(
+                '${(userInfo.commissionBalance / 100).toStringAsFixed(2)} ${t.userInfo.currency}'), // 佣金余额除以100并保留两位小数
+          ),
+        ],
+      ),
+    );
+  }
+
+// 构建邀请码列表部分
+  Widget _buildInviteCodeSection(
+      BuildContext context, WidgetRef ref, Translations t) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8), // 卡片间距
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 4, // 阴影效果
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  t.inviteCode.inviteCodeListTitle,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // 调用生成邀请码的逻辑
+                    _generateInviteCode(context, ref);
+                  },
+                  icon: const Icon(FluentIcons.add_24_filled), // 图标
+                  label: Text(t.inviteCode.generateInviteCode), // 本地化按钮文本
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                  ),
+                ),
+              ],
+            ),
+            const Divider(), // 分隔符
+            FutureBuilder<List<InviteCode>>(
+              future: getToken().then((token) {
+                if (token == null) {
+                  _showSnackbar(context, t.userInfo.noAccessToken);
+                  return [];
+                }
+                return _fetchInviteCodes(token);
+              }),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(
+                      child: Text(
+                          '${t.inviteCode.fetchInviteCodesError} ${snapshot.error}'));
+                } else if (snapshot.hasData && snapshot.data != null) {
+                  final inviteCodes = snapshot.data!;
+                  if (inviteCodes.isEmpty) {
+                    return Center(child: Text(t.inviteCode.noInviteCodes));
+                  }
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: inviteCodes.length,
+                    itemBuilder: (context, index) {
+                      final inviteCode = inviteCodes[index];
+                      final fullInviteLink =
+                          AuthService.getInviteLink(inviteCode.code);
+                      return ListTile(
+                        title: Text(inviteCode.code),
+                        trailing: IconButton(
+                          icon: const Icon(FluentIcons.copy_24_regular),
+                          onPressed: () {
+                            Clipboard.setData(ClipboardData(
+                                text: fullInviteLink)); // 复制完整链接到剪贴板
+                            _showSnackbar(context,
+                                '${t.inviteCode.copiedInviteCode} $fullInviteLink'); // 提示已复制链接
+                          },
+                          tooltip: t.inviteCode.copyToClipboard,
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  return Center(child: Text(t.inviteCode.noInviteCodes));
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+// 构建重置订阅按钮
+  Widget _buildResetSubscriptionButton(
+      BuildContext context, WidgetRef ref, Translations t) {
+    return Center(
+      child: ElevatedButton.icon(
+        onPressed: () => _resetSubscription(context, ref),
+        icon: const Icon(FluentIcons.arrow_clockwise_24_filled),
+        label: Text(t.userInfo.resetSubscription),
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          backgroundColor: Colors.blue,
+        ),
+      ),
+    );
+  }
+
 }

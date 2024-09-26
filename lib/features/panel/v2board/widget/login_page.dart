@@ -29,7 +29,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     _passwordController.dispose();
     super.dispose();
   }
-
   Future<void> _login(BuildContext context) async {
     setState(() {
       _isLoading = true;
@@ -42,15 +41,37 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       // 使用 AuthService 进行登录请求
       final result = await AuthService().login(email, password);
 
-      if (result["status"] == "success") {
-        final authData = result["data"]["auth_data"];
+      // 初始化要查找的字段
+      String? authData;
+      String? token;
+
+      // 递归遍历 JSON 结构
+      void _findAuthData(Map<String, dynamic> json) {
+        json.forEach((key, value) {
+          if (key == 'auth_data' && value is String) {
+            authData = value;
+          }
+          if (key == 'token' && value is String) {
+            token = value;
+          }
+          if (value is Map<String, dynamic>) {
+            _findAuthData(value); // 如果值是一个 Map，则递归调用
+          }
+        });
+      }
+
+      // 开始遍历查找
+      _findAuthData(result);
+
+      if (authData != null && token != null) {
         print("Login successful");
         print("Access Token: $authData");
 
         // 存储令牌
-        await storeToken(authData);
+        await storeToken(authData!);
+
         // 添加订阅信息并更新活动配置文件
-        await _addSubscription(authData);
+        await _addSubscription(authData!);
 
         // 更新 authProvider 状态为已登录
         ref.read(authProvider.notifier).state = true;
@@ -59,7 +80,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           context.go('/');
         }
       } else {
-        _showErrorSnackbar(context, result["message"]);
+        // 如果 authData 或 token 为空，则显示错误信息
+        _showErrorSnackbar(
+            context, "Login failed. Invalid authentication data.");
       }
     } catch (e) {
       print(e);
