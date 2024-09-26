@@ -80,6 +80,25 @@
     "generateInviteCode": "生成邀请码" ,
     "inviteCodeGenerateError":"生成邀请码失败"
   },
+  "transferDialog": {
+    "transferTitle": "推广佣金划转至余额",
+    "transferHint": "划转后的余额仅用于消费使用。",
+    "currentBalance": "当前推广佣金余额",
+    "transferAmount": "划转金额",
+    "transferSuccess": "佣金划转成功！",
+    "transferError": "佣金划转失败",
+    "withdrawTitle": "提现推广佣金",
+    "withdrawHint": "请输入要提现的金额。",
+    "withdrawAmount": "提现金额",
+    "withdrawSuccess": "提现申请成功！",
+    "withdrawError": "提现申请失败",
+    "transfer": "划转",
+    "withdraw": "提现"
+  },
+  "ensure": {
+    "confirm": "确认",
+    "cancel": "取消"
+  },
   "logout": {
     "buttonText": "登出",
     "confirmationMessage": "是否确定登出当前账号？",

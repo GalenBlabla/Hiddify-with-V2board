@@ -47,6 +47,18 @@ class AuthService {
       throw Exception("Request to $endpoint failed: ${response.statusCode}");
     }
   }
+    // 划转佣金到余额的方法
+  Future<bool> transferCommission(
+      String accessToken, int transferAmount) async {
+    final response = await _postRequest(
+      '/api/v1/user/transfer',
+      {'transfer_amount': transferAmount},
+      headers: {'Authorization': accessToken}, // 需要用户的认证令牌
+    );
+
+    return response['status'] == 'success';
+  }
+
     // 生成邀请码的方法
   Future<bool> generateInviteCode(String accessToken) async {
     final url = Uri.parse("$_baseUrl/api/v1/user/invite/save");

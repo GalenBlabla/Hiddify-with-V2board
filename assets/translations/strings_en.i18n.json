@@ -80,6 +80,25 @@
     "generateInviteCode": "Generate Invite Code",
     "inviteCodeGenerateError": "Failed To Generate Invite Code"
   },
+  "transferDialog": {
+    "transferTitle": "Transfer Promotion Commission to Balance",
+    "transferHint": "Transferred balance can only be used for consumption.",
+    "currentBalance": "Current Promotion Commission Balance",
+    "transferAmount": "Transfer Amount",
+    "transferSuccess": "Commission transferred successfully!",
+    "transferError": "Commission transfer failed",
+    "withdrawTitle": "Withdraw Promotion Commission",
+    "withdrawHint": "Please enter the amount to withdraw.",
+    "withdrawAmount": "Withdrawal Amount",
+    "withdrawSuccess": "Withdrawal request successful!",
+    "withdrawError": "Withdrawal request failed",
+    "transfer": "Transfer",
+    "withdraw": "Withdraw"
+  },
+  "ensure": {
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
   "logout": {
     "buttonText": "Logout",
     "confirmationMessage": "Are you sure you want to log out of your account?",

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/services.dart'; // 用于复制到剪贴板
@@ -115,6 +117,106 @@ class UserInfoPage extends ConsumerWidget {
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+// 划转佣金的方法
+  Future<void> _transferCommission(
+      BuildContext context, WidgetRef ref, int transferAmount) async {
+    final t = ref.read(translationsProvider);
+    final token = await getToken();
+    if (token == null) {
+      _showSnackbar(context, t.userInfo.noAccessToken);
+      return;
+    }
+
+    try {
+      final success =
+          await AuthService().transferCommission(token, transferAmount);
+      if (success) {
+        _showSnackbar(context, t.transferDialog.transferSuccess); // 提示划转成功
+        ref.refresh(userInfoProvider); // 刷新用户信息
+      } else {
+        _showSnackbar(context, t.transferDialog.transferError); // 提示划转失败
+      }
+    } catch (e) {
+      _showSnackbar(context, "${t.transferDialog.transferError}: $e");
+    }
+  }
+void _showWithdrawDialog(
+      BuildContext context, WidgetRef ref, double commissionBalance) {
+    final t = ref.watch(translationsProvider); // 获取本地化对象
+    final _amountController = TextEditingController(); // 用于接收输入的金额
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(t.transferDialog.withdrawTitle), // 弹窗标题
+          content: Column(
+            mainAxisSize: MainAxisSize.min, // 设置列宽度最小化
+            children: [
+              Text(t.transferDialog.withdrawHint), // 提示信息
+              const SizedBox(height: 16), // 间隔
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('${t.transferDialog.currentBalance}:'),
+                  Text(
+                    '${(commissionBalance / 100).toStringAsFixed(2)} ${t.userInfo.currency}', // 当前推广佣金余额
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16), // 间隔
+              TextField(
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: t.transferDialog.withdrawAmount, // 输入金额标签
+                  border: const OutlineInputBorder(), // 边框
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 关闭弹窗
+              },
+              child: Text(t.ensure.cancel), // 取消按钮文本
+            ),
+            TextButton(
+              onPressed: () async {
+                final inputAmount = int.tryParse(_amountController.text);
+                if (inputAmount != null && inputAmount > 0) {
+                  final transferAmount = inputAmount * 100; // 将输入金额转换为表单所需倍数
+                  final token = await getToken();
+                  // 发送划转请求
+                  final success = await AuthService().transferCommission(token!,
+                    json.encode({
+                      "transfer_amount": transferAmount,
+                    }) as int,
+                  );
+                  if (success) {
+                    _showSnackbar(
+                        context, t.transferDialog.transferSuccess); // 显示成功消息
+                    ref.refresh(userInfoProvider); // 刷新用户信息
+                  } else {
+                    _showSnackbar(
+                        context, t.transferDialog.transferError); // 显示失败消息
+                  }
+                } else {
+                  _showSnackbar(
+                      context, t.transferDialog.withdrawError); // 无效输入提示
+                }
+
+                Navigator.of(context).pop(); // 关闭弹窗
+              },
+              child: Text(t.ensure.confirm), // 确认按钮文本
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -168,7 +270,7 @@ class UserInfoPage extends ConsumerWidget {
                   const SizedBox(height: 16), // 分隔
 
                   // 账户余额信息卡片
-                  _buildAccountBalanceCard(userInfo, t),
+                  _buildAccountBalanceCard(userInfo, t, context, ref),
 
                   const SizedBox(height: 16), // 分隔
 
@@ -234,7 +336,8 @@ class UserInfoPage extends ConsumerWidget {
   }
 
 // 构建账户余额信息卡片
-  Widget _buildAccountBalanceCard(UserInfo userInfo, Translations t) {
+  Widget _buildAccountBalanceCard(
+      UserInfo userInfo, Translations t, BuildContext context, WidgetRef ref) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8), // 卡片间距
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -254,9 +357,72 @@ class UserInfoPage extends ConsumerWidget {
             title: Text(t.userInfo.commissionBalance),
             subtitle: Text(
                 '${(userInfo.commissionBalance / 100).toStringAsFixed(2)} ${t.userInfo.currency}'), // 佣金余额除以100并保留两位小数
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ElevatedButton(
+                  onPressed: () =>
+                      _showTransferDialog(context, ref, userInfo), // 弹出划转弹窗
+                  child: Text(t.transferDialog.transfer), // 本地化“划转”按钮
+                ),
+                const SizedBox(width: 8), // 按钮间距
+                ElevatedButton(
+                  onPressed: () =>
+                      _showWithdrawDialog(context, ref, userInfo.commissionBalance), // 弹出提现弹窗（实现类似）
+                  child: Text(t.transferDialog.withdraw), // 本地化“提现”按钮
+                ),
+              ],
+            ),
           ),
         ],
       ),
+    );
+  }
+// 显示划转对话框的方法
+  void _showTransferDialog(
+      BuildContext context, WidgetRef ref, UserInfo userInfo) {
+    final t = ref.read(translationsProvider); // 获取本地化对象
+    final _amountController = TextEditingController(); // 控制用户输入的划转金额
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(t.transferDialog.transferTitle), // 标题“推广佣金划转至余额”
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(t.transferDialog.transferHint), // 提示“划转后的余额仅用于消费使用”
+              const SizedBox(height: 8),
+              Text(
+                  '${t.transferDialog.currentBalance}: ${(userInfo.commissionBalance / 100).toStringAsFixed(2)} ${t.userInfo.currency}'), // 显示当前佣金余额
+              TextField(
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    labelText: t.transferDialog.transferAmount), // 标签“划转金额”
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(), // 取消按钮关闭对话框
+              child: Text(t.ensure.cancel), // 本地化“取消”按钮
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final inputAmount = int.tryParse(_amountController.text) ?? 0;
+                if (inputAmount > 0) {
+                  await _transferCommission(
+                      context, ref, inputAmount * 100); // 调用划转请求，并将用户输入的金额乘以100
+                }
+                Navigator.of(context).pop(); // 划转后关闭对话框
+              },
+              child: Text(t.ensure.confirm), // 本地化“确认”按钮
+            ),
+          ],
+        );
+      },
     );
   }
 
