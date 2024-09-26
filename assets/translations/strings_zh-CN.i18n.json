@@ -31,7 +31,62 @@
   "home": {
     "pageTitle": "主页",
     "emptyProfilesMsg": "从添加订阅配置文件开始",
-    "noActiveProfileMsg": "选择配置文件"
+    "noActiveProfileMsg": "选择配置文件",
+    "noSubscriptionMsg": "当前账户没有可用订阅，请前往套餐购买页面，购买相应的套餐后使用",
+    "goToPurchasePage": "前往购买套餐"
+  },
+  "purchase": {
+    "pageTitle": "套餐购买",
+    "noAccessToken": "未找到访问令牌。",
+    "fetchPlansError": "加载失败: ",
+    "noPlans": "没有可用的套餐",
+    "priceLabel": "价格: ¥",
+    "rmb": "元",
+    "subscribe": "订阅",
+    "noData": "没有数据",
+    "subscribeSuccess": "成功订阅"
+  },
+  "logout": {
+    "buttonText": "登出"
+  },
+  "login": {
+    "welcome": "欢迎使用 V2Hiddify",
+    "username": "用户名",
+    "password": "密码",
+    "loginButton": "登录",
+    "forgotPassword": "忘记密码",
+    "register": "注册"
+  },
+  "forgetPassword": {
+    "pageTitle": "忘记密码",
+    "email": "邮箱",
+    "newPassword": "新密码",
+    "verificationCode": "验证码",
+    "sendCode": "发送验证码",
+    "resetPassword": "重置密码",
+    "emailEmptyError": "请输入您的邮箱",
+    "passwordEmptyError": "请输入您的新密码",
+    "verificationCodeEmptyError": "请输入验证码",
+    "codeSentSuccess": "验证码已发送至",
+    "resetSuccess": "密码重置成功",
+    "errorOccurred": "发生了一个错误：",
+    "emailSendError": "发送验证码失败。",
+    "passwordResetError": "重置密码失败。"
+  },
+  "register": {
+    "pageTitle": "注册",
+    "email": "邮箱",
+    "password": "密码",
+    "inviteCode": "邀请码（可选）",
+    "verificationCode": "验证码",
+    "sendCode": "发送验证码",
+    "register": "注册",
+    "emailEmptyError": "请输入您的邮箱",
+    "passwordEmptyError": "请输入您的密码",
+    "verificationCodeEmptyError": "请输入验证码",
+    "registrationSuccess": "注册成功",
+    "errorOccurred": "发生了一个错误：",
+    "codeSentSuccess": "验证码已发送至"
   },
   "stats": {
     "traffic": "流量",

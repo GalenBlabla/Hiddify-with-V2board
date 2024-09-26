@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:hiddify/features/v2board/service/auth_service.dart'; // 导入 AuthService
+import 'package:hiddify/features/v2board/service/auth_service.dart';
+import 'package:hiddify/core/localization/translations.dart'; // 导入本地化支持
 
 class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -40,9 +40,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   }
 
   Future<void> _sendVerificationCode() async {
+    final t = ref.watch(translationsProvider); // 获取本地化对象
     final email = _emailController.text.trim();
     if (email.isEmpty) {
-      _showSnackbar(context, "Please enter your email");
+      _showSnackbar(context, t.register.emailEmptyError); // 使用本地化错误信息
       return;
     }
 
@@ -55,12 +56,13 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       final response = await AuthService().sendVerificationCode(email);
 
       if (response["status"] == "success") {
-        _showSnackbar(context, "Verification code sent to $email");
+        _showSnackbar(
+            context, "${t.register.codeSentSuccess} $email"); // 使用本地化信息
       } else {
         _showSnackbar(context, response["message"]);
       }
     } catch (e) {
-      _showSnackbar(context, "An error occurred: $e");
+      _showSnackbar(context, "${t.register.errorOccurred} $e"); // 使用本地化错误信息
     }
 
     // 倒计时逻辑
@@ -77,6 +79,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   }
 
   Future<void> _register(BuildContext context) async {
+    final t = ref.watch(translationsProvider); // 获取本地化对象
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -95,13 +98,13 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
           await AuthService().register(email, password, inviteCode, emailCode);
 
       if (result["status"] == "success") {
-        _showSnackbar(context, "Registration successful");
+        _showSnackbar(context, t.register.registrationSuccess); // 使用本地化信息
         context.go('/login'); // 假设登录页面的路由为 /login
       } else {
         _showSnackbar(context, result["message"]);
       }
     } catch (e) {
-      _showSnackbar(context, "An error occurred: $e");
+      _showSnackbar(context, "${t.register.errorOccurred} $e"); // 使用本地化错误信息
     } finally {
       setState(() {
         _isLoading = false;
@@ -111,9 +114,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final t = ref.watch(translationsProvider); // 获取本地化对象
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register'),
+        title: Text(t.register.pageTitle), // 使用本地化的页面标题
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -129,10 +133,12 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
             children: [
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(
+                  labelText: t.register.email, // 使用本地化标签
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
+                    return t.register.emailEmptyError; // 使用本地化错误信息
                   }
                   return null;
                 },
@@ -141,7 +147,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 controller: _passwordController,
                 obscureText: _obscurePassword,
                 decoration: InputDecoration(
-                  labelText: "Password",
+                  labelText: t.register.password, // 使用本地化标签
                   suffixIcon: IconButton(
                     icon: Icon(
                       _obscurePassword
@@ -157,30 +163,31 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
+                    return t.register.passwordEmptyError; // 使用本地化错误信息
                   }
                   return null;
                 },
               ),
               TextFormField(
                 controller: _inviteCodeController,
-                decoration:
-                    InputDecoration(labelText: 'Invite Code (optional)'),
+                decoration: InputDecoration(
+                  labelText: t.register.inviteCode, // 使用本地化标签
+                ),
               ),
               TextFormField(
                 controller: _emailCodeController,
                 decoration: InputDecoration(
-                  labelText: 'Verification Code',
+                  labelText: t.register.verificationCode, // 使用本地化标签
                   suffixIcon: _isCountingDown
                       ? Text('$_countdownTime s')
                       : TextButton(
                           onPressed: _sendVerificationCode,
-                          child: const Text('Send Code'),
+                          child: Text(t.register.sendCode), // 使用本地化文本
                         ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the verification code';
+                    return t.register.verificationCodeEmptyError; // 使用本地化错误信息
                   }
                   return null;
                 },
@@ -188,8 +195,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _isLoading ? null : () => _register(context),
-                child:
-                    _isLoading ? CircularProgressIndicator() : Text('Register'),
+                child: _isLoading
+                    ? const CircularProgressIndicator()
+                    : Text(t.register.register), // 使用本地化文本
               ),
             ],
           ),

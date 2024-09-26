@@ -3,9 +3,11 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:hiddify/features/v2board/models/plan_model.dart';
 import 'package:hiddify/features/v2board/storage/token_storage.dart';
 import 'package:hiddify/features/v2board/service/auth_service.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart'; // 引入 Riverpod 库
+import 'package:hiddify/core/localization/translations.dart'; // 引入本地化支持
 
-
-class PurchasePage extends StatelessWidget {
+class PurchasePage extends ConsumerWidget {
+  // 改为 ConsumerWidget
   const PurchasePage({super.key});
 
   // 通过存储的令牌获取套餐数据
@@ -20,10 +22,13 @@ class PurchasePage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // 添加 WidgetRef 参数
+    final t = ref.watch(translationsProvider); // 获取本地化对象
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Purchase"),
+        title: Text(t.purchase.pageTitle), // 使用本地化页面标题
         leading: IconButton(
           icon: const Icon(FluentIcons.navigation_24_filled),
           onPressed: () {
@@ -45,11 +50,13 @@ class PurchasePage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('加载失败: ${snapshot.error}'));
+            return Center(
+                child: Text(
+                    '${t.purchase.fetchPlansError} ${snapshot.error}')); // 使用本地化错误信息
           } else if (snapshot.hasData && snapshot.data != null) {
             final plans = snapshot.data!;
             if (plans.isEmpty) {
-              return const Center(child: Text('没有可用的套餐'));
+              return Center(child: Text(t.purchase.noPlans)); // 使用本地化无套餐信息
             }
             return ListView.builder(
               padding: const EdgeInsets.all(8),
@@ -76,7 +83,7 @@ class PurchasePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          plan.content ?? '无描述',
+                          plan.content ?? t.purchase.noData, // 使用本地化无描述信息
                           style: const TextStyle(fontSize: 14),
                         ),
                         const SizedBox(height: 8),
@@ -86,24 +93,25 @@ class PurchasePage extends StatelessWidget {
                             Text.rich(
                               TextSpan(
                                 children: [
-                                  const TextSpan(
-                                    text: 'Price: ¥',
-                                    style: TextStyle(
+                                  TextSpan(
+                                    text: t.purchase.priceLabel, // 使用本地化价格标签
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   TextSpan(
-                                    text: '${plan.onetimePrice ?? '未知'}',
+                                    text:
+                                        '${plan.onetimePrice ?? t.purchase.noData}', // 使用本地化无数据信息
                                     style: const TextStyle(
                                       fontSize: 20, // 更大字体
                                       fontWeight: FontWeight.bold,
                                       color: Colors.red, // 红色数字
                                     ),
                                   ),
-                                  const TextSpan(
-                                    text: ' RMB',
-                                    style: TextStyle(
+                                  TextSpan(
+                                    text: ' ${t.purchase.rmb}', // 使用本地化人民币标签
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -116,6 +124,8 @@ class PurchasePage extends StatelessWidget {
                                 // 在这里添加购买逻辑
                                 print(
                                     'User wants to subscribe to plan: ${plan.name}');
+                                _showSnackbar(context,
+                                    "${t.purchase.subscribeSuccess} ${plan.name}"); // 使用本地化成功信息
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
@@ -123,9 +133,9 @@ class PurchasePage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              child: const Text(
-                                'Subscribe',
-                                style: TextStyle(color: Colors.white),
+                              child: Text(
+                                t.purchase.subscribe, // 使用本地化订阅按钮文本
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                           ],
@@ -137,10 +147,18 @@ class PurchasePage extends StatelessWidget {
               },
             );
           } else {
-            return const Center(child: Text('没有数据'));
+            return Center(child: Text(t.purchase.noData)); // 使用本地化无数据信息
           }
         },
       ),
     );
+  }
+
+  void _showSnackbar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: const Duration(seconds: 3), // 自动消失时间
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

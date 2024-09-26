@@ -30,8 +30,63 @@
   },
   "home": {
     "pageTitle": "Home",
-    "emptyProfilesMsg": "Begin by Adding a Subscription Profile",
-    "noActiveProfileMsg": "Choose a Profile"
+    "emptyProfilesMsg": "Start by adding a subscription profile",
+    "noActiveProfileMsg": "Select a profile",
+    "noSubscriptionMsg": "No available subscription found. Please go to the purchase page to buy a plan.",
+    "goToPurchasePage": "Go to Purchase Page"
+  },
+  "purchase": {
+    "pageTitle": "Purchase",
+    "noAccessToken": "No access token found.",
+    "fetchPlansError": "Failed to load: ",
+    "noPlans": "No available plans",
+    "priceLabel": "Price: ¥",
+    "rmb": "RMB",
+    "subscribe": "Subscribe",
+    "noData": "No data available",
+    "subscribeSuccess": "Successfully subscribed to"
+  },
+  "logout": {
+    "buttonText": "Logout"
+  },
+  "login": {
+    "welcome": "Welcome to V2Hiddify",
+    "username": "Username",
+    "password": "Password",
+    "loginButton": "Login",
+    "forgotPassword": "Forgot Password",
+    "register": "Register"
+  },
+  "forgetPassword": {
+    "pageTitle": "Forget Password",
+    "email": "Email",
+    "newPassword": "New Password",
+    "verificationCode": "Verification Code",
+    "sendCode": "Send Code",
+    "resetPassword": "Reset Password",
+    "emailEmptyError": "Please enter your email",
+    "passwordEmptyError": "Please enter your new password",
+    "verificationCodeEmptyError": "Please enter the verification code",
+    "codeSentSuccess": "Verification code sent to",
+    "resetSuccess": "Password reset successful",
+    "errorOccurred": "An error occurred:",
+    "emailSendError": "Failed to send verification code.",
+    "passwordResetError": "Failed to reset password."
+  },
+  "register": {
+    "pageTitle": "Register",
+    "email": "Email",
+    "password": "Password",
+    "inviteCode": "Invite Code (optional)",
+    "verificationCode": "Verification Code",
+    "sendCode": "Send Code",
+    "register": "Register",
+    "emailEmptyError": "Please enter your email",
+    "passwordEmptyError": "Please enter your password",
+    "verificationCodeEmptyError": "Please enter the verification code",
+    "registrationSuccess": "Registration successful",
+    "errorOccurred": "An error occurred:",
+    "codeSentSuccess": "Verification code sent to"
   },
   "stats": {
     "traffic": "Traffic",

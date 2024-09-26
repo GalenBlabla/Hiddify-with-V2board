@@ -38,7 +38,7 @@ class AdaptiveRootScaffold extends HookConsumerWidget {
       ),
       NavigationDestination(
         icon: const Icon(FluentIcons.money_24_filled),
-        label: "Purchase",
+        label: t.purchase.pageTitle,
       ),
       NavigationDestination(
         icon: const Icon(FluentIcons.box_edit_20_filled),
@@ -58,7 +58,7 @@ class AdaptiveRootScaffold extends HookConsumerWidget {
       ),
       NavigationDestination(
         icon: const Icon(FluentIcons.sign_out_20_filled),
-        label: "Logout",
+        label: t.logout.buttonText,
       ),
     ];
 

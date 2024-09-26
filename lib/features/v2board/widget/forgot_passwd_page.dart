@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hiddify/features/v2board/service/auth_service.dart';
+import 'package:hiddify/core/localization/translations.dart'; // 导入本地化支持
 
 class ForgetPasswordPage extends ConsumerStatefulWidget {
   const ForgetPasswordPage({Key? key}) : super(key: key);
@@ -37,9 +38,10 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
   }
 
   Future<void> _sendVerificationCode() async {
+    final t = ref.watch(translationsProvider); // 获取翻译实例
     final email = _emailController.text.trim();
     if (email.isEmpty) {
-      _showSnackbar(context, "Please enter your email");
+      _showSnackbar(context, t.forgetPassword.emailEmptyError);
       return;
     }
 
@@ -52,12 +54,12 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
       final result = await AuthService().sendVerificationCode(email);
 
       if (result["status"] == "success") {
-        _showSnackbar(context, "Verification code sent to $email");
+        _showSnackbar(context, "${t.forgetPassword.codeSentSuccess} $email");
       } else {
         _showSnackbar(context, result["message"]);
       }
     } catch (e) {
-      _showSnackbar(context, "An error occurred: $e");
+      _showSnackbar(context, "${t.forgetPassword.errorOccurred} $e");
     }
 
     // 倒计时逻辑
@@ -74,6 +76,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
   }
 
   Future<void> _resetPassword(BuildContext context) async {
+    final t = ref.watch(translationsProvider); // 获取翻译实例
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -91,13 +94,14 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
           await AuthService().resetPassword(email, password, emailCode);
 
       if (result["status"] == "success") {
-        _showSnackbar(context, "Password reset successful");
+        _showSnackbar(context, t.forgetPassword.resetSuccess);
         context.go('/login');
       } else {
-        _showSnackbar(context, result["message"]);
+        _showSnackbar(
+            context, result["message"] ?? t.forgetPassword.passwordResetError);
       }
     } catch (e) {
-      _showSnackbar(context, "An error occurred: $e");
+      _showSnackbar(context, "${t.forgetPassword.errorOccurred} $e");
     } finally {
       setState(() {
         _isLoading = false;
@@ -107,9 +111,11 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final t = ref.watch(translationsProvider); // 获取翻译实例
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Forget Password'),
+        title: Text(t.forgetPassword.pageTitle), // 使用本地化的页面标题
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -125,10 +131,11 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
             children: [
               TextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(
+                    labelText: t.forgetPassword.email), // 使用本地化标签
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
+                    return t.forgetPassword.emailEmptyError; // 使用本地化错误信息
                   }
                   return null;
                 },
@@ -136,7 +143,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
               TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  labelText: 'New Password',
+                  labelText: t.forgetPassword.newPassword, // 使用本地化标签
                   suffixIcon: IconButton(
                     icon: Icon(_obscurePassword
                         ? Icons.visibility
@@ -151,7 +158,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
                 obscureText: _obscurePassword,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your new password';
+                    return t.forgetPassword.passwordEmptyError; // 使用本地化错误信息
                   }
                   return null;
                 },
@@ -159,17 +166,18 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
               TextFormField(
                 controller: _emailCodeController,
                 decoration: InputDecoration(
-                  labelText: 'Verification Code',
+                  labelText: t.forgetPassword.verificationCode, // 使用本地化标签
                   suffixIcon: _isCountingDown
                       ? Text('$_countdownTime s')
                       : TextButton(
                           onPressed: _sendVerificationCode,
-                          child: const Text('Send Code'),
+                          child: Text(t.forgetPassword.sendCode), // 使用本地化文本
                         ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the verification code';
+                    return t
+                        .forgetPassword.verificationCodeEmptyError; // 使用本地化错误信息
                   }
                   return null;
                 },
@@ -179,7 +187,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
                 onPressed: _isLoading ? null : () => _resetPassword(context),
                 child: _isLoading
                     ? const CircularProgressIndicator()
-                    : const Text('Reset Password'),
+                    : Text(t.forgetPassword.resetPassword), // 使用本地化文本
               ),
             ],
           ),
