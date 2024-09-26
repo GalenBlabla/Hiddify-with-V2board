@@ -1,6 +1,7 @@
-# What is V2Hiddify
+# What is V2Hiddify（[查看中文版文档](./README.md)）
 
-V2Hiddify is a derivative project developed based on [Hiddify-Next](https://github.com/hiddify/hiddify-next). The goal of this project is to develop a cross-platform client that can be directly integrated with V2board (Xboard). Users can log in with the corresponding account provided by the VPN service provider to automatically subscribe and purchase plans.
+V2Hiddify is a derivative project developed based on [Hiddify-Next](https://github.com/hiddify/hiddify-next). The goal of this project is to develop a cross-platform client that can be directly integrated with V2board (Xboard). Users can log in with the corresponding account provided by the VPN service provider to automatically subscribe and purchase plans.  
+
 
 ## Features
 
