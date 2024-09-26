@@ -8,7 +8,7 @@ import 'package:hiddify/features/profile/model/profile_entity.dart';
 import 'package:hiddify/features/profile/notifier/active_profile_notifier.dart';
 import 'package:hiddify/features/profile/notifier/profile_notifier.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:hiddify/core/localization/translations.dart'; 
+import 'package:hiddify/core/localization/translations.dart';
 
 class PurchasePage extends ConsumerWidget {
   const PurchasePage({super.key});
@@ -27,12 +27,13 @@ class PurchasePage extends ConsumerWidget {
   // 添加新订阅到配置文件的方法
   Future<void> _addSubscription(
       BuildContext context, String accessToken, WidgetRef ref) async {
+    final t = ref.watch(translationsProvider);
     try {
       // 获取订阅链接
       final subscriptionLink =
           await AuthService().getSubscriptionLink(accessToken);
       if (subscriptionLink == null) {
-        _showSnackbar(context, '无法获取订阅链接');
+        _showSnackbar(context, t.purchase.noSubscriptionLink);
         return;
       }
 
@@ -63,10 +64,10 @@ class PurchasePage extends ConsumerWidget {
       ref.read(activeProfileProvider.notifier).update((_) => newProfile);
 
       // 显示成功的提示信息
-      _showSnackbar(context, '成功添加订阅并设置为活动配置文件！');
+      _showSnackbar(context, t.purchase.subscriptionAdded);
     } catch (e) {
       print(e);
-      _showSnackbar(context, "添加订阅时发生错误: $e");
+      _showSnackbar(context, "${t.purchase.addSubscriptionError} $e");
     }
   }
 
@@ -171,7 +172,8 @@ class PurchasePage extends ConsumerWidget {
                                 // 获取存储的 AccessToken
                                 final accessToken = await getToken();
                                 if (accessToken == null) {
-                                  _showSnackbar(context, '无法获取访问令牌，请重新登录');
+                                  _showSnackbar(
+                                      context, t.purchase.noAccessToken);
                                   return;
                                 }
 

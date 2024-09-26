@@ -36,15 +36,19 @@
     "goToPurchasePage": "Go to Purchase Page"
   },
   "purchase": {
-    "pageTitle": "Purchase",
-    "noAccessToken": "No access token found.",
-    "fetchPlansError": "Failed to load: ",
+    "pageTitle": "Purchase Plans",
+    "noAccessToken": "No access token found. Please log in again.",
+    "fetchPlansError": "Failed to load plans: ",
     "noPlans": "No available plans",
     "priceLabel": "Price: ¥",
     "rmb": "RMB",
     "subscribe": "Subscribe",
     "noData": "No data available",
-    "subscribeSuccess": "Successfully subscribed to"
+    "subscribeSuccess": "Subscription successful",
+    "addSubscriptionError": "Error adding subscription: ",
+    "subscriptionAdded": "Subscription added successfully and set as active profile!",
+    "noSubscriptionLink": "Unable to retrieve subscription link",
+    "goToLogin": "Please log in again"
   },
   "logout": {
     "buttonText": "Logout"

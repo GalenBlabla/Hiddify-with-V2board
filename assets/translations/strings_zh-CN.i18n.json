@@ -37,14 +37,18 @@
   },
   "purchase": {
     "pageTitle": "套餐购买",
-    "noAccessToken": "未找到访问令牌。",
+    "noAccessToken": "未找到访问令牌，请重新登录。",
     "fetchPlansError": "加载失败: ",
     "noPlans": "没有可用的套餐",
     "priceLabel": "价格: ¥",
     "rmb": "元",
     "subscribe": "订阅",
     "noData": "没有数据",
-    "subscribeSuccess": "成功订阅"
+    "subscribeSuccess": "成功订阅",
+    "addSubscriptionError": "添加订阅时发生错误: ",
+    "subscriptionAdded": "成功添加订阅并设置为活动配置文件！",
+    "noSubscriptionLink": "无法获取订阅链接",
+    "goToLogin": "请重新登录"
   },
   "logout": {
     "buttonText": "登出"
