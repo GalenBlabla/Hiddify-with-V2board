@@ -60,7 +60,11 @@
     "lastLogin": "Last Login",
     "noData": "No data available",
     "noAccessToken": "No access token found.",
-    "fetchUserInfoError": "Failed to load user information:"
+    "fetchUserInfoError": "Failed to load user information:",
+    "resetSubscription": "Reset Subscription",
+    "subscriptionResetSuccess": "Subscription link has been successfully reset and updated.",
+    "subscriptionResetError": "Failed to reset subscription:",
+    "noSubscriptionLink": "No subscription link found."
   },
   "logout": {
     "buttonText": "Logout",

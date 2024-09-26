@@ -60,7 +60,11 @@
     "lastLogin": "最后登录时间",
     "noData": "暂无数据",
     "noAccessToken": "未找到访问令牌。",
-    "fetchUserInfoError": "加载用户信息失败:"
+    "fetchUserInfoError": "加载用户信息失败:",
+    "resetSubscription": "重置订阅",
+    "subscriptionResetSuccess": "订阅链接已成功重置并更新。",
+    "subscriptionResetError": "重置订阅失败：",
+    "noSubscriptionLink": "未找到订阅链接。"
   },
   "logout": {
     "buttonText": "登出",

@@ -163,4 +163,27 @@ class AuthService {
       throw Exception("Failed to retrieve user info: ${result["message"]}");
     }
   }
+
+    Future<String?> resetSubscriptionLink(String accessToken) async {
+    final url = Uri.parse("$_baseUrl/api/v1/user/resetSecurity");
+    final response = await http.get(
+      url,
+      headers: {'Authorization': accessToken},
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data["status"] == "success") {
+        return data["data"];
+      } else {
+        throw Exception(
+            "Failed to reset subscription link: ${data["message"]}");
+      }
+    } else {
+      throw Exception(
+          "Failed to reset subscription link: ${response.statusCode}");
+    }
+  }
+
+
 }
