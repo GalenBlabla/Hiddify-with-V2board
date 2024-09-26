@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hiddify/core/localization/translations.dart'; // 引入本地化
+import 'package:hiddify/core/localization/translations.dart'; 
 import '../service/auth_provider.dart';
 import 'package:hiddify/features/panel/v2board/storage/token_storage.dart';
 import 'package:hiddify/features/profile/notifier/profile_notifier.dart';
 import 'package:hiddify/features/profile/notifier/active_profile_notifier.dart';
 import 'package:hiddify/features/profile/data/profile_data_providers.dart';
 import 'package:hiddify/features/profile/model/profile_entity.dart';
-import 'package:hiddify/features/panel/v2board/service/auth_service.dart'; // 导入 AuthService
+import 'package:hiddify/features/panel/v2board/service/auth_service.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -146,7 +146,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: t.login.welcome, // 第一段本地化文本
+                              text: t.login.welcome, 
                               style: TextStyle(
                                 fontSize: constraints.maxWidth > 600 ? 32 : 24,
                                 fontWeight: FontWeight.bold,
@@ -157,7 +157,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               text: ' ', // 添加一个空格来分隔两段文字
                             ),
                             TextSpan(
-                              text: t.general.appTitle, // 第二段本地化文本
+                              text: t.general.appTitle, 
                               style: TextStyle(
                                 fontSize: constraints.maxWidth > 600 ? 32 : 24,
                                 fontWeight: FontWeight.bold,
@@ -174,7 +174,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       TextFormField(
                         controller: _usernameController,
                         decoration: InputDecoration(
-                          labelText: t.login.username, // 使用本地化文本
+                          labelText: t.login.username, 
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -182,7 +182,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return t.login.username; // 使用本地化文本
+                            return t.login.username; 
                           }
                           return null;
                         },
@@ -191,7 +191,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       TextFormField(
                         controller: _passwordController,
                         decoration: InputDecoration(
-                          labelText: t.login.password, // 使用本地化文本
+                          labelText: t.login.password, 
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -200,7 +200,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return t.login.password; // 使用本地化文本
+                            return t.login.password; 
                           }
                           return null;
                         },
@@ -230,7 +230,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               ),
                             ),
                             child: Text(
-                              t.login.loginButton, // 使用本地化文本
+                              t.login.loginButton, 
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,
@@ -247,7 +247,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               context.go('/forget-password');
                             },
                             child: Text(
-                              t.login.forgotPassword, // 使用本地化文本
+                              t.login.forgotPassword, 
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 14,
@@ -259,7 +259,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               context.go('/register');
                             },
                             child: Text(
-                              t.login.register, // 使用本地化文本
+                              t.login.register, 
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 14,

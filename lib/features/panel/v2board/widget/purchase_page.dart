@@ -3,8 +3,8 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:hiddify/features/panel/v2board/models/plan_model.dart';
 import 'package:hiddify/features/panel/v2board/storage/token_storage.dart';
 import 'package:hiddify/features/panel/v2board/service/auth_service.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart'; // 引入 Riverpod 库
-import 'package:hiddify/core/localization/translations.dart'; // 引入本地化支持
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:hiddify/core/localization/translations.dart'; 
 
 class PurchasePage extends ConsumerWidget {
   // 改为 ConsumerWidget
@@ -24,11 +24,11 @@ class PurchasePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // 添加 WidgetRef 参数
-    final t = ref.watch(translationsProvider); // 获取本地化对象
+    final t = ref.watch(translationsProvider); 
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.purchase.pageTitle), // 使用本地化页面标题
+        title: Text(t.purchase.pageTitle),
         leading: IconButton(
           icon: const Icon(FluentIcons.navigation_24_filled),
           onPressed: () {
@@ -52,11 +52,11 @@ class PurchasePage extends ConsumerWidget {
           } else if (snapshot.hasError) {
             return Center(
                 child: Text(
-                    '${t.purchase.fetchPlansError} ${snapshot.error}')); // 使用本地化错误信息
+                    '${t.purchase.fetchPlansError} ${snapshot.error}'));
           } else if (snapshot.hasData && snapshot.data != null) {
             final plans = snapshot.data!;
             if (plans.isEmpty) {
-              return Center(child: Text(t.purchase.noPlans)); // 使用本地化无套餐信息
+              return Center(child: Text(t.purchase.noPlans)); 
             }
             return ListView.builder(
               padding: const EdgeInsets.all(8),
@@ -83,7 +83,7 @@ class PurchasePage extends ConsumerWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          plan.content ?? t.purchase.noData, // 使用本地化无描述信息
+                          plan.content ?? t.purchase.noData, 
                           style: const TextStyle(fontSize: 14),
                         ),
                         const SizedBox(height: 8),
@@ -94,7 +94,7 @@ class PurchasePage extends ConsumerWidget {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: t.purchase.priceLabel, // 使用本地化价格标签
+                                    text: t.purchase.priceLabel, 
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -102,15 +102,15 @@ class PurchasePage extends ConsumerWidget {
                                   ),
                                   TextSpan(
                                     text:
-                                        '${plan.onetimePrice ?? t.purchase.noData}', // 使用本地化无数据信息
+                                        '${plan.onetimePrice ?? t.purchase.noData}', 
                                     style: const TextStyle(
-                                      fontSize: 20, // 更大字体
+                                      fontSize: 20, 
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.red, // 红色数字
+                                      color: Colors.red, 
                                     ),
                                   ),
                                   TextSpan(
-                                    text: ' ${t.purchase.rmb}', // 使用本地化人民币标签
+                                    text: ' ${t.purchase.rmb}',
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -125,7 +125,7 @@ class PurchasePage extends ConsumerWidget {
                                 print(
                                     'User wants to subscribe to plan: ${plan.name}');
                                 _showSnackbar(context,
-                                    "${t.purchase.subscribeSuccess} ${plan.name}"); // 使用本地化成功信息
+                                    "${t.purchase.subscribeSuccess} ${plan.name}");
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
@@ -134,7 +134,7 @@ class PurchasePage extends ConsumerWidget {
                                 ),
                               ),
                               child: Text(
-                                t.purchase.subscribe, // 使用本地化订阅按钮文本
+                                t.purchase.subscribe, 
                                 style: const TextStyle(color: Colors.white),
                               ),
                             ),
@@ -147,7 +147,7 @@ class PurchasePage extends ConsumerWidget {
               },
             );
           } else {
-            return Center(child: Text(t.purchase.noData)); // 使用本地化无数据信息
+            return Center(child: Text(t.purchase.noData));
           }
         },
       ),
@@ -157,7 +157,7 @@ class PurchasePage extends ConsumerWidget {
   void _showSnackbar(BuildContext context, String message) {
     final snackBar = SnackBar(
       content: Text(message),
-      duration: const Duration(seconds: 3), // 自动消失时间
+      duration: const Duration(seconds: 3),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

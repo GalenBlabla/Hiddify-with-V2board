@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hiddify/features/panel/v2board/service/auth_service.dart';
-import 'package:hiddify/core/localization/translations.dart'; // 导入本地化支持
+import 'package:hiddify/core/localization/translations.dart'; 
 
 class ForgetPasswordPage extends ConsumerStatefulWidget {
   const ForgetPasswordPage({Key? key}) : super(key: key);
@@ -111,15 +111,15 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final t = ref.watch(translationsProvider); // 获取翻译实例
+    final t = ref.watch(translationsProvider); 
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.forgetPassword.pageTitle), // 使用本地化的页面标题
+        title: Text(t.forgetPassword.pageTitle),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            context.go('/login'); // 返回登录页面
+            context.go('/login');
           },
         ),
       ),
@@ -132,10 +132,10 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                    labelText: t.forgetPassword.email), // 使用本地化标签
+                    labelText: t.forgetPassword.email), 
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return t.forgetPassword.emailEmptyError; // 使用本地化错误信息
+                    return t.forgetPassword.emailEmptyError;
                   }
                   return null;
                 },
@@ -143,7 +143,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
               TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  labelText: t.forgetPassword.newPassword, // 使用本地化标签
+                  labelText: t.forgetPassword.newPassword, 
                   suffixIcon: IconButton(
                     icon: Icon(_obscurePassword
                         ? Icons.visibility
@@ -158,7 +158,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
                 obscureText: _obscurePassword,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return t.forgetPassword.passwordEmptyError; // 使用本地化错误信息
+                    return t.forgetPassword.passwordEmptyError; 
                   }
                   return null;
                 },
@@ -166,18 +166,18 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
               TextFormField(
                 controller: _emailCodeController,
                 decoration: InputDecoration(
-                  labelText: t.forgetPassword.verificationCode, // 使用本地化标签
+                  labelText: t.forgetPassword.verificationCode, 
                   suffixIcon: _isCountingDown
                       ? Text('$_countdownTime s')
                       : TextButton(
                           onPressed: _sendVerificationCode,
-                          child: Text(t.forgetPassword.sendCode), // 使用本地化文本
+                          child: Text(t.forgetPassword.sendCode), 
                         ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return t
-                        .forgetPassword.verificationCodeEmptyError; // 使用本地化错误信息
+                        .forgetPassword.verificationCodeEmptyError; 
                   }
                   return null;
                 },
@@ -187,7 +187,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
                 onPressed: _isLoading ? null : () => _resetPassword(context),
                 child: _isLoading
                     ? const CircularProgressIndicator()
-                    : Text(t.forgetPassword.resetPassword), // 使用本地化文本
+                    : Text(t.forgetPassword.resetPassword), 
               ),
             ],
           ),
