@@ -58,7 +58,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
         _showSnackbar(
             context, "${t.register.codeSentSuccess} $email"); 
       } else {
-        _showSnackbar(context, response["message"]);
+        _showSnackbar(context, response["message"].toString());
+
       }
     } catch (e) {
       _showSnackbar(context, "${t.register.errorOccurred} $e");
@@ -100,7 +101,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
         _showSnackbar(context, t.register.registrationSuccess); 
         context.go('/login'); 
       } else {
-        _showSnackbar(context, result["message"]);
+        _showSnackbar(context, result["message"].toString());
+
       }
     } catch (e) {
       _showSnackbar(context, "${t.register.errorOccurred} $e");
@@ -204,4 +206,5 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       ),
     );
   }
+
 }
