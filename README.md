@@ -223,4 +223,4 @@ V2Hiddify 项目目前存在一个问题：对于不同的域名，需要分别�
 个人开发者不易，如果你觉得本项目对你有帮助，欢迎打赏支持。  
 
 
-<img src="images/usdt_trc20.png" alt="USDT TRC20 收款码" width="300"/>
+<img src="images/usdt_trc20.png" alt="USDT TRC20 收款码" width="500"/>
