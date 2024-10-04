@@ -310,7 +310,13 @@
       "ignoreBatteryOptimizationsMsg": "Remove Restrictions For Optimal VPN Performance",
       "dynamicNotification": "Display Speed in Notification",
       "hapticFeedback": "Haptic Feedback",
-      "autoIpCheck": "Automatically Check Connection IP"
+      "autoIpCheck": "Automatically Check Connection IP",
+      "actionAtClosing": "Action at closing",
+      "actionsAtClosing": {
+        "askEachTime": "Ask each time",
+        "hide": "Hide",
+        "exit": "Exit"
+      }
     },
     "advanced": {
       "sectionTitle": "Advanced",
@@ -536,6 +542,7 @@
   "window": {
     "hide": "Hide",
     "close": "Exit",
-    "alertMessage": "Hide or Exit the application?"
+    "alertMessage": "Hide or Exit the application?",
+    "remember": "Remember my choice"
   }
 }
