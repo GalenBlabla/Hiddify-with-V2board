@@ -8,7 +8,7 @@ import 'package:hiddify/features/config_option/widget/quick_settings_modal.dart'
 import 'package:hiddify/features/home/widget/home_page.dart';
 import 'package:hiddify/features/intro/widget/intro_page.dart';
 import 'package:hiddify/features/log/overview/logs_overview_page.dart';
-import 'package:hiddify/features/panel/v2board/widget/user_info_page.dart';
+import 'package:hiddify/features/panel/v2board/pages/user_info_page.dart';
 import 'package:hiddify/features/per_app_proxy/overview/per_app_proxy_page.dart';
 import 'package:hiddify/features/profile/add/add_profile_modal.dart';
 import 'package:hiddify/features/profile/details/profile_details_page.dart';
@@ -18,10 +18,10 @@ import 'package:hiddify/features/settings/about/about_page.dart';
 import 'package:hiddify/features/settings/overview/settings_overview_page.dart';
 import 'package:hiddify/utils/utils.dart';
 
-import 'package:hiddify/features/panel/v2board/widget/login_page.dart'; 
-import 'package:hiddify/features/panel/v2board/widget/register_page.dart';
-import 'package:hiddify/features/panel/v2board/widget/purchase_page.dart'; 
-import 'package:hiddify/features/panel/v2board/widget/forgot_passwd_page.dart';
+import 'package:hiddify/features/panel/v2board/pages/login_page.dart'; 
+import 'package:hiddify/features/panel/v2board/pages/register_page.dart';
+import 'package:hiddify/features/panel/v2board/pages/purchase_page.dart'; 
+import 'package:hiddify/features/panel/v2board/pages/forgot_passwd_page.dart';
 part 'routes.g.dart';
 
 GlobalKey<NavigatorState>? _dynamicRootKey = useMobileRouter ? rootNavigatorKey : null;

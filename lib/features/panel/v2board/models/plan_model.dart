@@ -9,6 +9,14 @@ class Plan {
   final bool show;
   final String? content;
   final double? onetimePrice;
+  final double? monthPrice;
+  final double? quarterPrice;
+  final double? halfYearPrice;
+  final double? yearPrice;
+  final double? twoYearPrice;
+  final double? threeYearPrice;
+  final int? createdAt;
+  final int? updatedAt;
 
   Plan({
     required this.id,
@@ -19,6 +27,14 @@ class Plan {
     required this.show,
     this.content,
     this.onetimePrice,
+    this.monthPrice,
+    this.quarterPrice,
+    this.halfYearPrice,
+    this.yearPrice,
+    this.twoYearPrice,
+    this.threeYearPrice,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Plan.fromJson(Map<String, dynamic> json) {
@@ -28,19 +44,44 @@ class Plan {
     final cleanContent = document.body?.text ?? '';
 
     return Plan(
-      id: json['id'] ?? 0, // 如果 id 是 null，则提供一个默认值 0
-      groupId: json['group_id'] ?? 0, // 同样处理 groupId
-      transferEnable: json['transfer_enable']?.toDouble() ??
-          0.0, // 处理 transfer_enable 可能为 null 的情况
-      name: json['name'] ?? '未知', // 如果 name 是 null，提供默认名称
-      speedLimit: json['speed_limit'] ?? 0, // 同样处理 speed_limit
-      show: json['show'] == 1, // 如果 show 不是 1，则默认为 false
-      content: cleanContent.isNotEmpty
-          ? cleanContent
-          : null, // 如果内容为空字符串，则将 content 设置为 null
+      id: json['id'] is int ? json['id'] as int : 0,
+      groupId: json['group_id'] is int ? json['group_id'] as int : 0,
+      transferEnable: json['transfer_enable'] is num
+          ? (json['transfer_enable'] as num).toDouble()
+          : 0.0,
+      name: json['name'] is String ? json['name'] as String : '未知',
+      speedLimit: json['speed_limit'] is int ? json['speed_limit'] as int : 0,
+      show: json['show'] == 1, // 布尔类型处理
+
+      // 清理后的内容
+      content: cleanContent.isNotEmpty ? cleanContent : null,
+
+      // 处理价格字段
       onetimePrice: json['onetime_price'] != null
-          ? json['onetime_price'] / 100
-          : null, // 处理 onetime_price 可能为 null 的情况
+          ? (json['onetime_price']! as num).toDouble() / 100
+          : null,
+      monthPrice: json['month_price'] != null
+          ? (json['month_price']! as num).toDouble() / 100
+          : null,
+      quarterPrice: json['quarter_price'] != null
+          ? (json['quarter_price']! as num).toDouble() / 100
+          : null,
+      halfYearPrice: json['half_year_price'] != null
+          ? (json['half_year_price']! as num).toDouble() / 100
+          : null,
+      yearPrice: json['year_price'] != null
+          ? (json['year_price']! as num).toDouble() / 100
+          : null,
+      twoYearPrice: json['two_year_price'] != null
+          ? (json['two_year_price']! as num).toDouble() / 100
+          : null,
+      threeYearPrice: json['three_year_price'] != null
+          ? (json['three_year_price']! as num).toDouble() / 100
+          : null,
+
+      // 处理创建时间和更新时间字段
+      createdAt: json['created_at'] is int ? json['created_at'] as int : null,
+      updatedAt: json['updated_at'] is int ? json['updated_at'] as int : null,
     );
   }
 }

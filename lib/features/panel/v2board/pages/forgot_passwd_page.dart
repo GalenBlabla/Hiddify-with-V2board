@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hiddify/core/localization/translations.dart';
 import 'package:hiddify/features/panel/v2board/service/auth_service.dart';
-import 'package:hiddify/core/localization/translations.dart'; 
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ForgetPasswordPage extends ConsumerStatefulWidget {
-  const ForgetPasswordPage({Key? key}) : super(key: key);
+  const ForgetPasswordPage({super.key});
 
   @override
   _ForgetPasswordPageState createState() => _ForgetPasswordPageState();
@@ -29,38 +29,15 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
     super.dispose();
   }
 
-  void _showSnackbar(BuildContext context, String message) {
-    final snackBar = SnackBar(
-      content: Text(message),
-      duration: const Duration(seconds: 3), // 自动消失时间
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
   Future<void> _sendVerificationCode() async {
-    final t = ref.watch(translationsProvider); // 获取翻译实例
     final email = _emailController.text.trim();
-    if (email.isEmpty) {
-      _showSnackbar(context, t.forgetPassword.emailEmptyError);
-      return;
-    }
 
     setState(() {
       _isCountingDown = true;
       _countdownTime = 60;
     });
 
-    try {
-      final result = await AuthService().sendVerificationCode(email);
-
-      if (result["status"] == "success") {
-        _showSnackbar(context, "${t.forgetPassword.codeSentSuccess} $email");
-      } else {
-        _showSnackbar(context, result["message"]);
-      }
-    } catch (e) {
-      _showSnackbar(context, "${t.forgetPassword.errorOccurred} $e");
-    }
+    await AuthService().sendVerificationCode(email);
 
     // 倒计时逻辑
     while (_countdownTime > 0) {
@@ -76,7 +53,6 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
   }
 
   Future<void> _resetPassword(BuildContext context) async {
-    final t = ref.watch(translationsProvider); // 获取翻译实例
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -90,18 +66,8 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
     final emailCode = _emailCodeController.text.trim();
 
     try {
-      final result =
-          await AuthService().resetPassword(email, password, emailCode);
-
-      if (result["status"] == "success") {
-        _showSnackbar(context, t.forgetPassword.resetSuccess);
-        context.go('/login');
-      } else {
-        _showSnackbar(
-            context, result["message"] ?? t.forgetPassword.passwordResetError);
-      }
-    } catch (e) {
-      _showSnackbar(context, "${t.forgetPassword.errorOccurred} $e");
+      await AuthService().resetPassword(email, password, emailCode);
+      context.go('/login');
     } finally {
       setState(() {
         _isLoading = false;
@@ -111,7 +77,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final t = ref.watch(translationsProvider); 
+    final t = ref.watch(translationsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -131,8 +97,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
             children: [
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(
-                    labelText: t.forgetPassword.email), 
+                decoration: InputDecoration(labelText: t.forgetPassword.email),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return t.forgetPassword.emailEmptyError;
@@ -143,7 +108,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
               TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  labelText: t.forgetPassword.newPassword, 
+                  labelText: t.forgetPassword.newPassword,
                   suffixIcon: IconButton(
                     icon: Icon(_obscurePassword
                         ? Icons.visibility
@@ -158,7 +123,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
                 obscureText: _obscurePassword,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return t.forgetPassword.passwordEmptyError; 
+                    return t.forgetPassword.passwordEmptyError;
                   }
                   return null;
                 },
@@ -166,18 +131,17 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
               TextFormField(
                 controller: _emailCodeController,
                 decoration: InputDecoration(
-                  labelText: t.forgetPassword.verificationCode, 
+                  labelText: t.forgetPassword.verificationCode,
                   suffixIcon: _isCountingDown
                       ? Text('$_countdownTime s')
                       : TextButton(
                           onPressed: _sendVerificationCode,
-                          child: Text(t.forgetPassword.sendCode), 
+                          child: Text(t.forgetPassword.sendCode),
                         ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return t
-                        .forgetPassword.verificationCodeEmptyError; 
+                    return t.forgetPassword.verificationCodeEmptyError;
                   }
                   return null;
                 },
@@ -187,7 +151,7 @@ class _ForgetPasswordPageState extends ConsumerState<ForgetPasswordPage> {
                 onPressed: _isLoading ? null : () => _resetPassword(context),
                 child: _isLoading
                     ? const CircularProgressIndicator()
-                    : Text(t.forgetPassword.resetPassword), 
+                    : Text(t.forgetPassword.resetPassword),
               ),
             ],
           ),

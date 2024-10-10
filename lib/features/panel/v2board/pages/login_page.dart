@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hiddify/core/localization/translations.dart'; 
-import '../service/auth_provider.dart';
-import 'package:hiddify/features/panel/v2board/storage/token_storage.dart';
-import 'package:hiddify/features/profile/notifier/profile_notifier.dart';
-import 'package:hiddify/features/profile/notifier/active_profile_notifier.dart';
-import 'package:hiddify/features/profile/data/profile_data_providers.dart';
-import 'package:hiddify/features/profile/model/profile_entity.dart';
+import 'package:hiddify/core/localization/translations.dart';
 import 'package:hiddify/features/panel/v2board/service/auth_service.dart';
+import 'package:hiddify/features/panel/v2board/service/subscription_service.dart';
+import 'package:hiddify/features/panel/v2board/storage/token_storage.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../service/auth_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -29,6 +27,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     _passwordController.dispose();
     super.dispose();
   }
+
   Future<void> _login(BuildContext context) async {
     setState(() {
       _isLoading = true;
@@ -69,10 +68,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
         // 存储令牌
         await storeToken(authData!);
-
-        // 添加订阅信息并更新活动配置文件
-        await _addSubscription(authData!);
-
+        // 调用重置订阅的逻辑
+        await SubscriptionService.updateSubscription(context, ref);
         // 更新 authProvider 状态为已登录
         ref.read(authProvider.notifier).state = true;
 
@@ -85,50 +82,19 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             context, "Login failed. Invalid authentication data.");
       }
     } catch (e) {
-      print(e);
       _showErrorSnackbar(context, "An error occurred during login.");
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  Future<void> _addSubscription(String accessToken) async {
-    try {
-      final subscriptionLink =
-          await AuthService().getSubscriptionLink(accessToken);
-      if (subscriptionLink == null) return;
-
-      print("Adding subscription link: $subscriptionLink");
-
-      await ref.read(addProfileProvider.notifier).add(subscriptionLink);
-
-      final profileRepository =
-          await ref.read(profileRepositoryProvider.future);
-      final profilesResult = await profileRepository.watchAll().first;
-      final profiles = profilesResult.getOrElse((_) => []);
-      final newProfile = profiles.firstWhere(
-        (profile) =>
-            profile is RemoteProfileEntity && profile.url == subscriptionLink,
-        orElse: () {
-          if (profiles.isNotEmpty) {
-            return profiles[0];
-          } else {
-            throw Exception("No profiles available");
-          }
-        },
-      );
-
-      ref.read(activeProfileProvider.notifier).update((_) => newProfile);
-    } catch (e) {
-      print(e);
-      _showErrorSnackbar(
-          context, "An error occurred while adding the subscription.");
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
   void _showErrorSnackbar(BuildContext context, String message) {
+    if (!mounted) return; // 确保当前 widget 还挂载在树中
+
     final snackBar = SnackBar(
       content: Text(message),
       backgroundColor: Colors.red,
@@ -169,7 +135,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: t.login.welcome, 
+                              text: t.login.welcome,
                               style: TextStyle(
                                 fontSize: constraints.maxWidth > 600 ? 32 : 24,
                                 fontWeight: FontWeight.bold,
@@ -180,7 +146,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               text: ' ', // 添加一个空格来分隔两段文字
                             ),
                             TextSpan(
-                              text: t.general.appTitle, 
+                              text: t.general.appTitle,
                               style: TextStyle(
                                 fontSize: constraints.maxWidth > 600 ? 32 : 24,
                                 fontWeight: FontWeight.bold,
@@ -188,16 +154,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               ),
                             ),
                           ],
-                          
                         ),
                         textAlign: TextAlign.center, // 设置文本居中
                       ),
-
                       const SizedBox(height: 20),
                       TextFormField(
                         controller: _usernameController,
                         decoration: InputDecoration(
-                          labelText: t.login.username, 
+                          labelText: t.login.username,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -205,7 +169,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return t.login.username; 
+                            return t.login.username;
                           }
                           return null;
                         },
@@ -214,7 +178,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       TextFormField(
                         controller: _passwordController,
                         decoration: InputDecoration(
-                          labelText: t.login.password, 
+                          labelText: t.login.password,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -223,7 +187,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return t.login.password; 
+                            return t.login.password;
                           }
                           return null;
                         },
@@ -253,7 +217,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               ),
                             ),
                             child: Text(
-                              t.login.loginButton, 
+                              t.login.loginButton,
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,
@@ -270,7 +234,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               context.go('/forget-password');
                             },
                             child: Text(
-                              t.login.forgotPassword, 
+                              t.login.forgotPassword,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 14,
@@ -282,7 +246,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               context.go('/register');
                             },
                             child: Text(
-                              t.login.register, 
+                              t.login.register,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 14,

@@ -48,14 +48,18 @@ Future<void> lazyBootstrap(
     ],
   );
 
-  // 尝试读取 token 并设置登录状态
+// 尝试读取 token 并设置登录状态
   final token = await getToken(); // 从 SharedPreferences 中获取 token
   if (token != null) {
     // 调用 authService 实例上的 validateToken 方法
     final isValid = await authService.validateToken(token);
     if (isValid) {
       container.read(authProvider.notifier).state = true; // 设置为已登录
+    } else {
+      container.read(authProvider.notifier).state = false; // 设置为未登录
     }
+  } else {
+    container.read(authProvider.notifier).state = false; // 没有 token 时设置为未登录
   }
 
   await _init(

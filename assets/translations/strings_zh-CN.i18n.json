@@ -48,7 +48,14 @@
     "addSubscriptionError": "添加订阅时发生错误: ",
     "subscriptionAdded": "成功添加订阅并设置为活动配置文件！",
     "noSubscriptionLink": "无法获取订阅链接",
-    "goToLogin": "请重新登录"
+    "goToLogin": "请重新登录",
+    "monthPrice": "月付价格",
+    "quarterPrice": "季付价格",
+    "halfYearPrice": "半年付价格",
+    "yearPrice": "年付价格",
+    "twoYearPrice": "两年付价格",
+    "threeYearPrice": "三年付价格",
+    "onetimePrice": "一次性购买价格"
   },
   "userInfo": {
     "pageTitle": "用户信息",
