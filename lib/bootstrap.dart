@@ -17,8 +17,10 @@ import 'package:hiddify/core/preferences/preferences_provider.dart';
 import 'package:hiddify/features/app/widget/app.dart';
 import 'package:hiddify/features/auto_start/notifier/auto_start_notifier.dart';
 import 'package:hiddify/features/deep_link/notifier/deep_link_notifier.dart';
-
 import 'package:hiddify/features/log/data/log_data_providers.dart';
+import 'package:hiddify/features/panel/xboard/services/auth_provider.dart';
+import 'package:hiddify/features/panel/xboard/services/http_service/user_service.dart';
+import 'package:hiddify/features/panel/xboard/utils/storage/token_storage.dart';
 import 'package:hiddify/features/profile/data/profile_data_providers.dart';
 import 'package:hiddify/features/profile/notifier/active_profile_notifier.dart';
 import 'package:hiddify/features/system_tray/notifier/system_tray_notifier.dart';
@@ -27,9 +29,8 @@ import 'package:hiddify/singbox/service/singbox_service_provider.dart';
 import 'package:hiddify/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:hiddify/features/panel/v2board/service/auth_provider.dart';
-import 'package:hiddify/features/panel/v2board/service/auth_service.dart';
-import 'package:hiddify/features/panel/v2board/storage/token_storage.dart';
+
+
 
 Future<void> lazyBootstrap(
   WidgetsBinding widgetsBinding,
@@ -41,8 +42,7 @@ Future<void> lazyBootstrap(
   FlutterError.onError = Logger.logFlutterError;
   WidgetsBinding.instance.platformDispatcher.onError =
       Logger.logPlatformDispatcherError;
-  await AuthService.initialize(); // 在启动时调用初始化方法
-  final authService = AuthService();
+  final userService = UserService();
   final stopWatch = Stopwatch()..start();
 
   final container = ProviderContainer(
@@ -55,7 +55,7 @@ Future<void> lazyBootstrap(
   final token = await getToken(); // 从 SharedPreferences 中获取 token
   if (token != null) {
     // 调用 authService 实例上的 validateToken 方法
-    final isValid = await authService.validateToken(token);
+    final isValid = await userService.validateToken(token);
     if (isValid) {
       container.read(authProvider.notifier).state = true; // 设置为已登录
     } else {
