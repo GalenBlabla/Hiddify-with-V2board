@@ -12,7 +12,7 @@ class UserInfo {
   final int planId;
   final double? discount;
   final double? commissionRate;
-  final String? telegramId;
+  final Object? telegramId;
   final String uuid;
   final String avatarUrl;
 
