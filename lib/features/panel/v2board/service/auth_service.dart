@@ -6,8 +6,51 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthService {
-  static const _baseUrl = "https://abcd168.icu";
-  static const _inviteLinkBase = "$_baseUrl/#/register?code=";
+  static const String ossDomain =
+      'https://6536b91a.website-list.pages.dev/websites.json';
+  static String _baseUrl = ""; // Initially empty, will be set later.
+  static String _inviteLinkBase = "";
+
+  // 初始化服务并设置 _baseUrl
+  static Future<void> initialize() async {
+    _baseUrl = await _fetchValidDomain();
+    _inviteLinkBase = "$_baseUrl/#/register?code=";
+  }
+
+  // 从返回的 JSON 中挑选一个可以正常访问的域名
+  static Future<String> _fetchValidDomain() async {
+    try {
+      final response = await http.get(Uri.parse(ossDomain)).timeout(const Duration(seconds: 5));
+      if (response.statusCode == 200) {
+        final List<dynamic> websites =
+            json.decode(response.body) as List<dynamic>;
+        for (var website in websites) {
+          final String domain = website['url'] as String;
+          if (await _checkDomainAccessibility(domain)) {
+            print('Valid domain found: $domain');
+            return domain;
+          }
+        }
+        throw Exception('No accessible domains found.');
+      } else {
+        throw Exception(
+            'Failed to fetch websites.json: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching valid domain: $e');
+      throw e;
+    }
+  }
+
+  // 检查域名是否可访问
+  static Future<bool> _checkDomainAccessibility(String domain) async {
+    try {
+      final response = await http.get(Uri.parse(domain));
+      return response.statusCode == 200;
+    } catch (_) {
+      return false;
+    }
+  }
 
   // 获取完整邀请码链接的方法
   static String getInviteLink(String code) {
