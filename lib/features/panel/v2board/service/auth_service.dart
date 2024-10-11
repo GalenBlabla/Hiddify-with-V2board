@@ -107,8 +107,9 @@ class AuthService {
     }
   }
 
+
 // 提交订单，获取支付链接的方法
-  Future<String?> submitOrder(
+  Future<Map<String, dynamic>> submitOrder(
       String tradeNo, String method, String accessToken) async {
     const endpoint = "/api/v1/user/order/checkout";
     final body = {"trade_no": tradeNo, "method": method};
@@ -120,17 +121,11 @@ class AuthService {
         'Authorization': accessToken,
       },
     );
-    print(response);
+    print(response.runtimeType);
     print(body);
-    if (response.containsKey("data")) {
-      final data = response["data"];
-      if (data is String) {
-        return data; // 返回支付链接字符串
-      }
-    }
-    return null;
-  }
 
+    return response; // 确保返回 Map<String, dynamic>
+    }
   // 提交订单的方法
   Future<Map<String, dynamic>> createOrder(
       String accessToken, int planId, String period) async {

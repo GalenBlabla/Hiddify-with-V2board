@@ -71,7 +71,7 @@ class PurchaseService {
     return await _authService.getPaymentMethods(accessToken);
   }
 
-  Future<String?> submitOrder(
+  Future<Map<String, dynamic>> submitOrder(
       String tradeNo, String method, String accessToken) async {
     return await _authService.submitOrder(tradeNo, method, accessToken);
   }

@@ -122,22 +122,53 @@ class _PurchaseDetailsDialogState extends ConsumerState<PurchaseDetailsDialog> {
   Future<void> _handlePayment(dynamic selectedMethod) async {
     final accessToken = await getToken(); // 获取用户的token
     try {
-      final paymentLink = await _purchaseService.submitOrder(
-          _tradeNo!, selectedMethod['id'].toString(), accessToken!);
-      print("paymentLink$paymentLink");
-      if (paymentLink != null) {
-        _openPaymentUrl(paymentLink); // 打开支付链接
-        // 开始监听订单状态
-        _monitorOrderStatus();
-      } else {
-        print('Failed to generate payment link.');
+      // 调用 submitOrder 并获取完整的响应字典
+      final response = await _purchaseService.submitOrder(
+        _tradeNo!,
+        selectedMethod['id'].toString(),
+        accessToken!,
+      );
+
+      print('Payment response: $response');
+
+      // 获取 type 和 data 字段
+      final type = response['type'];
+      final data = response['data'];
+
+      // 确保 type 是 int 并且 data 是期望的类型
+      if (type is int) {
+        // 如果 type 为 -1 且 data 为 true，表示订单已通过钱包余额支付成功
+        if (type == -1 && data == true) {
+          print('订单已通过钱包余额支付成功，无需跳转支付页面');
+          _handlePaymentSuccess(); // 直接处理支付成功
+          return;
+        }
+
+        // 如果 type 为 1 且 data 是 String 类型，认为它是支付链接
+        if (type == 1 && data is String) {
+          _openPaymentUrl(data); // 打开支付链接
+          _monitorOrderStatus(); // 开始监听订单状态
+          return;
+        }
       }
+
+      // 处理其他未知情况
+      print('Failed to process payment: unexpected response.');
     } catch (e) {
       print('Payment error: $e');
     }
   }
 
-  void _monitorOrderStatus() async {
+  void _handlePaymentSuccess() {
+    print('Order marked as paid.');
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Order has been successfully paid')),
+    );
+    SubscriptionService.updateSubscription(context, widget.ref);
+    Navigator.of(context).pop(); // 关闭对话框或页面
+  }
+
+  Future<void> _monitorOrderStatus() async {
     final accessToken = await getToken();
     if (accessToken == null) return;
 
@@ -169,7 +200,7 @@ class _PurchaseDetailsDialogState extends ConsumerState<PurchaseDetailsDialog> {
     );
   }
 
-void _showPaymentMethodsDialog(List<dynamic> paymentMethods) async {
+  Future<void> _showPaymentMethodsDialog(List<dynamic> paymentMethods) async {
     final accessToken = await getToken();
     if (accessToken == null) return;
 
@@ -178,8 +209,10 @@ void _showPaymentMethodsDialog(List<dynamic> paymentMethods) async {
         await _orderService.getOrderDetails(_tradeNo!, accessToken);
     if (orderDetails['status'] == 'success') {
       final orderData = orderDetails['data'];
-      final totalAmount = (orderData['total_amount'] ?? 0) / 100; // 转换为元
-      final balanceAmount = (orderData['balance_amount'] ?? 0) / 100; // 转换为元
+      final totalAmount =
+          (orderData['total_amount'] as num? ?? 0) / 100.0; // 转换为元并确保类型为 num
+      final balanceAmount =
+          (orderData['balance_amount'] as num? ?? 0) / 100.0; // 转换为元并确保类型为 num
 
       // 显示详细费用结算信息
       showDialog(
@@ -193,7 +226,7 @@ void _showPaymentMethodsDialog(List<dynamic> paymentMethods) async {
                 Text(
                   'Total: ${totalAmount.toStringAsFixed(2)} ${widget.t.purchase.rmb}',
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                      fontSize: 16, fontWeight: FontWeight.bold,),
                 ),
                 Text(
                   'Wallet Deduction: ${balanceAmount.toStringAsFixed(2)} ${widget.t.purchase.rmb}',
@@ -202,7 +235,7 @@ void _showPaymentMethodsDialog(List<dynamic> paymentMethods) async {
                 Text(
                   'Amount to Pay: ${totalAmount.toStringAsFixed(2)} ${widget.t.purchase.rmb}',
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                      fontSize: 18, fontWeight: FontWeight.bold,),
                 ),
                 const SizedBox(height: 16),
 
@@ -211,14 +244,14 @@ void _showPaymentMethodsDialog(List<dynamic> paymentMethods) async {
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      _handlePaymentSuccess(); // 直接进入支付成功流程
+                      _handlePayment({'id': 'wallet_balance'}); // 使用钱包余额支付
                     },
-                    child: Text(
-                      'Pay Now (Free)',
-                      style: const TextStyle(color: Colors.white),
-                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
+                    ),
+                    child: const Text(
+                      'Pay Now (Free)',
+                      style: TextStyle(color: Colors.white),
                     ),
                   )
                 else
@@ -229,7 +262,7 @@ void _showPaymentMethodsDialog(List<dynamic> paymentMethods) async {
                     final feePercent = paymentMethod['handling_fee_percent'] !=
                             null
                         ? double.tryParse(paymentMethod['handling_fee_percent']
-                                .toString()) ??
+                                .toString(),) ??
                             0.0
                         : 0.0;
                     final handlingFee = totalAmount * feePercent / 100;
@@ -258,7 +291,7 @@ void _showPaymentMethodsDialog(List<dynamic> paymentMethods) async {
                         _handlePayment(paymentMethod); // 处理实际支付流程
                       },
                     );
-                  }).toList(),
+                  }),
               ],
             ),
             actions: [
@@ -276,6 +309,7 @@ void _showPaymentMethodsDialog(List<dynamic> paymentMethods) async {
       print('Failed to retrieve order details: ${orderDetails['message']}');
     }
   }
+
   void _openPaymentUrl(String paymentUrl) {
     final Uri url = Uri.parse(paymentUrl);
     launchUrl(url);
@@ -382,13 +416,5 @@ void _showPaymentMethodsDialog(List<dynamic> paymentMethods) async {
         ),
       ],
     );
-  }
-  void _handlePaymentSuccess() {
-    print('Order marked as paid.');
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Order has been successfully paid')),
-    );
-    SubscriptionService.resetSubscription(context, widget.ref);
-    Navigator.of(context).pop(); // 关闭对话框或页面
   }
 }
