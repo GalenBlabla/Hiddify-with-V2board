@@ -24,7 +24,9 @@ class _UserInfoPageState extends ConsumerState<UserInfoPage> {
 
   void _refreshData() {
     // 刷新用户信息和邀请码列表
+    // ignore: unused_result
     ref.refresh(userTokenInfoProvider);
+    // ignore: unused_result
     ref.refresh(inviteCodesProvider);
   }
 

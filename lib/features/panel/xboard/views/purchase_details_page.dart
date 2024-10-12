@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hiddify/core/localization/translations.dart';
 import 'package:hiddify/features/panel/xboard/models/order_model.dart';
 import 'package:hiddify/features/panel/xboard/models/plan_model.dart';
-import 'package:hiddify/features/panel/xboard/services/http_service/auth_service.dart';
 import 'package:hiddify/features/panel/xboard/services/http_service/order_service.dart';
 import 'package:hiddify/features/panel/xboard/services/monitor_pay_status.dart';
 import 'package:hiddify/features/panel/xboard/services/purchase_service.dart';

@@ -28,17 +28,17 @@ class HttpService {
           .timeout(const Duration(seconds: 20)); // 设置超时时间
 
       if (kDebugMode) {
-        print("GET $endpoint response: ${response.body}");
+        print("GET $baseUrl$endpoint response: ${response.body}");
       }
       if (response.statusCode == 200) {
         return json.decode(response.body) as Map<String, dynamic>;
       } else {
         throw Exception(
-            "GET request to $endpoint failed: ${response.statusCode}, ${response.body}");
+            "GET request to $baseUrl$endpoint failed: ${response.statusCode}, ${response.body}");
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Error during GET request to $endpoint: $e');
+        print('Error during GET request to $baseUrl$endpoint: $e');
       }
       rethrow;
     }
@@ -62,13 +62,13 @@ class HttpService {
           .timeout(const Duration(seconds: 20)); // 设置超时时间
 
       if (kDebugMode) {
-        print("POST $endpoint response: ${response.body}");
+        print("POST $baseUrl$endpoint response: ${response.body}");
       }
       if (response.statusCode == 200) {
         return json.decode(response.body) as Map<String, dynamic>;
       } else {
         throw Exception(
-            "POST request to $endpoint failed: ${response.statusCode}, ${response.body}");
+            "POST request to $baseUrl$endpoint failed: ${response.statusCode}, ${response.body}");
       }
     } catch (e) {
       rethrow;

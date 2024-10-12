@@ -5,8 +5,6 @@ import 'package:hiddify/features/panel/xboard/services/http_service/user_service
 import 'package:hiddify/features/panel/xboard/utils/storage/token_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-
-
 // 创建 UserInfoViewModel
 class UserInfoViewModel extends ChangeNotifier {
   final UserService _userService;

@@ -8,7 +8,6 @@ import 'package:hiddify/features/panel/xboard/utils/storage/token_storage.dart';
 import 'package:hiddify/features/panel/xboard/viewmodels/user_info_viewmodel.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-
 class AccountBalanceCard extends ConsumerWidget {
   const AccountBalanceCard({super.key});
 
@@ -16,7 +15,6 @@ class AccountBalanceCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = ref.watch(translationsProvider);
     final userInfoAsync = ref.watch(userInfoProvider);
-
 
     return userInfoAsync.when(
       data: (userInfo) {
@@ -26,11 +24,9 @@ class AccountBalanceCard extends ConsumerWidget {
         return _buildAccountBalanceCard(userInfo, t, context, ref);
       },
       loading: () {
-
         return const Center(child: CircularProgressIndicator());
       },
       error: (error, _) {
-
         return Center(
           child: Text('${t.userInfo.fetchUserInfoError} $error'),
         );
@@ -44,7 +40,6 @@ class AccountBalanceCard extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
