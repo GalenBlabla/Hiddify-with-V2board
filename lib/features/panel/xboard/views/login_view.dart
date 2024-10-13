@@ -25,7 +25,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Widget build(BuildContext context) {
     final loginViewModel = ref.watch(loginViewModelProvider);
     final t = ref.watch(translationsProvider);
-
+    final domainCheckViewModel = ref.watch(domainCheckViewModelProvider);
     return Scaffold(
       appBar: AppBar(
         // title: const Text('Login'),
@@ -124,22 +124,24 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         const Center(child: CircularProgressIndicator())
                       else
                         ElevatedButton(
-                          onPressed: () async {
-                            final email =
-                                loginViewModel.usernameController.text;
-                            final password =
-                                loginViewModel.passwordController.text;
-                            try {
-                              await loginViewModel.login(
-                                  email, password, context, ref);
-                              if (context.mounted) {
-                                context.go('/');
-                              }
-                            } catch (e) {
-                              _showErrorSnackbar(
-                                  context, "Login failed: $e", Colors.red);
-                            }
-                          },
+                          onPressed: domainCheckViewModel.isSuccess
+                              ? () async {
+                                  final email =
+                                      loginViewModel.usernameController.text;
+                                  final password =
+                                      loginViewModel.passwordController.text;
+                                  try {
+                                    await loginViewModel.login(
+                                        email, password, context, ref);
+                                    if (context.mounted) {
+                                      context.go('/');
+                                    }
+                                  } catch (e) {
+                                    _showErrorSnackbar(context,
+                                        "Login failed: $e", Colors.red);
+                                  }
+                                }
+                              : null, // 禁用按钮，直到连通性检查通过
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).primaryColor,
                             padding: const EdgeInsets.symmetric(
