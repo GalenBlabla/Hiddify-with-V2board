@@ -1,4 +1,5 @@
 // viewmodels/forget_password_viewmodel.dart
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hiddify/features/panel/xboard/services/http_service/auth_service.dart';
@@ -47,7 +48,9 @@ class ForgetPasswordViewModel extends ChangeNotifier {
       notifyListeners();
 
       // 可以在这里记录错误或显示错误提示
-      print("发送验证码失败: $e");
+      if (kDebugMode) {
+        print("发送验证码失败: $e");
+      }
     }
 
     // 请求成功或倒计时结束后，重置状态

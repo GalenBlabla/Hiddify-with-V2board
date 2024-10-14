@@ -7,7 +7,7 @@ class Plan {
   final String name;
   final int speedLimit;
   final bool show;
-  final String? content;
+  String? content;
   final double? onetimePrice;
   final double? monthPrice;
   final double? quarterPrice;

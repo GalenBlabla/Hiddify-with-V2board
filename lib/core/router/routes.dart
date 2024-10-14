@@ -7,6 +7,7 @@ import 'package:hiddify/features/config_option/widget/quick_settings_modal.dart'
 import 'package:hiddify/features/home/widget/home_page.dart';
 import 'package:hiddify/features/intro/widget/intro_page.dart';
 import 'package:hiddify/features/log/overview/logs_overview_page.dart';
+import 'package:hiddify/features/panel/xboard/views/components/user_info/order_page.dart';
 
 import 'package:hiddify/features/panel/xboard/views/forget_password_view.dart';
 import 'package:hiddify/features/panel/xboard/views/login_view.dart';
@@ -25,7 +26,8 @@ import 'package:hiddify/utils/utils.dart';
 
 part 'routes.g.dart';
 
-GlobalKey<NavigatorState>? dynamicRootKey = useMobileRouter ? rootNavigatorKey : null;
+GlobalKey<NavigatorState>? dynamicRootKey =
+    useMobileRouter ? rootNavigatorKey : null;
 
 @TypedShellRoute<MobileWrapperRoute>(
   routes: [
@@ -85,6 +87,10 @@ GlobalKey<NavigatorState>? dynamicRootKey = useMobileRouter ? rootNavigatorKey :
       path: "/purchase",
       name: PurchaseRoute.name,
     ),
+    TypedGoRoute<OrderRoute>(
+      path: "/order",
+      name: OrderRoute.name,
+    ),
     TypedGoRoute<UserInfoRoute>(
       path: "/user-info",
       name: UserInfoRoute.name,
@@ -132,6 +138,10 @@ class MobileWrapperRoute extends ShellRouteData {
       path: "/purchase",
       name: PurchaseRoute.name,
     ),
+    TypedGoRoute<OrderRoute>(
+      path: "/order",
+      name: OrderRoute.name,
+    ),
     TypedGoRoute<UserInfoRoute>(
       path: "/user-info",
       name: UserInfoRoute.name,
@@ -158,7 +168,6 @@ class MobileWrapperRoute extends ShellRouteData {
     ),
   ],
 )
-
 class DesktopWrapperRoute extends ShellRouteData {
   const DesktopWrapperRoute();
 
@@ -167,8 +176,12 @@ class DesktopWrapperRoute extends ShellRouteData {
     return AdaptiveRootScaffold(navigator);
   }
 }
+
 // 定义登录路由
-@TypedGoRoute<LoginRoute>(path: "/login",name: LoginRoute.name,)
+@TypedGoRoute<LoginRoute>(
+  path: "/login",
+  name: LoginRoute.name,
+)
 class LoginRoute extends GoRouteData {
   const LoginRoute();
   static const name = "Login";
@@ -182,6 +195,7 @@ class LoginRoute extends GoRouteData {
     );
   }
 }
+
 // 定义注册路由
 @TypedGoRoute<RegisterRoute>(
   path: "/register",
@@ -260,6 +274,7 @@ class ProxiesRoute extends GoRouteData {
     );
   }
 }
+
 class PurchaseRoute extends GoRouteData {
   const PurchaseRoute();
   static const name = "Purchase";
@@ -269,6 +284,24 @@ class PurchaseRoute extends GoRouteData {
     return const NoTransitionPage(
       name: name,
       child: PurchasePage(), // 确保 PurchasePage 是定义好的组件
+    );
+  }
+}
+
+@TypedGoRoute<OrderRoute>(
+  path: "/order",
+  name: OrderRoute.name,
+)
+class OrderRoute extends GoRouteData {
+  const OrderRoute();
+  static const name = "Order";
+
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return const MaterialPage(
+      fullscreenDialog: true,
+      name: name,
+      child: OrderPage(),
     );
   }
 }
@@ -285,7 +318,6 @@ class UserInfoRoute extends GoRouteData {
     );
   }
 }
-
 
 class AddProfileRoute extends GoRouteData {
   const AddProfileRoute({this.url});
@@ -319,7 +351,8 @@ class ProfilesOverviewRoute extends GoRouteData {
   Page<void> buildPage(BuildContext context, GoRouterState state) {
     return BottomSheetPage(
       name: name,
-      builder: (controller) => ProfilesOverviewModal(scrollController: controller),
+      builder: (controller) =>
+          ProfilesOverviewModal(scrollController: controller),
     );
   }
 }

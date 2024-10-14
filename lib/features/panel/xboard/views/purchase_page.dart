@@ -1,12 +1,11 @@
-// views/purchase_page.dart
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hiddify/core/localization/translations.dart';
 import 'package:hiddify/features/panel/xboard/models/plan_model.dart';
 import 'package:hiddify/features/panel/xboard/services/purchase_service.dart';
 import 'package:hiddify/features/panel/xboard/utils/price_widget.dart';
 import 'package:hiddify/features/panel/xboard/viewmodels/purchase_viewmodel.dart';
-import 'package:hiddify/features/panel/xboard/views/components/user_info/order_page.dart';
 import 'package:hiddify/features/panel/xboard/views/purchase_details_page.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -14,16 +13,27 @@ final purchaseViewModelProvider = ChangeNotifierProvider(
   (ref) => PurchaseViewModel(purchaseService: PurchaseService()),
 );
 
-class PurchasePage extends ConsumerWidget {
+class PurchasePage extends ConsumerStatefulWidget {
   const PurchasePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _PurchasePageState createState() => _PurchasePageState();
+}
+
+class _PurchasePageState extends ConsumerState<PurchasePage> {
+  @override
+  void initState() {
+    super.initState();
+    // Delay the provider modification until after the first frame is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(purchaseViewModelProvider).fetchPlans();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final t = ref.watch(translationsProvider);
     final viewModel = ref.watch(purchaseViewModelProvider);
-
-    // 确保 fetchPlans 只在页面首次加载时调用一次
-    ref.read(purchaseViewModelProvider).fetchPlans();
 
     return Scaffold(
       appBar: AppBar(
@@ -37,12 +47,7 @@ class PurchasePage extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const OrderPage(),
-                ),
-              );
+              context.push('/order');
             },
             child: const Text(
               '订单管理',
@@ -51,28 +56,34 @@ class PurchasePage extends ConsumerWidget {
           ),
         ],
       ),
-      body: Builder(
-        builder: (context) {
-          if (viewModel.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (viewModel.errorMessage != null) {
-            return Center(
-              child: Text(
-                  '${t.purchase.fetchPlansError} ${viewModel.errorMessage}'),
-            );
-          } else if (viewModel.plans.isEmpty) {
-            return Center(child: Text(t.purchase.noPlans));
-          } else {
-            return ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: viewModel.plans.length,
-              itemBuilder: (context, index) {
-                final plan = viewModel.plans[index];
-                return _buildPlanCard(plan, t, context, ref);
-              },
-            );
-          }
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await ref.read(purchaseViewModelProvider).fetchPlans(); // 强制刷新
         },
+        child: Builder(
+          builder: (context) {
+            if (viewModel.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (viewModel.errorMessage != null) {
+              return Center(
+                child: Text(
+                  '${t.purchase.fetchPlansError} ${viewModel.errorMessage}',
+                ),
+              );
+            } else if (viewModel.plans.isEmpty) {
+              return Center(child: Text(t.purchase.noPlans));
+            } else {
+              return ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: viewModel.plans.length,
+                itemBuilder: (context, index) {
+                  final plan = viewModel.plans[index];
+                  return _buildPlanCard(plan, t, context, ref);
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }

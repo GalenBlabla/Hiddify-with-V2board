@@ -1,5 +1,5 @@
 // viewmodels/user_info_viewmodel.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hiddify/features/panel/xboard/models/user_info_model.dart';
 import 'package:hiddify/features/panel/xboard/services/http_service/user_service.dart';
 import 'package:hiddify/features/panel/xboard/utils/storage/token_storage.dart';
@@ -26,19 +26,29 @@ class UserInfoViewModel extends ChangeNotifier {
     try {
       final token = await getToken();
       if (token != null) {
-        print('Token: $token');
+        if (kDebugMode) {
+          print('Token: $token');
+        }
         _userInfo = await _userService.fetchUserInfo(token);
-        print('用户信息已获取: $_userInfo');
+        if (kDebugMode) {
+          print('用户信息已获取: $_userInfo');
+        }
       } else {
-        print('未找到Token');
+        if (kDebugMode) {
+          print('未找到Token');
+        }
       }
     } catch (e) {
       _userInfo = null;
-      print('获取用户信息失败: $e');
+      if (kDebugMode) {
+        print('获取用户信息失败: $e');
+      }
     } finally {
       _isLoading = false;
       notifyListeners();
-      print('用户信息加载状态: $_isLoading');
+      if (kDebugMode) {
+        print('用户信息加载状态: $_isLoading');
+      }
     }
   }
 }

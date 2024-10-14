@@ -7,8 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class ResetSubscriptionViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  final Subscription _subscription;
-  ResetSubscriptionViewModel(this._subscription);
+  ResetSubscriptionViewModel();
 
   Future<void> resetSubscription(BuildContext context, WidgetRef ref) async {
     _isLoading = true;

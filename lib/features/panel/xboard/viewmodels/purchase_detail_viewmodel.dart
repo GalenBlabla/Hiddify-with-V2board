@@ -1,10 +1,9 @@
 // viewmodels/purchase_detail_viewmodel.dart
 import 'package:flutter/material.dart';
-import 'package:hiddify/features/panel/xboard/models/order_model.dart';
 import 'package:hiddify/features/panel/xboard/models/plan_model.dart';
 import 'package:hiddify/features/panel/xboard/services/http_service/order_service.dart';
-import 'package:hiddify/features/panel/xboard/services/purchase_service.dart';
 import 'package:hiddify/features/panel/xboard/services/monitor_pay_status.dart';
+import 'package:hiddify/features/panel/xboard/services/purchase_service.dart';
 import 'package:hiddify/features/panel/xboard/utils/storage/token_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -86,6 +85,7 @@ class PurchaseDetailViewModel extends ChangeNotifier {
     try {
       final response = await _purchaseService.submitOrder(
         _tradeNo!,
+        // ignore: avoid_dynamic_calls
         selectedMethod['id'].toString(),
         token,
       );
