@@ -19,6 +19,7 @@ import 'package:hiddify/features/auto_start/notifier/auto_start_notifier.dart';
 import 'package:hiddify/features/deep_link/notifier/deep_link_notifier.dart';
 import 'package:hiddify/features/log/data/log_data_providers.dart';
 import 'package:hiddify/features/panel/xboard/services/auth_provider.dart';
+import 'package:hiddify/features/panel/xboard/services/http_service/http_service.dart';
 import 'package:hiddify/features/panel/xboard/services/http_service/user_service.dart';
 import 'package:hiddify/features/panel/xboard/utils/storage/token_storage.dart';
 import 'package:hiddify/features/profile/data/profile_data_providers.dart';
@@ -29,8 +30,6 @@ import 'package:hiddify/singbox/service/singbox_service_provider.dart';
 import 'package:hiddify/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-
-
 
 Future<void> lazyBootstrap(
   WidgetsBinding widgetsBinding,
@@ -50,19 +49,44 @@ Future<void> lazyBootstrap(
       environmentProvider.overrideWithValue(env),
     ],
   );
+// 初始化域名
+  try {
+    print("Initializing domain...");
+    await HttpService.initialize();
+    print("Domain initialized successfully: ${HttpService.baseUrl}");
+  } catch (e) {
+    // 如果初始化域名出错，设置为未登录状态
+    print("Error during domain initialization: $e");
+    container.read(authProvider.notifier).state = false;
+    return;
+  }
 
 // 尝试读取 token 并设置登录状态
-  final token = await getToken(); // 从 SharedPreferences 中获取 token
-  if (token != null) {
-    // 调用 authService 实例上的 validateToken 方法
-    final isValid = await userService.validateToken(token);
-    if (isValid) {
-      container.read(authProvider.notifier).state = true; // 设置为已登录
+  try {
+    final token = await getToken(); // 从 SharedPreferences 中获取 token
+    print("Retrieved token: $token");
+
+    if (token != null) {
+      // 调用 authService 实例上的 validateToken 方法
+      print("Validating token...");
+      final isValid = await userService.validateToken(token);
+      print("Token validation result: $isValid");
+
+      if (isValid) {
+        container.read(authProvider.notifier).state = true; // 设置为已登录
+        print("User is logged in");
+      } else {
+        container.read(authProvider.notifier).state = false; // 设置为未登录
+        print("Token is invalid, setting user to not logged in");
+      }
     } else {
-      container.read(authProvider.notifier).state = false; // 设置为未登录
+      container.read(authProvider.notifier).state = false; // 没有 token 时设置为未登录
+      print("No token found, setting user to not logged in");
     }
-  } else {
-    container.read(authProvider.notifier).state = false; // 没有 token 时设置为未登录
+  } catch (e) {
+    // 在任何错误情况下设置为未登录
+    print("Error during token validation: $e");
+    container.read(authProvider.notifier).state = false;
   }
 
   await _init(

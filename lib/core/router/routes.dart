@@ -8,11 +8,6 @@ import 'package:hiddify/features/home/widget/home_page.dart';
 import 'package:hiddify/features/intro/widget/intro_page.dart';
 import 'package:hiddify/features/log/overview/logs_overview_page.dart';
 
-
-
-
-
-
 import 'package:hiddify/features/panel/xboard/views/forget_password_view.dart';
 import 'package:hiddify/features/panel/xboard/views/login_view.dart';
 import 'package:hiddify/features/panel/xboard/views/purchase_page.dart';
