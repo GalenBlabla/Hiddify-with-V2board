@@ -81,10 +81,8 @@ flutter run
 
 1. **替换面板域名**：
 
-   打开```lib/features/panel/v2board/service/auth_service.dart``` 替换_baseUrl为目标面板地址。  
-   ~~搜索项目中所有 `https://tomato.galen.life` 的地方，并替换为你的面板域名。例如，如果你的面板域名是 `https://example.com`，你可以用以下命令快速替换：~~
+   打开```lib/features/panel/xboard/services/http_service/domain_service.dart``` 替换ossDomain为目标自己的oss地址.[oss模版](https://github.com/GalenBlabla/website-list/blob/master/websites.json)。  
 
-   ~~grep -rl 'https://tomato.galen.life' lib/ | xargs sed -i 's#https://tomato.galen.life#https://example.com#g'~~
 
 2. **替换机场名字**：
 
@@ -109,9 +107,9 @@ flutter run
    ~~grep -rl 'V2Hiddify' lib/ | xargs sed -i 's/V2Hiddify/SuperVPN/g'~~
 
 ### 5. 打包应用
-
+默认无任何代理.
 根据需要打包相应平台的应用：  
-在打包之前我需要进入 `android` 目录下，找到 `gradle.properties` 文件，修改里面的代理 IP 和端口为自己的,如果无需代理，删除systemProp开头的5行即可：
+如果需要配置安卓代理,在打包之前需要进入 `android` 目录下，找到 `gradle.properties` 文件，修改里面的代理 IP 和端口为自己的,如果无需代理，可忽略：
 
   ```properties
   org.gradle.jvmargs=-Xmx4048m -Dfile.encoding=UTF-8
@@ -129,7 +127,13 @@ flutter run
   # 不使用代理的主机（可选）
   systemProp.http.nonProxyHosts=localhost|127.0.0.1
   ```
+**中国大陆境内务必使用gradle镜像地址下载依赖**
+打开```android/gradle/wrapper/gradle-wrapper.properties```根据需要自行选择**gradle**源
+```
+distributionUrl=https://mirrors.cloud.tencent.com/gradle/gradle-7.6.1-bin.zip
 
+# distributionUrl=https\://services.gradle.org/distributions/gradle-7.6.1-bin.zip
+```
 - Android 打包：
 
   ```bash
@@ -176,19 +180,6 @@ flutter run
   <img src="./images/connect_en.jpg" alt="Connect Example EN" width="200"/>
 </p>
 
----
-
-## 打包平台需求介绍
-
-V2Hiddify 项目目前存在一个问题：对于不同的域名，需要分别打包客户端。为了简化这个过程，我计划开发一个自动打包平台。用户可以通过该平台输入目标面板的域名(如 ```https://tomato.galen.life```),和面板名称（如 "V2Hiddify"），平台会自动为该面板生成配置文件并完成打包。
-
-### 实现思路
-
-1. **前端用户输入**：用户在平台上输入域名和面板名称。
-2. **生成配置文件**：后端根据用户输入生成对应的配置文件（例如 `config.toml`）。
-3. **触发打包脚本**：后端调用打包脚本（如 `build.sh`），根据配置文件进行打包。
-4. **下载链接**：打包完成后，生成下载链接供用户下载。
----
 ## 欢迎提交 Pull Request 🎉
 
 非常感谢你对本项目的关注！欢迎所有形式的贡献，无论是修复 bug、改进文档，还是增加新功能。如果你有好的想法或发现需要改进的地方，欢迎提交 PR！
