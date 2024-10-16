@@ -53,7 +53,7 @@ class AnalyticsController extends _$AnalyticsController with AppLogger {
           options.tracesSampleRate = 0.20;
           options.enableUserInteractionTracing = true;
           options.addIntegration(sentryLogger);
-          options.beforeSend = sentryBeforeSend as BeforeSendCallback?;
+          options.beforeSend = sentryBeforeSend;
         },
       );
 
