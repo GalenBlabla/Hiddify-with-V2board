@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:hiddify/features/panel/xboard/viewmodels/domain_check_viewmodel.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:hiddify/core/localization/translations.dart'; // 引入本地化提供者
 
 final domainCheckViewModelProvider = ChangeNotifierProvider((ref) {
   return DomainCheckViewModel();
@@ -12,6 +13,7 @@ class DomainCheckIndicator extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final t = ref.watch(translationsProvider); // 引入本地化文件
     final domainCheckViewModel = ref.watch(domainCheckViewModelProvider);
 
     return Row(
@@ -28,15 +30,16 @@ class DomainCheckIndicator extends ConsumerWidget {
               const SizedBox(width: 4),
               Text(domainCheckViewModel.progressIndicator),
               const SizedBox(width: 8),
-              Text('重试次数: ${domainCheckViewModel.retryCount}'),
+              Text(
+                  '${t.domain.retryAttempts}: ${domainCheckViewModel.retryCount}'),
             ],
           )
         else if (domainCheckViewModel.isSuccess)
-          const Row(
+          Row(
             children: [
-              Icon(Icons.check_circle, color: Colors.green),
-              SizedBox(width: 8),
-              Text('检查通过'),
+              const Icon(Icons.check_circle, color: Colors.green),
+              const SizedBox(width: 8),
+              Text(t.domain.checkPassed),
             ],
           )
         else
@@ -44,7 +47,8 @@ class DomainCheckIndicator extends ConsumerWidget {
             children: [
               const Icon(Icons.error, color: Colors.red),
               const SizedBox(width: 8),
-              Text('连接失败 (重试次数: ${domainCheckViewModel.retryCount})'),
+              Text(
+                  '${t.domain.connectionFailed} (${t.domain.retryAttempts}: ${domainCheckViewModel.retryCount})'),
               IconButton(
                 icon: const Icon(Icons.refresh),
                 onPressed: () {

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hiddify/core/localization/translations.dart';
@@ -60,7 +62,7 @@ class InviteCodeSection extends ConsumerWidget {
                 Text(
                   t.inviteCode.inviteCodeListTitle,
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                      fontSize: 18, fontWeight: FontWeight.bold,),
                 ),
                 ElevatedButton.icon(
                   onPressed: () => _generateInviteCode(context, ref),
@@ -93,7 +95,7 @@ class InviteCodeSection extends ConsumerWidget {
                             icon: const Icon(Icons.copy),
                             onPressed: () {
                               Clipboard.setData(
-                                  ClipboardData(text: fullInviteLink));
+                                  ClipboardData(text: fullInviteLink),);
                               _showSnackbar(
                                 context,
                                 '${t.inviteCode.copiedInviteCode} $fullInviteLink',

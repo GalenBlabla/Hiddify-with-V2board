@@ -1,4 +1,6 @@
 // views/account_balance_card.dart
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:hiddify/core/localization/translations.dart';
@@ -52,9 +54,9 @@ class AccountBalanceCard extends ConsumerWidget {
             child: ListTile(
               leading: const Icon(FluentIcons.wallet_24_filled),
               title: Text(
-                  '${t.userInfo.balance} (${t.userInfo.onlyForConsumption})'),
+                  '${t.userInfo.balance} (${t.userInfo.onlyForConsumption})',),
               subtitle: Text(
-                  '${(userInfo.balance / 100).toStringAsFixed(2)} ${t.userInfo.currency}'),
+                  '${(userInfo.balance / 100).toStringAsFixed(2)} ${t.userInfo.currency}',),
             ),
           ),
           const Divider(height: 1),
@@ -65,7 +67,7 @@ class AccountBalanceCard extends ConsumerWidget {
               leading: const Icon(FluentIcons.gift_card_money_24_filled),
               title: Text(t.userInfo.commissionBalance),
               subtitle: Text(
-                  '${(userInfo.commissionBalance / 100).toStringAsFixed(2)} ${t.userInfo.currency}'),
+                  '${(userInfo.commissionBalance / 100).toStringAsFixed(2)} ${t.userInfo.currency}',),
             ),
           ),
           Container(
@@ -81,7 +83,7 @@ class AccountBalanceCard extends ConsumerWidget {
                 const SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () => _showWithdrawDialog(
-                      context, ref, userInfo.commissionBalance),
+                      context, ref, userInfo.commissionBalance,),
                   child: Text(t.transferDialog.withdraw),
                 ),
               ],
@@ -93,9 +95,9 @@ class AccountBalanceCard extends ConsumerWidget {
   }
 
   void _showTransferDialog(
-      BuildContext context, WidgetRef ref, UserInfo userInfo) {
+      BuildContext context, WidgetRef ref, UserInfo userInfo,) {
     final t = ref.read(translationsProvider);
-    final _amountController = TextEditingController();
+    final amountController = TextEditingController();
 
     showDialog(
       context: context,
@@ -112,7 +114,7 @@ class AccountBalanceCard extends ConsumerWidget {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               TextField(
-                controller: _amountController,
+                controller: amountController,
                 keyboardType: TextInputType.number,
                 decoration:
                     InputDecoration(labelText: t.transferDialog.transferAmount),
@@ -126,7 +128,7 @@ class AccountBalanceCard extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () async {
-                final inputAmount = int.tryParse(_amountController.text) ?? 0;
+                final inputAmount = int.tryParse(amountController.text) ?? 0;
                 if (inputAmount > 0) {
                   await _transferCommission(context, ref, inputAmount * 100);
                 }
@@ -176,9 +178,9 @@ class AccountBalanceCard extends ConsumerWidget {
   }
 
   void _showWithdrawDialog(
-      BuildContext context, WidgetRef ref, double commissionBalance) {
+      BuildContext context, WidgetRef ref, double commissionBalance,) {
     final t = ref.watch(translationsProvider);
-    final _amountController = TextEditingController();
+    final amountController = TextEditingController();
 
     showDialog(
       context: context,
@@ -196,7 +198,7 @@ class AccountBalanceCard extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
               TextField(
-                controller: _amountController,
+                controller: amountController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: t.transferDialog.withdrawAmount,
@@ -214,7 +216,7 @@ class AccountBalanceCard extends ConsumerWidget {
             ),
             TextButton(
               onPressed: () async {
-                final inputAmount = int.tryParse(_amountController.text);
+                final inputAmount = int.tryParse(amountController.text);
                 if (inputAmount != null && inputAmount > 0) {
                   final transferAmount = inputAmount * 100;
                   await _transferCommission(context, ref, transferAmount);

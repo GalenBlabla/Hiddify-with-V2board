@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hiddify/core/localization/translations.dart';
 import 'package:hiddify/features/panel/xboard/services/http_service/auth_service.dart';
-import 'package:hiddify/features/panel/xboard/viewmodels/register_viewmodel.dart';
+import 'package:hiddify/features/panel/xboard/viewmodels/login_viewmodel/register_viewmodel.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final registerViewModelProvider = ChangeNotifierProvider((ref) {

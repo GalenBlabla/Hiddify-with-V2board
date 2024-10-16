@@ -6,7 +6,8 @@ import 'package:hiddify/features/panel/xboard/models/plan_model.dart';
 import 'package:hiddify/features/panel/xboard/services/purchase_service.dart';
 import 'package:hiddify/features/panel/xboard/utils/price_widget.dart';
 import 'package:hiddify/features/panel/xboard/viewmodels/purchase_viewmodel.dart';
-import 'package:hiddify/features/panel/xboard/views/purchase_details_page.dart';
+
+import 'package:hiddify/features/panel/xboard/views/components/dialog/purchase_details_dialog.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final purchaseViewModelProvider = ChangeNotifierProvider(
@@ -49,8 +50,8 @@ class _PurchasePageState extends ConsumerState<PurchasePage> {
             onPressed: () {
               context.push('/order');
             },
-            child: const Text(
-              '订单管理',
+            child: Text(
+              t.order.title,
               style: TextStyle(fontSize: 16, color: Colors.black),
             ),
           ),

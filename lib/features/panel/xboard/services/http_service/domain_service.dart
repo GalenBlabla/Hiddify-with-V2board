@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 class DomainService {
   static const String ossDomain =
       'https://down.protected.fun/config/config.json';
+      // 'https://storage.googleapis.com/oss-clarity/config.json';
 
 // 从返回的 JSON 中挑选一个可以正常访问的域名
   static Future<String> fetchValidDomain() async {
@@ -42,12 +43,12 @@ class DomainService {
 
   static Future<bool> _checkDomainAccessibility(String domain) async {
     try {
-      final response =
-          await http.get(Uri.parse(domain)).timeout(const Duration(seconds: 15));
+      final response = await http
+          .get(Uri.parse(domain))
+          .timeout(const Duration(seconds: 15));
 
       return response.statusCode == 200;
     } catch (e) {
-
       return false;
     }
   }

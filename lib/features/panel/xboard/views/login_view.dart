@@ -1,9 +1,11 @@
 // views/login_view.dart
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hiddify/core/localization/translations.dart';
 import 'package:hiddify/features/panel/xboard/services/http_service/auth_service.dart';
-import 'package:hiddify/features/panel/xboard/viewmodels/login_viewmodel.dart';
+import 'package:hiddify/features/panel/xboard/viewmodels/login_viewmodel/login_viewmodel.dart';
 import 'package:hiddify/features/panel/xboard/views/domain_check_indicator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -116,7 +118,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               loginViewModel.toggleRememberMe(value ?? false);
                             },
                           ),
-                          Text("t.login.rememberMe"),
+                          Text(t.login.rememberMe),
                         ],
                       ),
                       const SizedBox(height: 20),
@@ -132,13 +134,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                       loginViewModel.passwordController.text;
                                   try {
                                     await loginViewModel.login(
-                                        email, password, context, ref);
+                                        email, password, context, ref,);
                                     if (context.mounted) {
                                       context.go('/');
                                     }
                                   } catch (e) {
                                     _showErrorSnackbar(context,
-                                        "Login failed: $e", Colors.red);
+                                        "${t.login.loginErr}: $e", Colors.red,);
                                   }
                                 }
                               : null, // 禁用按钮，直到连通性检查通过

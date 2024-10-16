@@ -1,19 +1,23 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // 用于复制到剪贴板
+import 'package:hiddify/core/localization/translations.dart'; // 本地化提供者
 import 'package:hiddify/features/panel/xboard/models/order_model.dart';
 import 'package:hiddify/features/panel/xboard/services/http_service/order_service.dart';
 import 'package:hiddify/features/panel/xboard/utils/storage/token_storage.dart';
-
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart'; // 用于格式化日期
 
-class OrderPage extends StatefulWidget {
+class OrderPage extends ConsumerStatefulWidget {
   const OrderPage({super.key});
 
   @override
   _OrderPageState createState() => _OrderPageState();
 }
 
-class _OrderPageState extends State<OrderPage> {
+class _OrderPageState extends ConsumerState<OrderPage> {
   late Future<List<Order>> _ordersFuture; // 初始化 late 变量
 
   @override
@@ -36,23 +40,23 @@ class _OrderPageState extends State<OrderPage> {
     return await OrderService().fetchUserOrders(accessToken);
   }
 
-  String _getOrderStatusText(int? status) {
+  String _getOrderStatusText(int? status, Translations t) {
     switch (status) {
       case 0:
-        return '未支付';
+        return t.order.statuses.unpaid;
       case 3:
-        return '已支付';
+        return t.order.statuses.paid;
       case 2:
-        return '已取消';
+        return t.order.statuses.cancelled;
       default:
-        return '未知状态';
+        return t.order.statuses.unknown;
     }
   }
 
   // 将Unix时间戳转换为可读的日期格式
-  String _formatTimestamp(int? timestamp) {
+  String _formatTimestamp(int? timestamp, Translations t) {
     if (timestamp == null) {
-      return '未知';
+      return t.order.statuses.unknown;
     }
     final dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
     return DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
@@ -60,9 +64,10 @@ class _OrderPageState extends State<OrderPage> {
 
   @override
   Widget build(BuildContext context) {
+    final t = ref.watch(translationsProvider); // 获取本地化内容
     return Scaffold(
       appBar: AppBar(
-        title: const Text('订单管理'),
+        title: Text(t.order.title),
       ),
       body: RefreshIndicator(
         onRefresh: _refreshOrders, // 下拉刷新调用刷新方法
@@ -72,11 +77,11 @@ class _OrderPageState extends State<OrderPage> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+              return Center(child: Text('error: ${snapshot.error}'));
             } else if (snapshot.hasData && snapshot.data != null) {
               final orders = snapshot.data!;
               if (orders.isEmpty) {
-                return const Center(child: Text('暂无订单'));
+                return Center(child: Text(t.order.noOrders));
               }
               return ListView.builder(
                 padding: const EdgeInsets.all(8),
@@ -98,12 +103,15 @@ class _OrderPageState extends State<OrderPage> {
                           GestureDetector(
                             onLongPress: () {
                               Clipboard.setData(
-                                ClipboardData(text: order.tradeNo ?? '未知'),
+                                ClipboardData(
+                                  text:
+                                      order.tradeNo ?? t.order.statuses.unknown,
+                                ),
                               );
-                              _showSnackbar(context, '订单号已复制');
+                              _showSnackbar(context, t.order.orderNumberCopied);
                             },
                             child: Text(
-                              '订单号: ${order.tradeNo ?? '未知'}',
+                              '${t.order.orderDetails.orderNumber}: ${order.tradeNo ?? t.order.statuses.unknown}',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -114,7 +122,7 @@ class _OrderPageState extends State<OrderPage> {
 
                           // 金额
                           Text(
-                            '金额: ¥${(order.totalAmount != null ? (order.totalAmount! / 100).toStringAsFixed(2) : '未知')}',
+                            '${t.order.orderDetails.amount}: ¥${order.totalAmount != null ? (order.totalAmount! / 100).toStringAsFixed(2) : t.order.statuses.unknown}',
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -124,7 +132,7 @@ class _OrderPageState extends State<OrderPage> {
 
                           // 支付周期
                           Text(
-                            '支付周期: ${order.period ?? '未知'}',
+                            '${t.order.orderDetails.paymentCycle}: ${order.period ?? t.order.statuses.unknown}',
                             style: const TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -134,7 +142,7 @@ class _OrderPageState extends State<OrderPage> {
 
                           // 订单状态
                           Text(
-                            '订单状态: ${_getOrderStatusText(order.status)}',
+                            '${t.order.orderDetails.orderStatus}: ${_getOrderStatusText(order.status, t)}',
                             style: TextStyle(
                               fontSize: 14,
                               color: _getStatusColor(order.status),
@@ -144,7 +152,7 @@ class _OrderPageState extends State<OrderPage> {
 
                           // 订单创建时间
                           Text(
-                            '下单时间: ${_formatTimestamp(order.createdAt)}',
+                            '${t.order.orderDetails.orderTime}: ${_formatTimestamp(order.createdAt, t)}',
                             style: const TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
@@ -168,7 +176,7 @@ class _OrderPageState extends State<OrderPage> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
-                                  child: const Text('支付'),
+                                  child: Text(t.order.actions.pay),
                                 ),
                                 const SizedBox(width: 8),
                                 ElevatedButton(
@@ -182,7 +190,7 @@ class _OrderPageState extends State<OrderPage> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
-                                  child: const Text('取消'),
+                                  child: Text(t.order.actions.cancel),
                                 ),
                               ],
                             ),
@@ -193,7 +201,7 @@ class _OrderPageState extends State<OrderPage> {
                 },
               );
             } else {
-              return const Center(child: Text('暂无订单'));
+              return Center(child: Text(t.order.noOrders));
             }
           },
         ),
@@ -217,31 +225,40 @@ class _OrderPageState extends State<OrderPage> {
 
   // 支付逻辑处理函数
   void _handlePayment(Order order) {
-    // 这里处理订单支付逻辑
-    print('Processing payment for order: ${order.tradeNo}');
-    // 可以根据需求跳转到支付页面或者发起支付请求
+    if (kDebugMode) {
+      print('Processing payment for order: ${order.tradeNo}');
+    }
+    // 支付处理逻辑
   }
 
   // 取消订单逻辑处理函数
   Future<void> _handleCancel(Order order) async {
-    // 这里处理取消订单逻辑
-    print('Cancelling order: ${order.tradeNo}');
-    // 发起取消订单的API请求
+    if (kDebugMode) {
+      print('Cancelling order: ${order.tradeNo}');
+    }
     final authService = OrderService();
-    final tradeNo = order.tradeNo; // 替换为真实订单号
-    final accessToken = await getToken(); // 假设你有获取 access token 的方法
+    final tradeNo = order.tradeNo;
+    final accessToken = await getToken();
 
     try {
       final result = await authService.cancelOrder(tradeNo!, accessToken!);
-      print("订单取消结果: $result");
       if (result['status'] == 'success') {
-        _showSnackbar(context, "订单取消成功");
-        await _refreshOrders(); // 取消成功后刷新订单
+        _showSnackbar(
+          context,
+          ref.watch(translationsProvider).order.messages.orderCancelSuccess,
+        );
+        await _refreshOrders();
       } else {
-        _showSnackbar(context, "订单取消失败");
+        _showSnackbar(
+          context,
+          ref.watch(translationsProvider).order.messages.orderCancelFailed,
+        );
       }
     } catch (e) {
-      _showSnackbar(context, "取消订单失败: $e");
+      _showSnackbar(
+        context,
+        "${ref.watch(translationsProvider).order.messages.orderCancelFailed}: $e",
+      );
     }
   }
 

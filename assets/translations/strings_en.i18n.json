@@ -28,6 +28,11 @@
     "termsAndPolicyCaution(rich)": "By Continuing You Agree With ${tap(@:about.termsAndConditions)}",
     "start": "Start"
   },
+  "domain": {
+    "checkPassed": "Check Passed",
+    "connectionFailed": "Connection Failed",
+    "retryAttempts": "Retry Attempts"
+  },
   "home": {
     "pageTitle": "Home",
     "emptyProfilesMsg": "Start by adding a subscription profile",
@@ -36,26 +41,69 @@
     "goToPurchasePage": "Go to Purchase Page"
   },
   "purchase": {
-      "pageTitle": "Plans",
-      "noAccessToken": "No access token found. Please log in again.",
-      "fetchPlansError": "Failed to load: ",
-      "noPlans": "No available plans",
-      "priceLabel": "Price: ¥",
-      "rmb": "CNY",
-      "subscribe": "Subscribe",
-      "noData": "No data",
-      "subscribeSuccess": "Subscription successful",
-      "addSubscriptionError": "Error adding subscription: ",
-      "subscriptionAdded": "Subscription added and set as active profile!",
-      "noSubscriptionLink": "Unable to fetch subscription link",
-      "goToLogin": "Please log in again",
-      "monthPrice": "Monthly Price",
-      "quarterPrice": "Quarterly Price",
-      "halfYearPrice": "Half-Year Price",
-      "yearPrice": "Yearly Price",
-      "twoYearPrice": "Two-Year Price",
-      "threeYearPrice": "Three-Year Price",
-      "onetimePrice": "One-Time Purchase Price"
+    "pageTitle": "Plans",
+    "noAccessToken": "No access token found. Please log in again.",
+    "fetchPlansError": "Failed to load: ",
+    "noPlans": "No available plans",
+    "priceLabel": "Price: ¥",
+    "rmb": "CNY",
+    "subscribe": "Subscribe",
+    "noData": "No data",
+    "subscribeSuccess": "Subscription successful",
+    "addSubscriptionError": "Error adding subscription: ",
+    "subscriptionAdded": "Subscription added and set as active profile!",
+    "noSubscriptionLink": "Unable to fetch subscription link",
+    "goToLogin": "Please log in again",
+    "orderSuccess": "Payment successful",
+    "subscriptionDuration": "Select the subscription Duration",
+    "monthPrice": "Monthly",
+    "quarterPrice": "Quarterly",
+    "halfYearPrice": "Half-yearly",
+    "yearPrice": "Yearly",
+    "twoYearPrice": "Two years",
+    "threeYearPrice": "Three years",
+    "onetimePrice": "One-time",
+    "total": "Total",
+    "walletDeduction": "Wallet deduction",
+    "amountToPay": "Amount to pay",
+    "payNowFree": "Pay now (Free)",
+    "handlingFee": "Fee",
+    "totalPrice": "Total price",
+    "fee": "Fee",
+    "selectPaymentMethod": "Select payment method",
+    "unknown": "Unknown",
+    "close": "Close",
+    "selectPrice": "Please select a price"
+  },
+  "payments": {
+    "noPayments": "No Payments",
+    "noSuchPlan": "No subscription duration"
+  },
+  "order": {
+    "title": "Order Management",
+    "statuses": {
+      "unpaid": "Unpaid",
+      "paid": "Paid",
+      "cancelled": "Cancelled",
+      "unknown": "Unknown Status"
+    },
+    "noOrders": "No Orders",
+    "orderNumberCopied": "Order Number Copied",
+    "orderDetails": {
+      "orderNumber": "Order Number",
+      "amount": "Amount",
+      "paymentCycle": "Payment Cycle",
+      "orderStatus": "Order Status",
+      "orderTime": "Order Time"
+    },
+    "actions": {
+      "pay": "Pay",
+      "cancel": "Cancel"
+    },
+    "messages": {
+      "orderCancelSuccess": "Order Cancelled Successfully",
+      "orderCancelFailed": "Order Cancellation Failed"
+    }
   },
   "userInfo": {
     "pageTitle": "User",
@@ -118,7 +166,9 @@
     "password": "Password",
     "loginButton": "Login",
     "forgotPassword": "Forgot Password",
-    "register": "Register"
+    "register": "Register",
+    "rememberMe": "Remember Me",
+    "loginErr": "Login failed"
   },
   "forgetPassword": {
     "pageTitle": "Forget Password",
