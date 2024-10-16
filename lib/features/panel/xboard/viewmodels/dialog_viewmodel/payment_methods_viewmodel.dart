@@ -1,7 +1,8 @@
 // payment_methods_view_model.dart
 
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:flutter/foundation.dart';
-import 'package:hiddify/features/panel/xboard/services/http_service/order_service.dart';
 import 'package:hiddify/features/panel/xboard/services/monitor_pay_status.dart';
 import 'package:hiddify/features/panel/xboard/services/purchase_service.dart';
 import 'package:hiddify/features/panel/xboard/utils/storage/token_storage.dart';
@@ -12,7 +13,6 @@ class PaymentMethodsViewModel extends ChangeNotifier {
   final double totalAmount;
   final VoidCallback onPaymentSuccess;
   final PurchaseService _purchaseService = PurchaseService();
-  final OrderService _orderService = OrderService();
 
   PaymentMethodsViewModel({
     required this.tradeNo,
@@ -42,7 +42,9 @@ class PaymentMethodsViewModel extends ChangeNotifier {
       if (type is int) {
         // 如果 type 为 -1 且 data 为 true，表示订单已通过钱包余额支付成功
         if (type == -1 && data == true) {
-          print('订单已通过钱包余额支付成功，无需跳转支付页面');
+          if (kDebugMode) {
+            print('订单已通过钱包余额支付成功，无需跳转支付页面');
+          }
           handlePaymentSuccess(); // 直接处理支付成功
           return;
         }
@@ -79,10 +81,14 @@ class PaymentMethodsViewModel extends ChangeNotifier {
 
     MonitorPayStatus().monitorOrderStatus(tradeNo, accessToken, (bool isPaid) {
       if (isPaid) {
-        print('订单支付成功');
+        if (kDebugMode) {
+          print('订单支付成功');
+        }
         handlePaymentSuccess();
       } else {
-        print('订单未支付');
+        if (kDebugMode) {
+          print('订单未支付');
+        }
       }
     });
   }
