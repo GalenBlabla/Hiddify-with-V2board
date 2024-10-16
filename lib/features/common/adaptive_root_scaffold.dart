@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:hiddify/core/localization/translations.dart';
 import 'package:hiddify/core/router/router.dart';
-import 'package:hiddify/features/panel/v2board/common/logout_dialog.dart';
+
+import 'package:hiddify/features/panel/xboard/utils/logout_dialog.dart';
 import 'package:hiddify/features/stats/widget/side_bar_stats_overview.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 
-import 'package:hiddify/features/panel/v2board/service/auth_provider.dart'; // 确保引入 auth_provider 包
 
 abstract interface class RootScaffold {
   static final stateKey = GlobalKey<ScaffoldState>();

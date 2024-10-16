@@ -28,6 +28,11 @@
     "termsAndPolicyCaution(rich)": "继续即表示您同意 ${tap(@:about.termsAndConditions)}",
     "start": "开始"
   },
+  "domain": {
+    "checkPassed": "检查通过",
+    "connectionFailed": "连接失败",
+    "retryAttempts": "重试次数"
+  },
   "home": {
     "pageTitle": "主页",
     "emptyProfilesMsg": "从添加订阅配置文件开始",
@@ -42,13 +47,64 @@
     "noPlans": "没有可用的套餐",
     "priceLabel": "价格: ¥",
     "rmb": "元",
-    "subscribe": "订阅",
-    "noData": "没有数据",
     "subscribeSuccess": "成功订阅",
     "addSubscriptionError": "添加订阅时发生错误: ",
     "subscriptionAdded": "成功添加订阅并设置为活动配置文件！",
     "noSubscriptionLink": "无法获取订阅链接",
-    "goToLogin": "请重新登录"
+    "goToLogin": "请重新登录",
+    "subscriptionDuration":"请选择订阅时长",
+    "monthPrice": "月付价格",
+    "quarterPrice": "季付价格",
+    "halfYearPrice": "半年付价格",
+    "yearPrice": "年付价格",
+    "twoYearPrice": "两年付价格",
+    "threeYearPrice": "三年付价格",
+    "onetimePrice": "一次性购买价格",
+    "orderSuccess": "订单支付成功",
+    "total": "总计",
+    "walletDeduction": "钱包扣除",
+    "amountToPay": "支付金额",
+    "payNowFree": "立即支付（免费）",
+    "handlingFee": "手续费",
+    "totalPrice": "总价格",
+    "fee": "手续费",
+    "selectPaymentMethod": "选择支付方式",
+    "unknown": "未知",
+    "noData": "无数据",
+    "close": "关闭",
+    "subscribe": "订阅",
+    "selectPrice": "请选择价格"
+  },
+  "payments":{
+    "noPayments":"没有可用的支付方式",
+    "noSuchPlan":"没有选择订阅时长"
+  },
+
+  "order": {
+    "title": "订单管理",
+    "statuses": {
+      "unpaid": "未支付",
+      "paid": "已支付",
+      "cancelled": "已取消",
+      "unknown": "未知状态"
+    },
+    "noOrders": "暂无订单",
+    "orderNumberCopied": "订单号已复制",
+    "orderDetails": {
+      "orderNumber": "订单号",
+      "amount": "金额",
+      "paymentCycle": "支付周期",
+      "orderStatus": "订单状态",
+      "orderTime": "下单时间"
+    },
+    "actions": {
+      "pay": "支付",
+      "cancel": "取消"
+    },
+    "messages": {
+      "orderCancelSuccess": "订单取消成功",
+      "orderCancelFailed": "订单取消失败"
+    }
   },
   "userInfo": {
     "pageTitle": "用户信息",
@@ -71,14 +127,14 @@
     "banned": "封禁",
     "active": "正常"
   },
-  "inviteCode":{
+  "inviteCode": {
     "inviteCodeListTitle": "邀请码列表",
     "fetchInviteCodesError": "加载邀请码失败：",
     "noInviteCodes": "没有可用的邀请码",
     "copyToClipboard": "复制到剪贴板",
     "copiedInviteCode": "已复制邀请码：",
-    "generateInviteCode": "生成邀请码" ,
-    "inviteCodeGenerateError":"生成邀请码失败"
+    "generateInviteCode": "生成邀请码",
+    "inviteCodeGenerateError": "生成邀请码失败"
   },
   "transferDialog": {
     "transferTitle": "推广佣金划转至余额",
@@ -111,7 +167,9 @@
     "password": "密码",
     "loginButton": "登录",
     "forgotPassword": "忘记密码",
-    "register": "注册"
+    "register": "注册",
+    "rememberMe": "记住账号密码",
+    "loginErr":"登录失败"
   },
   "forgetPassword": {
     "pageTitle": "忘记密码",
