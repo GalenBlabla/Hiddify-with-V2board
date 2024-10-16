@@ -49,7 +49,7 @@ dependencies:
   url_launcher: ^6.2.5
   vclibs: ^0.1.2
   launch_at_startup: ^0.2.2
-  sentry_flutter: ^7.16.1
+  sentry_flutter: ^8.9.0
   sentry_dart_plugin: ^1.7.1
   combine: ^0.5.7
   path: ^1.8.3
