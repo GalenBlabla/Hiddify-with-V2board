@@ -39,21 +39,22 @@ class PurchaseDetailsViewModel extends ChangeNotifier {
       final List<Order> orders =
           await _orderService.fetchUserOrders(accessToken);
       for (final order in orders) {
+        print(order.status);
         if (order.status == 0) {
           // 如果订单未支付
           await _orderService.cancelOrder(order.tradeNo!, accessToken);
           print('未支付订单 ${order.tradeNo} 已取消');
         }
       }
-
+      print("准备创建");
       // 创建新订单
       final orderResponse = await _purchaseService.createOrder(
         planId,
         selectedPeriod!,
         accessToken,
       );
-
-      if (orderResponse != null && orderResponse['status'] == 'success') {
+      print("请求完毕");
+      if (orderResponse != null) {
         tradeNo = orderResponse['data']?.toString();
         if (kDebugMode) {
           print("订单创建成功 订单号$tradeNo");

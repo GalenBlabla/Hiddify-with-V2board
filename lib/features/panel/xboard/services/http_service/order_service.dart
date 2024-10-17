@@ -12,14 +12,10 @@ class OrderService {
       headers: {'Authorization': accessToken},
     );
 
-    if (result["status"] == "success") {
-      final ordersJson = result["data"] as List;
-      return ordersJson
-          .map((json) => Order.fromJson(json as Map<String, dynamic>))
-          .toList();
-    } else {
-      throw Exception("Failed to fetch user orders: ${result['message']}");
-    }
+    final ordersJson = result["data"] as List;
+    return ordersJson
+        .map((json) => Order.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 
   Future<Map<String, dynamic>> getOrderDetails(
@@ -43,7 +39,7 @@ class OrderService {
       String accessToken, int planId, String period) async {
     return await _httpService.postRequest(
       "/api/v1/user/order/save",
-      {"plan_id": planId, "period": period},
+      {"plan_id": planId.toString(), "period": period},
       headers: {'Authorization': accessToken},
     );
   }

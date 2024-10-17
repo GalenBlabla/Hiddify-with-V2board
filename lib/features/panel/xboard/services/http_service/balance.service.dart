@@ -10,7 +10,7 @@ class BalanceService {
   ) async {
     await _httpService.postRequest(
       '/api/v1/user/transfer',
-      {'transfer_amount': transferAmount},
+      {'transfer_amount': transferAmount.toString()},
       headers: {'Authorization': accessToken}, // 需要用户的认证令牌
     );
     return true;

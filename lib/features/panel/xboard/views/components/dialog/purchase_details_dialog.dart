@@ -141,7 +141,7 @@ class _PurchaseDetailsDialogState extends ConsumerState<PurchaseDetailsDialog> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Text(
+            Text(
               '${t.purchase.subscriptionDuration}:',
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
@@ -212,6 +212,7 @@ class _PurchaseDetailsDialogState extends ConsumerState<PurchaseDetailsDialog> {
                   if (viewModel.selectedPrice != null &&
                       viewModel.selectedPeriod != null) {
                     final paymentMethods = await viewModel.handleSubscribe();
+                    print("paymentMethods:$paymentMethods");
                     if (paymentMethods.isNotEmpty) {
                       // 显示支付方式对话框
                       showDialog(
@@ -228,12 +229,12 @@ class _PurchaseDetailsDialogState extends ConsumerState<PurchaseDetailsDialog> {
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                         SnackBar(content: Text(t.payments.noPayments)),
+                        SnackBar(content: Text(t.payments.noPayments)),
                       );
                     }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                       SnackBar(content: Text(t.payments.noSuchPlan)),
+                      SnackBar(content: Text(t.payments.noSuchPlan)),
                     );
                   }
                 },
