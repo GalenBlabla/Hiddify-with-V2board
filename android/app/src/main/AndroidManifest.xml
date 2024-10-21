@@ -29,6 +29,7 @@
         android:banner="@mipmap/ic_banner"
         android:icon="@mipmap/ic_launcher"
         android:label="Clarity"
+
         android:roundIcon="@mipmap/ic_launcher_round"
         tools:targetApi="31">
 
