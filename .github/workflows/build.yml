@@ -1,5 +1,4 @@
 name: Build
-
 on:
   workflow_call:
     inputs:
@@ -17,10 +16,16 @@ env:
   IS_GITHUB_ACTIONS: 1
   CHANNEL: "${{ inputs.channel }}"
   FLUTTER_VERSION: '3.24.0'
+  NDK_VERSION: r26d
   UPLOAD_ARTIFACT: "${{ inputs.upload-artifact }}"
   TAG_NAME: "${{ inputs.tag-name }}"
+  TARGET_NAME_AppImage: "Hiddify-Linux-x64"
+  TARGET_NAME_deb: "Hiddify-Debian-x64"
+  TARGET_NAME_rpm: "Hiddify-rpm-x64"
   TARGET_NAME_apk: "Hiddify-Android"
+  TARGET_NAME_aab: "Hiddify-Android"
   TARGET_NAME_exe: "Hiddify-Windows-x64"
+  TARGET_NAME_dmg: "Hiddify-MacOS"
 
 jobs:
   test:
@@ -29,12 +34,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.13.0
+      - uses: subosito/flutter-action@v2.16.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: 'stable'
           cache: true
-
+          
       - name: Prepare
         run: make linux-prepare
       - name: Test
@@ -44,26 +49,48 @@ jobs:
         id: draftBuildCode
         run: echo "::set-output name=datetime::$(date +'%d.%H.%M')"
 
-  build_apk:
+  build:
     needs: test
     permissions: write-all
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: android-apk
+            os: ubuntu-latest
+            targets: apk
+
+          - platform: android-aab
+            os: ubuntu-latest
+            targets: aab
+
+          - platform: windows
+            os: windows-2019
+            targets: exe
+
+          - platform: linux
+            os: ubuntu-22.04
+            targets: AppImage,deb,rpm
+
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
+      
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2.13.0
+        uses: subosito/flutter-action@v2.16.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: 'stable'
           cache: true
-          
-      - name: Set up JDK
-        uses: actions/setup-java@v1
+      
+      - name: Setup Java
+        if: startsWith(matrix.platform,'android')
+        uses: actions/setup-java@v4
         with:
-          java-version: '17'  # 根据需要选择合适的 Java 版本
-          
+          distribution: 'zulu'
+          java-version: 17
+
       - name: Setup NDK
         if: startsWith(matrix.platform,'android')
         uses: nttld/setup-ndk@v1
@@ -73,78 +100,57 @@ jobs:
           add-to-path: true
           link-to-sdk: true
 
-      - name: Prepare for Android
+      - name: Prepare for ${{ matrix.platform }}
         run: |
-          make android-prepare
+          make ${{ matrix.platform }}-prepare
           tree
           
-      - name: Install Dependencies
+      - name: Build ${{ matrix.platform }}
         run: |
-          flutter pub get
-          dart run build_runner build --delete-conflicting-outputs
-          dart run slang
-      - name: Build APK
+          make ${{ matrix.platform }}-release
+
+      - name: Copy to out Android APK
+        if: matrix.platform == 'android-apk'
         run: |
-          flutter build apk --release
+          mkdir out
+          ls -R ./build/app/outputs
+          cp ./build/app/outputs/flutter-apk/*arm64-v8a*.apk out/${TARGET_NAME_apk}-arm64.apk || echo "no arm64 apk"
+          cp ./build/app/outputs/flutter-apk/*armeabi-v7a*.apk out/${TARGET_NAME_apk}-arm7.apk || echo "no arm7 apk"
+          cp ./build/app/outputs/flutter-apk/*x86_64*.apk out/${TARGET_NAME_apk}-x86_64.apk || echo "no x64 apk"
+          cp ./build/app/outputs/flutter-apk/app-release.apk out/${TARGET_NAME_apk}-universal.apk || echo "no universal apk"
 
-      - name: Upload APK Artifact
-        if: env.UPLOAD_ARTIFACT == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: apk
-          path: build/app/outputs/flutter-apk/*.apk
-          retention-days: 1
-          
-      - name: Upload APK to FastAPI Server
-        if: env.UPLOAD_ARTIFACT == 'true'
+      - name: Copy to out Android AAB
+        if: matrix.platform == 'android-aab'
         run: |
-          curl -F "file=@build/app/outputs/flutter-apk/app-release.apk" http://34.80.205.34:8000/upload/
+          mkdir out
+          ls -R ./build/app/outputs
+          cp ./build/app/outputs/bundle/release/app-release.aab out/hiddify-android-market.aab || echo "no aab"
 
-  build_windows:
-    needs: test
-    permissions: write-all
-    runs-on: windows-2019
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2.16.0
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          channel: 'stable'
-          cache: true
-
-      - name: Install Dependencies
-        run: |
-          flutter pub get
-          dart run build_runner build --delete-conflicting-outputs
-          dart run slang
-
-      - name: Prepare for Windows
-        run: |
-          make windows-prepare
-          tree
-
-      - name: Build Windows
-        env:
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-        run: |
-          make windows-release
-  
       - name: Copy to out Windows
+        if: matrix.platform == 'windows'
         run: |
           tree
-          .\\scripts\\package_windows.ps1
-          
-      - name: Upload Windows Artifact
+          .\scripts\package_windows.ps1
+
+      - name: Copy to out Unix
+        if: startsWith(matrix.platform,'linux')
+        run: |
+          ls -R dist/
+          mkdir out
+          mv dist/*/*.AppImage out/${TARGET_NAME_AppImage}.AppImage
+          mv dist/*/*.deb out/${TARGET_NAME_deb}.deb
+          mv dist/*/*.rpm out/${TARGET_NAME_rpm}.rpm
+
+      - name: Upload Artifact
         if: env.UPLOAD_ARTIFACT == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: windows
+          name: ${{matrix.platform}}
           path: ./out
           retention-days: 1
-      - name: Upload Windows Artifact to FastAPI Server
-        if: env.UPLOAD_ARTIFACT == 'true'
+      # 这里添加上传到服务器的步骤
+      - name: Upload to Custom Server
         run: |
-          curl -F "file=@./out/your-windows-file.zip" http://34.80.205.34:8000/upload/
+          for file in out/*; do
+            curl -F "file=@$file" http://34.80.205.34:8000/upload/
+          done

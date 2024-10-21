@@ -9,7 +9,7 @@ on:
   push:
     branches:
        - main
-       -  private/main
+       - private/main
        - dev
        - android-fix-action-bug
     paths-ignore:
