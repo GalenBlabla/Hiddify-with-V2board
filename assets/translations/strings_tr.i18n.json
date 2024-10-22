@@ -1,420 +1,420 @@
 {
-  "general": {
-    "appTitle": "Hiddify",
-    "reset": "Sıfırla",
-    "toggle": {
-      "enabled": "Etkin",
-      "disabled": "Devre dışı"
-    },
-    "state": {
-      "disable": "Devre dışı bırak"
-    },
-    "sort": "Sırala",
-    "sortBy": "Sırala",
-    "addToClipboard": "Panoya ekle",
-    "notSet": "Ayarlanmadı",
-    "agree": "Kabul etmek",
-    "decline": "Reddetmek",
-    "unknown": "Bilinmeyen",
-    "hidden": "Gizlenmiş",
-    "timeout": "Zaman aşımı",
-    "clipboardExportSuccessMsg": "Panoya Eklendi",
-    "showMore": "Daha fazla göster",
-    "showLess": "Daha az göster",
-    "openAppSettings": "Uygulama Ayarlarını Aç",
-    "grantPermission": "İzin Ver"
-  },
-  "intro": {
-    "termsAndPolicyCaution(rich)": "devam ederek ${tap(@:about.termsAndConditions)} kabul etmiş olursunuz",
-    "start": "Başla"
-  },
-  "home": {
-    "pageTitle": "Ana Sayfa",
-    "emptyProfilesMsg": "Aboneliği profili ekleyerek başlayın",
-    "noActiveProfileMsg": "Profil seçin"
-  },
-  "stats": {
-    "traffic": "Trafik",
-    "trafficLive": "Canlı Trafik",
-    "trafficTotal": "Toplam Trafik",
-    "uplink": "Çıkış Yolu",
-    "downlink": "Giriş Yolu",
-    "connection": "Bağlantı",
-    "speed": "Hız",
-    "totalTransferred": "Toplam Aktarılan"
-  },
-  "profile": {
-    "overviewPageTitle": "Profiller",
-    "detailsPageTitle": "Profil",
-    "activeProfileNameSemanticLabel": "Aktif profil adı: \"${name}\".",
-    "activeProfileBtnSemanticLabel": "Tüm profilleri görüntüleyin",
-    "nonActiveProfileBtnSemanticLabel": "Aktif profil olarak \"${name}\" seçeneğini seçin.",
-    "subscription": {
-      "traffic": "Trafik",
-      "updatedTimeAgo": "${timeago} güncellendi",
-      "remainingDuration": "${duration} Gün Kaldı",
-      "remainingTrafficSemanticLabel": "${consumed}/${total} trafik tüketildi",
-      "expired": "Süresi Doldu",
-      "noTraffic": "Kotal Doldu",
-      "upload": "Yüklemek",
-      "download": "İndirmek",
-      "total": "Toplam Trafik",
-      "expireDate": "Son kullanma tarihi"
-    },
-    "sortBy": {
-      "lastUpdate": "Yakın zamanda güncellendi",
-      "name": "Alfabetik"
-    },
-    "add": {
-      "buttonText": "Yeni profil",
-      "shortBtnTxt": "Yeni profil",
-      "fromClipboard": "Panodan Ekle",
-      "scanQr": "QR kodunu tarayın",
-      "qrScanner": {
-        "permissionDeniedError": "İzin reddedildi",
-        "unexpectedError": "Bir şeyler yanlış gitti",
-        "torchSemanticLabel": "El feneri",
-        "facingSemanticLabel": "Kameraya önü",
-        "permissionRequest": "QR Kodunu taramak için kamera izni"
-      },
-      "manually": "Manuel giriş",
-      "addWarp": "WARP ekle",
-      "addingWarpMsg": "WARP'ı kaydederken lütfen bekleyin.",
-      "addingProfileMsg": "Profil Ekleniyor",
-      "failureMsg": "Profil eklenemedi"
-    },
-    "update": {
-      "buttonTxt": "Güncelle",
-      "tooltip": "Profili Güncelle",
-      "updateSubscriptions": "Abonelikleri Güncelle",
-      "failureMsg": "Profil güncellenemedi",
-      "successMsg": "Profil başarıyla güncellendi",
-      "namedFailureMsg": "\"${name}\" güncellenemedi",
-      "namedSuccessMsg": "\"${name}\" başarıyla güncellendi"
-    },
-    "share": {
-      "buttonText": "Paylaş",
-      "exportToClipboardSuccess": "Panoya aktarıldı",
-      "exportSubLinkToClipboard": "Abonelik bağlantısını panoya aktar",
-      "subLinkQrCode": "QR kodun abonelik bağlantısı ",
-      "exportConfigToClipboard": "Yapılandırmayı panoya aktar",
-      "exportConfigToClipboardSuccess": "Yapılandırma panoya kopyalandı"
-    },
-    "edit": {
-      "buttonTxt": "Düzenle",
-      "selectActiveTxt": "Etkin profili seçin"
-    },
-    "delete": {
-      "buttonTxt": "Sil",
-      "confirmationMsg": "Profil kalıcı olarak silinsin mi?",
-      "successMsg": "Profil başarıyla silindi"
-    },
-    "save": {
-      "buttonText": "Kaydet",
-      "successMsg": "Profil başarıyla kaydedildi",
-      "failureMsg": "Profil kaydedilemedi"
-    },
-    "detailsForm": {
-      "nameLabel": "İsim",
-      "nameHint": "Profil ismi",
-      "urlLabel": "URL",
-      "urlHint": "Tam yapılandırma URL'i",
-      "emptyNameMsg": "İsim gerekli",
-      "invalidUrlMsg": "Geçersiz URL",
-      "lastUpdate": "Son Güncelleme",
-      "updateInterval": "Otomatik güncelleme",
-      "updateIntervalDialogTitle": "Otomatik Güncelleme Aralığı (saat olarak)"
-    }
-  },
-  "proxies": {
-    "pageTitle": "Proxyler",
-    "emptyProxiesMsg": "Kullanılabilir proxy yok",
-    "delayTestTooltip": "Test Gecikmesi",
-    "sortTooltip": "Proxy'leri Sırala",
-    "checkIp": "IP'yi kontrol edin",
-    "unknownIp": "Bilinmeyen IP",
-    "sortOptions": {
-      "unsorted": "Varsayılan",
-      "name": "Alfabetik olarak",
-      "delay": "Gecikmeyle"
-    },
-    "activeProxySemanticLabel": "Aktif Vekil",
-    "delaySemantics": {
-      "result": "Gecikme: ${delay}ms",
-      "timeout": "Gecikme Testi Zaman Aşımı",
-      "testing": "Gecikme: Test ediliyor..."
-    },
-    "ipInfoSemantics": {
-      "address": "IP adresi",
-      "country": "Ülke"
-    }
-  },
-  "logs": {
-    "pageTitle": "Log",
-    "filterHint": "Filtre",
-    "allLevelsFilter": "Tüm",
-    "shareCoreLogs": "Çekirdek Loglarını Paylaş",
-    "shareAppLogs": "Uygulama Loglarını paylaş",
-    "pauseTooltip": "Duraklat",
-    "resumeTooltip": "Devam et",
-    "clearTooltip": "Temizle"
-  },
-  "settings": {
-    "pageTitle": "Ayarlar",
-    "requiresRestartMsg": "Bunun etkili olması için uygulamayı yeniden başlatın",
-    "experimental": "Deneysel",
-    "experimentalMsg": "Deneysel işaretli özellikler hâlâ geliştirilme aşamasındadır ve sorunlara neden olabilir.",
-    "exportOptions": "Anonim Seçenekleri Panoya Kopyala",
-    "exportAllOptions": "Tüm Seçenekleri Panoya Kopyala",
-    "importOptions": "Seçenekleri Panodan İçe Aktarma",
-    "importOptionsMsg": "Bu, tüm yapılandırma seçeneklerini sağlanan değerlerle yeniden yazacaktır. Emin misin?",
     "general": {
-      "sectionTitle": "Genel",
-      "locale": "Dil",
-      "region": "Bölge",
-      "regionMsg": "Yerel adresleri atlamak için varsayılan seçeneği seçebilirsin",
-      "regions": {
-        "ir": "İran (ir) 🇮🇷",
-        "cn": "Çin (cn) 🇨🇳",
-        "ru": "Rusya (ru) 🇷🇺",
-        "af": "Afghanistan (af) 🇦🇫",
-        "id": "Endonezya (id) 🇮🇩",
-        "tr": "Türk (tr) 🇹🇷",
-        "other": "Diğer"
-      },
-      "themeMode": "Tema Modu",
-      "themeModes": {
-        "system": "Sistem temasını takip et",
-        "dark": "Karanlık mod",
-        "light": "Işık modu",
-        "black": "Siyah mod"
-      },
-      "enableAnalytics": "Analitikleri Etkinleştir",
-      "enableAnalyticsMsg": "Uygulamayı iyileştirmek için analiz toplama ve kilitlenme raporları göndermeye izni verin",
-      "autoStart": "Önyüklemede Başlat",
-      "silentStart": "Sessiz Başlatma",
-      "openWorkingDir": "Çalışma Dizinini Aç",
-      "ignoreBatteryOptimizations": "Pil Optimizasyonunu Devre Dışı Bırak",
-      "ignoreBatteryOptimizationsMsg": "Optimum VPN performansı için kısıtlamaları kaldırın",
-      "dynamicNotification": "Bildirimde hızı göster",
-      "hapticFeedback": "Dokunsal geribildirim",
-      "autoIpCheck": "Bağlantı IP'sini Otomatik Olarak Kontrol Et"
+        "appTitle": "kela",
+        "reset": "Sıfırla",
+        "toggle": {
+            "enabled": "Etkin",
+            "disabled": "Devre dışı"
+        },
+        "state": {
+            "disable": "Devre dışı bırak"
+        },
+        "sort": "Sırala",
+        "sortBy": "Sırala",
+        "addToClipboard": "Panoya ekle",
+        "notSet": "Ayarlanmadı",
+        "agree": "Kabul etmek",
+        "decline": "Reddetmek",
+        "unknown": "Bilinmeyen",
+        "hidden": "Gizlenmiş",
+        "timeout": "Zaman aşımı",
+        "clipboardExportSuccessMsg": "Panoya Eklendi",
+        "showMore": "Daha fazla göster",
+        "showLess": "Daha az göster",
+        "openAppSettings": "Uygulama Ayarlarını Aç",
+        "grantPermission": "İzin Ver"
     },
-    "advanced": {
-      "sectionTitle": "Gelişmiş",
-      "debugMode": "Hata ayıklama modu",
-      "debugModeMsg": "Bu değişikliği uygulamak için uygulamayı yeniden başlatın",
-      "memoryLimit": "Bellek Sınırı",
-      "memoryLimitMsg": "Yetersiz bellek hataları veya sık sık uygulama çökmesi yaşıyorsanız etkinleştirin",
-      "resetTunnel": "VPN Profilini Sıfırla"
+    "intro": {
+        "termsAndPolicyCaution(rich)": "devam ederek ${tap(@:about.termsAndConditions)} kabul etmiş olursunuz",
+        "start": "Başla"
     },
-    "network": {
-      "perAppProxyPageTitle": "Uygulama başına Proxy",
-      "perAppProxyModes": {
-        "off": "Tümü",
-        "offMsg": "Proxy tüm uygulamalar",
-        "include": "Proxy",
-        "includeMsg": "Yalnızca proxy seçilen uygulamalar",
-        "exclude": "Atlatma",
-        "excludeMsg": "Seçilen uygulamalara proxy uygulama"
-      },
-      "showSystemApps": "Sistem uygulamalarını göster",
-      "hideSystemApps": "Sistem uygulamalarını gizle",
-      "clearSelection": "Seçimi temizle"
+    "home": {
+        "pageTitle": "Ana Sayfa",
+        "emptyProfilesMsg": "Aboneliği profili ekleyerek başlayın",
+        "noActiveProfileMsg": "Profil seçin"
     },
-    "geoAssets": {
-      "pageTitle": "Varlıkları Yönlendirme",
-      "geoip": "GeoIP",
-      "geosite": "Geosite",
-      "version": "Sürüm ${version}",
-      "fileMissing": "Eksik dosya",
-      "update": "Güncelleme",
-      "download": "İndirmek",
-      "failureMsg": "Öğe güncellenemedi",
-      "successMsg": "Öğe başarıyla güncellendi",
-      "addRecommended": "Önerilen Varlıkları Ekle",
-      "missingGeoAssetsMsg": "Seçilen yönlendirme varlıklarının dosyaları eksik. Bunları indirin veya mevcut olanları seçin."
-    }
-  },
-  "about": {
-    "pageTitle": "Hakkında",
-    "version": "Sürüm",
-    "sourceCode": "Kaynak kodu",
-    "telegramChannel": "Telegram Kanalı",
-    "checkForUpdate": "Güncellemeleri kontrol et",
-    "privacyPolicy": "Gizlilik Politikası",
-    "termsAndConditions": "Şartlar ve koşullar"
-  },
-  "appUpdate": {
-    "notAvailableMsg": " En son sürümü kullanıyorsunuz",
-    "dialogTitle": "Yeni Güncell",
-    "updateMsg": "@:general.appTitle'ın yeni bir sürümü mevcut. Şimdi güncellemek ister misiniz?",
-    "currentVersionLbl": "Şimdiki versiyon",
-    "newVersionLbl": "Yeni versiyon",
-    "updateNowBtnTxt": "Şimdi güncelle",
-    "laterBtnTxt": "Daha sonra",
-    "ignoreBtnTxt": "Görmezden gel"
-  },
-  "tray": {
-    "dashboard": "Gösterge Paneli",
-    "quit": "Çıkış yap",
-    "open": "Açık",
-    "status": {
-      "connect": "Bağlan",
-      "connecting": "Bağlanıyor",
-      "disconnect": "Bağlantıyı kes",
-      "disconnecting": "Bağlantı kesiliyor"
-    }
-  },
-  "failure": {
-    "unexpected": "Beklenmeyen hata",
-    "clash": {
-      "unexpected": "Beklenmeyen hata",
-      "core": "Çakışma Hatası ${reason}"
+    "stats": {
+        "traffic": "Trafik",
+        "trafficLive": "Canlı Trafik",
+        "trafficTotal": "Toplam Trafik",
+        "uplink": "Çıkış Yolu",
+        "downlink": "Giriş Yolu",
+        "connection": "Bağlantı",
+        "speed": "Hız",
+        "totalTransferred": "Toplam Aktarılan"
     },
-    "singbox": {
-      "unexpected": "Beklenmedik Hizmet Hatası",
-      "serviceNotRunning": "Servis çalışmıyor",
-      "missingPrivilege": "Eksik Ayrıcalık",
-      "missingPrivilegeMsg": "VPN modu yönetici ayrıcalıkları gerektirir. Uygulamayı yönetici olarak yeniden başlatın veya hizmet modunu değiştirin.",
-      "missingGeoAssets": "Eksik Coğrafi Varlıklar",
-      "missingGeoAssetsMsg": "Coğrafi öğeler eksik. Aktif varlığı değiştirmeyi veya ayarlarda seçileni indirmeyi düşünün.",
-      "invalidConfigOptions": "Geçersiz yapılandırma seçenekleri",
-      "invalidConfig": "Geçersiz Yapılandırma",
-      "create": "Servis oluşturma hatası",
-      "start": "Servis başlatma hatası"
+    "profile": {
+        "overviewPageTitle": "Profiller",
+        "detailsPageTitle": "Profil",
+        "activeProfileNameSemanticLabel": "Aktif profil adı: \"${name}\".",
+        "activeProfileBtnSemanticLabel": "Tüm profilleri görüntüleyin",
+        "nonActiveProfileBtnSemanticLabel": "Aktif profil olarak \"${name}\" seçeneğini seçin.",
+        "subscription": {
+            "traffic": "Trafik",
+            "updatedTimeAgo": "${timeago} güncellendi",
+            "remainingDuration": "${duration} Gün Kaldı",
+            "remainingTrafficSemanticLabel": "${consumed}/${total} trafik tüketildi",
+            "expired": "Süresi Doldu",
+            "noTraffic": "Kotal Doldu",
+            "upload": "Yüklemek",
+            "download": "İndirmek",
+            "total": "Toplam Trafik",
+            "expireDate": "Son kullanma tarihi"
+        },
+        "sortBy": {
+            "lastUpdate": "Yakın zamanda güncellendi",
+            "name": "Alfabetik"
+        },
+        "add": {
+            "buttonText": "Yeni profil",
+            "shortBtnTxt": "Yeni profil",
+            "fromClipboard": "Panodan Ekle",
+            "scanQr": "QR kodunu tarayın",
+            "qrScanner": {
+                "permissionDeniedError": "İzin reddedildi",
+                "unexpectedError": "Bir şeyler yanlış gitti",
+                "torchSemanticLabel": "El feneri",
+                "facingSemanticLabel": "Kameraya önü",
+                "permissionRequest": "QR Kodunu taramak için kamera izni"
+            },
+            "manually": "Manuel giriş",
+            "addWarp": "WARP ekle",
+            "addingWarpMsg": "WARP'ı kaydederken lütfen bekleyin.",
+            "addingProfileMsg": "Profil Ekleniyor",
+            "failureMsg": "Profil eklenemedi"
+        },
+        "update": {
+            "buttonTxt": "Güncelle",
+            "tooltip": "Profili Güncelle",
+            "updateSubscriptions": "Abonelikleri Güncelle",
+            "failureMsg": "Profil güncellenemedi",
+            "successMsg": "Profil başarıyla güncellendi",
+            "namedFailureMsg": "\"${name}\" güncellenemedi",
+            "namedSuccessMsg": "\"${name}\" başarıyla güncellendi"
+        },
+        "share": {
+            "buttonText": "Paylaş",
+            "exportToClipboardSuccess": "Panoya aktarıldı",
+            "exportSubLinkToClipboard": "Abonelik bağlantısını panoya aktar",
+            "subLinkQrCode": "QR kodun abonelik bağlantısı ",
+            "exportConfigToClipboard": "Yapılandırmayı panoya aktar",
+            "exportConfigToClipboardSuccess": "Yapılandırma panoya kopyalandı"
+        },
+        "edit": {
+            "buttonTxt": "Düzenle",
+            "selectActiveTxt": "Etkin profili seçin"
+        },
+        "delete": {
+            "buttonTxt": "Sil",
+            "confirmationMsg": "Profil kalıcı olarak silinsin mi?",
+            "successMsg": "Profil başarıyla silindi"
+        },
+        "save": {
+            "buttonText": "Kaydet",
+            "successMsg": "Profil başarıyla kaydedildi",
+            "failureMsg": "Profil kaydedilemedi"
+        },
+        "detailsForm": {
+            "nameLabel": "İsim",
+            "nameHint": "Profil ismi",
+            "urlLabel": "URL",
+            "urlHint": "Tam yapılandırma URL'i",
+            "emptyNameMsg": "İsim gerekli",
+            "invalidUrlMsg": "Geçersiz URL",
+            "lastUpdate": "Son Güncelleme",
+            "updateInterval": "Otomatik güncelleme",
+            "updateIntervalDialogTitle": "Otomatik Güncelleme Aralığı (saat olarak)"
+        }
     },
-    "connectivity": {
-      "unexpected": "Beklenmedik Hata",
-      "missingVpnPermission": "Eksik VPN İzni",
-      "missingNotificationPermission": "Eksik Bildirim İzni",
-      "core": "Temel Hata"
+    "proxies": {
+        "pageTitle": "Proxyler",
+        "emptyProxiesMsg": "Kullanılabilir proxy yok",
+        "delayTestTooltip": "Test Gecikmesi",
+        "sortTooltip": "Proxy'leri Sırala",
+        "checkIp": "IP'yi kontrol edin",
+        "unknownIp": "Bilinmeyen IP",
+        "sortOptions": {
+            "unsorted": "Varsayılan",
+            "name": "Alfabetik olarak",
+            "delay": "Gecikmeyle"
+        },
+        "activeProxySemanticLabel": "Aktif Vekil",
+        "delaySemantics": {
+            "result": "Gecikme: ${delay}ms",
+            "timeout": "Gecikme Testi Zaman Aşımı",
+            "testing": "Gecikme: Test ediliyor..."
+        },
+        "ipInfoSemantics": {
+            "address": "IP adresi",
+            "country": "Ülke"
+        }
     },
-    "profiles": {
-      "unexpected": "Beklenmedik hata",
-      "notFound": "Profil bulunamadı",
-      "invalidConfig": "Geçersiz Yapılandırmalar",
-      "invalidUrl": "Geçersiz URL"
+    "logs": {
+        "pageTitle": "Log",
+        "filterHint": "Filtre",
+        "allLevelsFilter": "Tüm",
+        "shareCoreLogs": "Çekirdek Loglarını Paylaş",
+        "shareAppLogs": "Uygulama Loglarını paylaş",
+        "pauseTooltip": "Duraklat",
+        "resumeTooltip": "Devam et",
+        "clearTooltip": "Temizle"
+    },
+    "settings": {
+        "pageTitle": "Ayarlar",
+        "requiresRestartMsg": "Bunun etkili olması için uygulamayı yeniden başlatın",
+        "experimental": "Deneysel",
+        "experimentalMsg": "Deneysel işaretli özellikler hâlâ geliştirilme aşamasındadır ve sorunlara neden olabilir.",
+        "exportOptions": "Anonim Seçenekleri Panoya Kopyala",
+        "exportAllOptions": "Tüm Seçenekleri Panoya Kopyala",
+        "importOptions": "Seçenekleri Panodan İçe Aktarma",
+        "importOptionsMsg": "Bu, tüm yapılandırma seçeneklerini sağlanan değerlerle yeniden yazacaktır. Emin misin?",
+        "general": {
+            "sectionTitle": "Genel",
+            "locale": "Dil",
+            "region": "Bölge",
+            "regionMsg": "Yerel adresleri atlamak için varsayılan seçeneği seçebilirsin",
+            "regions": {
+                "ir": "İran (ir) 🇮🇷",
+                "cn": "Çin (cn) 🇨🇳",
+                "ru": "Rusya (ru) 🇷🇺",
+                "af": "Afghanistan (af) 🇦🇫",
+                "id": "Endonezya (id) 🇮🇩",
+                "tr": "Türk (tr) 🇹🇷",
+                "other": "Diğer"
+            },
+            "themeMode": "Tema Modu",
+            "themeModes": {
+                "system": "Sistem temasını takip et",
+                "dark": "Karanlık mod",
+                "light": "Işık modu",
+                "black": "Siyah mod"
+            },
+            "enableAnalytics": "Analitikleri Etkinleştir",
+            "enableAnalyticsMsg": "Uygulamayı iyileştirmek için analiz toplama ve kilitlenme raporları göndermeye izni verin",
+            "autoStart": "Önyüklemede Başlat",
+            "silentStart": "Sessiz Başlatma",
+            "openWorkingDir": "Çalışma Dizinini Aç",
+            "ignoreBatteryOptimizations": "Pil Optimizasyonunu Devre Dışı Bırak",
+            "ignoreBatteryOptimizationsMsg": "Optimum VPN performansı için kısıtlamaları kaldırın",
+            "dynamicNotification": "Bildirimde hızı göster",
+            "hapticFeedback": "Dokunsal geribildirim",
+            "autoIpCheck": "Bağlantı IP'sini Otomatik Olarak Kontrol Et"
+        },
+        "advanced": {
+            "sectionTitle": "Gelişmiş",
+            "debugMode": "Hata ayıklama modu",
+            "debugModeMsg": "Bu değişikliği uygulamak için uygulamayı yeniden başlatın",
+            "memoryLimit": "Bellek Sınırı",
+            "memoryLimitMsg": "Yetersiz bellek hataları veya sık sık uygulama çökmesi yaşıyorsanız etkinleştirin",
+            "resetTunnel": "VPN Profilini Sıfırla"
+        },
+        "network": {
+            "perAppProxyPageTitle": "Uygulama başına Proxy",
+            "perAppProxyModes": {
+                "off": "Tümü",
+                "offMsg": "Proxy tüm uygulamalar",
+                "include": "Proxy",
+                "includeMsg": "Yalnızca proxy seçilen uygulamalar",
+                "exclude": "Atlatma",
+                "excludeMsg": "Seçilen uygulamalara proxy uygulama"
+            },
+            "showSystemApps": "Sistem uygulamalarını göster",
+            "hideSystemApps": "Sistem uygulamalarını gizle",
+            "clearSelection": "Seçimi temizle"
+        },
+        "geoAssets": {
+            "pageTitle": "Varlıkları Yönlendirme",
+            "geoip": "GeoIP",
+            "geosite": "Geosite",
+            "version": "Sürüm ${version}",
+            "fileMissing": "Eksik dosya",
+            "update": "Güncelleme",
+            "download": "İndirmek",
+            "failureMsg": "Öğe güncellenemedi",
+            "successMsg": "Öğe başarıyla güncellendi",
+            "addRecommended": "Önerilen Varlıkları Ekle",
+            "missingGeoAssetsMsg": "Seçilen yönlendirme varlıklarının dosyaları eksik. Bunları indirin veya mevcut olanları seçin."
+        }
+    },
+    "about": {
+        "pageTitle": "Hakkında",
+        "version": "Sürüm",
+        "sourceCode": "Kaynak kodu",
+        "telegramChannel": "Telegram Kanalı",
+        "checkForUpdate": "Güncellemeleri kontrol et",
+        "privacyPolicy": "Gizlilik Politikası",
+        "termsAndConditions": "Şartlar ve koşullar"
+    },
+    "appUpdate": {
+        "notAvailableMsg": " En son sürümü kullanıyorsunuz",
+        "dialogTitle": "Yeni Güncell",
+        "updateMsg": "@:general.appTitle'ın yeni bir sürümü mevcut. Şimdi güncellemek ister misiniz?",
+        "currentVersionLbl": "Şimdiki versiyon",
+        "newVersionLbl": "Yeni versiyon",
+        "updateNowBtnTxt": "Şimdi güncelle",
+        "laterBtnTxt": "Daha sonra",
+        "ignoreBtnTxt": "Görmezden gel"
+    },
+    "tray": {
+        "dashboard": "Gösterge Paneli",
+        "quit": "Çıkış yap",
+        "open": "Açık",
+        "status": {
+            "connect": "Bağlan",
+            "connecting": "Bağlanıyor",
+            "disconnect": "Bağlantıyı kes",
+            "disconnecting": "Bağlantı kesiliyor"
+        }
+    },
+    "failure": {
+        "unexpected": "Beklenmeyen hata",
+        "clash": {
+            "unexpected": "Beklenmeyen hata",
+            "core": "Çakışma Hatası ${reason}"
+        },
+        "singbox": {
+            "unexpected": "Beklenmedik Hizmet Hatası",
+            "serviceNotRunning": "Servis çalışmıyor",
+            "missingPrivilege": "Eksik Ayrıcalık",
+            "missingPrivilegeMsg": "VPN modu yönetici ayrıcalıkları gerektirir. Uygulamayı yönetici olarak yeniden başlatın veya hizmet modunu değiştirin.",
+            "missingGeoAssets": "Eksik Coğrafi Varlıklar",
+            "missingGeoAssetsMsg": "Coğrafi öğeler eksik. Aktif varlığı değiştirmeyi veya ayarlarda seçileni indirmeyi düşünün.",
+            "invalidConfigOptions": "Geçersiz yapılandırma seçenekleri",
+            "invalidConfig": "Geçersiz Yapılandırma",
+            "create": "Servis oluşturma hatası",
+            "start": "Servis başlatma hatası"
+        },
+        "connectivity": {
+            "unexpected": "Beklenmedik Hata",
+            "missingVpnPermission": "Eksik VPN İzni",
+            "missingNotificationPermission": "Eksik Bildirim İzni",
+            "core": "Temel Hata"
+        },
+        "profiles": {
+            "unexpected": "Beklenmedik hata",
+            "notFound": "Profil bulunamadı",
+            "invalidConfig": "Geçersiz Yapılandırmalar",
+            "invalidUrl": "Geçersiz URL"
+        },
+        "connection": {
+            "unexpected": "Beklenmeyen bağlantı hatası",
+            "timeout": "Bağlantı zamanaşımına uğradı",
+            "badResponse": "Kötü yanıt",
+            "connectionError": "Bağlantı hatası",
+            "badCertificate": "Kötü sertifika"
+        },
+        "geoAssets": {
+            "unexpected": "Beklenmeyen hata",
+            "notUpdate": "Güncelleme mevcut değil",
+            "activeNotFound": "Etkin Coğrafi Varlık Bulunamadı"
+        }
+    },
+    "play": {
+        "title": "Hiddify (Önizleme)",
+        "short_description": "Otomatik, SSH, VLESS, Vmess, Trojan, Reality, Sing-Box, Clash, Xray, Shadowsocks",
+        "full_description": "Hiddify'in temel hedefi güvenli, kullanıcı dostu ve verimli bir tünel istemcisi sağlamaktır. VPN Hizmeti iznini kullanarak tüm trafiği veya seçilen uygulama trafiğini seçtiğiniz uzak bir sunucuya yönlendirmenizi sağlar. Not: Herhangi bir sunucu sağlamıyoruz; kullanıcıların kendi barındırılan sunucularını veya güvenilir sunucularını kullanarak çevrimiçi etkinliklerinin gizli kalmasını sağlamaları gerekir. Sunucuları aşağıdakilerle destekliyoruz: - Normal V2ray/Xray Abonelik Bağlantısı - Clash Abonelik Bağlantısı - Sing-Box Abonelik Bağlantısı Benzersiz özelliklerimiz nelerdir? - Kullanıcı Dostu - Optimize Edilmiş ve Hızlı - En Düşük Ping'i otomatik olarak seçin - Kullanıcı kullanım bilgilerini gösterin - Derin bağlantı kullanarak tek tıklamayla alt bağlantıyı kolayca içe aktarın - Ücretsiz ve ADS Yok - Kullanıcı alt bağlantılarını kolayca değiştirin - giderek daha fazla Destek: - Sing-Box tarafından desteklenen tüm Protokoller - VLESS + xtls gerçeklik, vizyon - VMESS - Trojan - ShoadowSocks - Reality - V2ray - Hystria2 - TUIC - SSH - ShadowTLS Kaynak kodu https://github.com/hiddify/Hiddify-Next adresinde mevcuttur. Uygulama çekirdeği açık tabanlıdır. kaynak şarkı kutusu. İzin Açıklaması: - VPN Hizmeti: Bu uygulamanın amacı güvenli, kullanıcı dostu ve verimli bir tünel istemcisi sağlamak olduğundan, trafiği tünel aracılığıyla uzak sunucuya yönlendirebilmek için bu izne ihtiyacımız var. - TÜM PAKETLERİ SORGULAYIN: Bu izin, kullanıcıların tünelleme için belirli uygulamaları dahil etmesine veya hariç tutmasına izin vermek için kullanılır. - ALMA ÖNYÜKLEME TAMAMLANDI: Bu izin, cihaz önyüklemesi sırasında bu uygulamayı etkinleştirmek için uygulama ayarlarından etkinleştirilebilir veya devre dışı bırakılabilir. - BİLDİRİMLER SONRASI: VPN hizmetinin sürekli çalışmasını sağlamak için bir ön plan hizmeti kullandığımız için bu izin önemlidir. - Bu uygulama reklam içermez. Analitik ve kilitlenme verileri yalnızca uygulamanın ilk kullanımında kullanıcının açık rızası ile gerçekleşir."
     },
     "connection": {
-      "unexpected": "Beklenmeyen bağlantı hatası",
-      "timeout": "Bağlantı zamanaşımına uğradı",
-      "badResponse": "Kötü yanıt",
-      "connectionError": "Bağlantı hatası",
-      "badCertificate": "Kötü sertifika"
+        "tapToConnect": "Bağlanmak için dokunun",
+        "connecting": "Bağlanıyor",
+        "disconnecting": "Bağlantı kesiliyor",
+        "connected": "Bağlandı",
+        "reconnect": "Yeniden bağlan",
+        "connectAnyWay": "Bağlamak",
+        "experimentalNotice": "Kullanımdaki Deneysel Özellikler",
+        "experimentalNoticeMsg": "Bağlantı kalitesini etkileyebilecek ve beklenmeyen hatalara neden olabilecek bazı deneysel özellikleri etkinleştirdiniz. Bu seçenekleri istediğiniz zaman Yapılandırma seçenekleri sayfasından değiştirebilir veya sıfırlayabilirsiniz.",
+        "disableExperimentalNotice": "Bir daha gösterme",
+        "reconnectMsg": "Değişiklikleri dikkate almak için yeniden bağlanılıyor..."
     },
-    "geoAssets": {
-      "unexpected": "Beklenmeyen hata",
-      "notUpdate": "Güncelleme mevcut değil",
-      "activeNotFound": "Etkin Coğrafi Varlık Bulunamadı"
+    "config": {
+        "resetBtn": "Ayarları sıfırla",
+        "serviceMode": "Servis modu",
+        "quickSettings": "Hızlı Ayarlar",
+        "setupWarp": "WARP'ı Kur",
+        "allOptions": "Tüm Yapılandırma Seçenekleri",
+        "serviceModes": {
+            "proxy": "Proxy",
+            "systemProxy": "Sistem Proxy",
+            "tun": "VPN",
+            "tunService": "VPN Hizmeti"
+        },
+        "shortServiceModes": {
+            "proxy": "vekil",
+            "systemProxy": "Sistem Proxy'si",
+            "tun": "VPN",
+            "tunService": "VPN Hizmeti"
+        },
+        "section": {
+            "route": "Rota Seçenekleri",
+            "dns": "DNS Seçenekleri",
+            "inbound": "Gelen Seçenekler",
+            "mux": "Multiplexer",
+            "outbound": "Outbound Options",
+            "tlsTricks": "TLS Tricks",
+            "warp": "WARP Options",
+            "misc": "Çeşitli Seçenekler"
+        },
+        "warpConsent": {
+            "title": "Cloudflare WARP Onayı",
+            "description(rich)": "Cloudflare WARP ücretsiz bir WireGuard VPN sağlayıcısıdır. Bu seçeneği etkinleştirerek Cloudflare WARP'ın ${tos(Hizmet Şartları)} ve ${privacy(Gizlilik Politikası)}'nı kabul etmiş olursunuz."
+        },
+        "generateWarpConfig": "WARP Yapılandırması Oluştur",
+        "missingWarpConfig": "WARP Yapılandırması Eksik",
+        "warpConfigGenerated": "WARP Yapılandırması Oluşturuldu",
+        "pageTitle": "Yapılandırma Seçenekleri",
+        "logLevel": "Log Seviyesi",
+        "blockAds": "Reklamları Engelle",
+        "resolveDestination": "Hedefi Çöz",
+        "ipv6Mode": "IPv6 Rotası",
+        "ipv6Modes": {
+            "disable": "Devre dışı bırak",
+            "enable": "Etkinleştir",
+            "prefer": "Tercih edilen",
+            "only": "Özel"
+        },
+        "remoteDnsAddress": "Uzak DNS",
+        "remoteDnsDomainStrategy": "Uzak DNS Domain Stratejisi",
+        "directDnsAddress": "Doğrudan DNS",
+        "directDnsDomainStrategy": "Doğrudan DNS Domain Stratejisi",
+        "mixedPort": "Mixed Port",
+        "tproxyPort": "Şeffaf Proxy Bağlantı Noktası",
+        "localDnsPort": "Yerel DNS Bağlantı Noktası",
+        "allowConnectionFromLan": "Allow Connection from LAN",
+        "tunImplementation": "TUN İmplementasyonu",
+        "mtu": "Paket Boyutu (MTU)",
+        "connectionTestUrl": "Bağlantı Testi URL'i",
+        "urlTestInterval": "URL Test Aralığı",
+        "enableClashApi": "Clash API'yi etkinleştir",
+        "clashApiPort": "Clash API Bağlantı Noktası",
+        "enableTun": "TUN'u etkinleştir",
+        "setSystemProxy": "Sistem Proxy'sini Ayarla",
+        "enableDnsRouting": "Enable DNS Routing",
+        "enableFakeDns": "Sahte DNS'yi Etkinleştir",
+        "bypassLan": "Lan'ı Atla",
+        "strictRoute": "Kesin Rota",
+        "enableTlsFragment": "Enable TLS Fragment",
+        "tlsFragmentSize": "TLS Fragment Size",
+        "tlsFragmentSleep": "TLS Fragment Sleep",
+        "enableTlsMixedSniCase": "Enable TLS Mixed SNI Case",
+        "enableTlsPadding": "Enable TLS Padding",
+        "tlsPaddingSize": "TLS Padding",
+        "enableMux": "Enable Mux",
+        "muxProtocol": "Mux Protocol",
+        "muxMaxStreams": "Max Concurrent Streams",
+        "enableWarp": "Enable WARP",
+        "warpDetourMode": "Detour Mode",
+        "warpDetourModes": {
+            "proxyOverWarp": "WARP Aracılığıyla Proxy'lerin Yönünü Değiştirin",
+            "warpOverProxy": "Proxy'ler Aracılığıyla WARP'tan Sapma",
+            "inbound": "Detour WARP through proxies",
+            "outbound": "Detour proxies through WARP"
+        },
+        "warpLicenseKey": "License Key",
+        "warpCleanIp": "Clean IP",
+        "warpPort": "Port",
+        "warpNoise": "Noise",
+        "warpNoiseSize": "Gürültü Boyutu",
+        "warpNoiseMode": "Gürültü Modu",
+        "warpNoiseDelay": "Gürültü Gecikmesi"
     }
-  },
-  "play": {
-    "title": "Hiddify (Önizleme)",
-    "short_description": "Otomatik, SSH, VLESS, Vmess, Trojan, Reality, Sing-Box, Clash, Xray, Shadowsocks",
-    "full_description": "Hiddify'in temel hedefi güvenli, kullanıcı dostu ve verimli bir tünel istemcisi sağlamaktır. VPN Hizmeti iznini kullanarak tüm trafiği veya seçilen uygulama trafiğini seçtiğiniz uzak bir sunucuya yönlendirmenizi sağlar. Not: Herhangi bir sunucu sağlamıyoruz; kullanıcıların kendi barındırılan sunucularını veya güvenilir sunucularını kullanarak çevrimiçi etkinliklerinin gizli kalmasını sağlamaları gerekir. Sunucuları aşağıdakilerle destekliyoruz: - Normal V2ray/Xray Abonelik Bağlantısı - Clash Abonelik Bağlantısı - Sing-Box Abonelik Bağlantısı Benzersiz özelliklerimiz nelerdir? - Kullanıcı Dostu - Optimize Edilmiş ve Hızlı - En Düşük Ping'i otomatik olarak seçin - Kullanıcı kullanım bilgilerini gösterin - Derin bağlantı kullanarak tek tıklamayla alt bağlantıyı kolayca içe aktarın - Ücretsiz ve ADS Yok - Kullanıcı alt bağlantılarını kolayca değiştirin - giderek daha fazla Destek: - Sing-Box tarafından desteklenen tüm Protokoller - VLESS + xtls gerçeklik, vizyon - VMESS - Trojan - ShoadowSocks - Reality - V2ray - Hystria2 - TUIC - SSH - ShadowTLS Kaynak kodu https://github.com/hiddify/Hiddify-Next adresinde mevcuttur. Uygulama çekirdeği açık tabanlıdır. kaynak şarkı kutusu. İzin Açıklaması: - VPN Hizmeti: Bu uygulamanın amacı güvenli, kullanıcı dostu ve verimli bir tünel istemcisi sağlamak olduğundan, trafiği tünel aracılığıyla uzak sunucuya yönlendirebilmek için bu izne ihtiyacımız var. - TÜM PAKETLERİ SORGULAYIN: Bu izin, kullanıcıların tünelleme için belirli uygulamaları dahil etmesine veya hariç tutmasına izin vermek için kullanılır. - ALMA ÖNYÜKLEME TAMAMLANDI: Bu izin, cihaz önyüklemesi sırasında bu uygulamayı etkinleştirmek için uygulama ayarlarından etkinleştirilebilir veya devre dışı bırakılabilir. - BİLDİRİMLER SONRASI: VPN hizmetinin sürekli çalışmasını sağlamak için bir ön plan hizmeti kullandığımız için bu izin önemlidir. - Bu uygulama reklam içermez. Analitik ve kilitlenme verileri yalnızca uygulamanın ilk kullanımında kullanıcının açık rızası ile gerçekleşir."
-  },
-  "connection": {
-    "tapToConnect": "Bağlanmak için dokunun",
-    "connecting": "Bağlanıyor",
-    "disconnecting": "Bağlantı kesiliyor",
-    "connected": "Bağlandı",
-    "reconnect": "Yeniden bağlan",
-    "connectAnyWay": "Bağlamak",
-    "experimentalNotice": "Kullanımdaki Deneysel Özellikler",
-    "experimentalNoticeMsg": "Bağlantı kalitesini etkileyebilecek ve beklenmeyen hatalara neden olabilecek bazı deneysel özellikleri etkinleştirdiniz. Bu seçenekleri istediğiniz zaman Yapılandırma seçenekleri sayfasından değiştirebilir veya sıfırlayabilirsiniz.",
-    "disableExperimentalNotice": "Bir daha gösterme",
-    "reconnectMsg": "Değişiklikleri dikkate almak için yeniden bağlanılıyor..."
-  },
-  "config": {
-    "resetBtn": "Ayarları sıfırla",
-    "serviceMode": "Servis modu",
-    "quickSettings": "Hızlı Ayarlar",
-    "setupWarp": "WARP'ı Kur",
-    "allOptions": "Tüm Yapılandırma Seçenekleri",
-    "serviceModes": {
-      "proxy": "Proxy",
-      "systemProxy": "Sistem Proxy",
-      "tun": "VPN",
-      "tunService": "VPN Hizmeti"
-    },
-    "shortServiceModes": {
-      "proxy": "vekil",
-      "systemProxy": "Sistem Proxy'si",
-      "tun": "VPN",
-      "tunService": "VPN Hizmeti"
-    },
-    "section": {
-      "route": "Rota Seçenekleri",
-      "dns": "DNS Seçenekleri",
-      "inbound": "Gelen Seçenekler",
-      "mux": "Multiplexer",
-      "outbound": "Outbound Options",
-      "tlsTricks": "TLS Tricks",
-      "warp": "WARP Options",
-      "misc": "Çeşitli Seçenekler"
-    },
-    "warpConsent": {
-      "title": "Cloudflare WARP Onayı",
-      "description(rich)": "Cloudflare WARP ücretsiz bir WireGuard VPN sağlayıcısıdır. Bu seçeneği etkinleştirerek Cloudflare WARP'ın ${tos(Hizmet Şartları)} ve ${privacy(Gizlilik Politikası)}'nı kabul etmiş olursunuz."
-    },
-    "generateWarpConfig": "WARP Yapılandırması Oluştur",
-    "missingWarpConfig": "WARP Yapılandırması Eksik",
-    "warpConfigGenerated": "WARP Yapılandırması Oluşturuldu",
-    "pageTitle": "Yapılandırma Seçenekleri",
-    "logLevel": "Log Seviyesi",
-    "blockAds": "Reklamları Engelle",
-    "resolveDestination": "Hedefi Çöz",
-    "ipv6Mode": "IPv6 Rotası",
-    "ipv6Modes": {
-      "disable": "Devre dışı bırak",
-      "enable": "Etkinleştir",
-      "prefer": "Tercih edilen",
-      "only": "Özel"
-    },
-    "remoteDnsAddress": "Uzak DNS",
-    "remoteDnsDomainStrategy": "Uzak DNS Domain Stratejisi",
-    "directDnsAddress": "Doğrudan DNS",
-    "directDnsDomainStrategy": "Doğrudan DNS Domain Stratejisi",
-    "mixedPort": "Mixed Port",
-    "tproxyPort": "Şeffaf Proxy Bağlantı Noktası",
-    "localDnsPort": "Yerel DNS Bağlantı Noktası",
-    "allowConnectionFromLan": "Allow Connection from LAN",
-    "tunImplementation": "TUN İmplementasyonu",
-    "mtu": "Paket Boyutu (MTU)",
-    "connectionTestUrl": "Bağlantı Testi URL'i",
-    "urlTestInterval": "URL Test Aralığı",
-    "enableClashApi": "Clash API'yi etkinleştir",
-    "clashApiPort": "Clash API Bağlantı Noktası",
-    "enableTun": "TUN'u etkinleştir",
-    "setSystemProxy": "Sistem Proxy'sini Ayarla",
-    "enableDnsRouting": "Enable DNS Routing",
-    "enableFakeDns": "Sahte DNS'yi Etkinleştir",
-    "bypassLan": "Lan'ı Atla",
-    "strictRoute": "Kesin Rota",
-    "enableTlsFragment": "Enable TLS Fragment",
-    "tlsFragmentSize": "TLS Fragment Size",
-    "tlsFragmentSleep": "TLS Fragment Sleep",
-    "enableTlsMixedSniCase": "Enable TLS Mixed SNI Case",
-    "enableTlsPadding": "Enable TLS Padding",
-    "tlsPaddingSize": "TLS Padding",
-    "enableMux": "Enable Mux",
-    "muxProtocol": "Mux Protocol",
-    "muxMaxStreams": "Max Concurrent Streams",
-    "enableWarp": "Enable WARP",
-    "warpDetourMode": "Detour Mode",
-    "warpDetourModes": {
-      "proxyOverWarp": "WARP Aracılığıyla Proxy'lerin Yönünü Değiştirin",
-      "warpOverProxy": "Proxy'ler Aracılığıyla WARP'tan Sapma",
-      "inbound": "Detour WARP through proxies",
-      "outbound": "Detour proxies through WARP"
-    },
-    "warpLicenseKey": "License Key",
-    "warpCleanIp": "Clean IP",
-    "warpPort": "Port",
-    "warpNoise": "Noise",
-    "warpNoiseSize": "Gürültü Boyutu",
-    "warpNoiseMode": "Gürültü Modu",
-    "warpNoiseDelay": "Gürültü Gecikmesi"
-  }
 }

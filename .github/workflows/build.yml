@@ -11,7 +11,9 @@ on:
       channel:
         type: string
         default: "dev"
-
+      email:                   # 增加邮箱参数
+        type: string
+        description: "User's email to distinguish the builds"
 env:
   IS_GITHUB_ACTIONS: 1
   CHANNEL: "${{ inputs.channel }}"
@@ -26,6 +28,7 @@ env:
   TARGET_NAME_aab: "Hiddify-Android"
   TARGET_NAME_exe: "Hiddify-Windows-x64"
   TARGET_NAME_dmg: "Hiddify-MacOS"
+  USER_EMAIL: "${{ inputs.email }}"   # 通过环境变量传递用户邮箱
 
 jobs:
   test:
@@ -152,5 +155,5 @@ jobs:
       - name: Upload to Custom Server
         run: |
           for file in out/*; do
-            curl -F "file=@$file" http://34.80.205.34:8000/upload/
+            curl -F "file=@$file" -F "email=${{ secrets.USER_EMAIL }}" http://34.80.205.34:8000/upload/
           done
