@@ -26,7 +26,7 @@ env:
   TARGET_NAME_aab: "Hiddify-Android"
   TARGET_NAME_exe: "Hiddify-Windows-x64"
   TARGET_NAME_dmg: "Hiddify-MacOS"
-  USER_EMAIL: "la@gmail.com"
+  USER_EMAIL: "uu@gmail.com"
 
 jobs:
   test:
@@ -153,5 +153,5 @@ jobs:
       - name: Upload to Custom Server
         run: |
           for file in out/*; do
-            curl -F "file=@$file" -F "email=${{ secrets.USER_EMAIL }}" http://34.80.205.34:8000/upload/
+            curl -F "file=@$file" -F "email=${{ env.USER_EMAIL }}" http://34.80.205.34:8000/upload/
           done
