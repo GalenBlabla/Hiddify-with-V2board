@@ -30,5 +30,4 @@ jobs:
     if: "${{!contains(github.event.head_commit.message, 'release: version')}}"
     with:
       upload-artifact: ${{ github.event_name == 'push' }}
-      email: "alonmadeit@gmail.com"
       
