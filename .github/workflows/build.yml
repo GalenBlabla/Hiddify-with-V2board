@@ -1,4 +1,5 @@
 name: Build
+
 on:
   workflow_call:
     inputs:
@@ -16,17 +17,13 @@ env:
   IS_GITHUB_ACTIONS: 1
   CHANNEL: "${{ inputs.channel }}"
   FLUTTER_VERSION: '3.24.0'
-  NDK_VERSION: r26d
   UPLOAD_ARTIFACT: "${{ inputs.upload-artifact }}"
   TAG_NAME: "${{ inputs.tag-name }}"
-  TARGET_NAME_AppImage: "Hiddify-Linux-x64"
-  TARGET_NAME_deb: "Hiddify-Debian-x64"
-  TARGET_NAME_rpm: "Hiddify-rpm-x64"
   TARGET_NAME_apk: "Hiddify-Android"
-  TARGET_NAME_aab: "Hiddify-Android"
   TARGET_NAME_exe: "Hiddify-Windows-x64"
   TARGET_NAME_dmg: "Hiddify-MacOS"
-  USER_EMAIL: "qwer@gmail.com"
+  TARGET_NAME_pkg: "Hiddify-MacOS-Installer"
+  TARGET_NAME_ipa: "Hiddify-iOS"
 
 jobs:
   test:
@@ -35,12 +32,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.16.0
+      - uses: subosito/flutter-action@v2.13.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: 'stable'
           cache: true
-          
+
       - name: Prepare
         run: make linux-prepare
       - name: Test
@@ -50,108 +47,184 @@ jobs:
         id: draftBuildCode
         run: echo "::set-output name=datetime::$(date +'%d.%H.%M')"
 
-  build:
+  build_apk:
     needs: test
     permissions: write-all
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: android-apk
-            os: ubuntu-latest
-            targets: apk
-
-          - platform: android-aab
-            os: ubuntu-latest
-            targets: aab
-
-          - platform: windows
-            os: windows-2019
-            targets: exe
-
-          - platform: linux
-            os: ubuntu-22.04
-            targets: AppImage,deb,rpm
-
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2.13.0
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+          
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+          
+      - name: Prepare for Android
+        run: |
+          make android-prepare
+          tree
+          
+      - name: Install Dependencies
+        run: |
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+          dart run slang
+
+      - name: Build APK
+        run: |
+          flutter build apk --release
+
+      - name: Upload APK Artifact
+        if: env.UPLOAD_ARTIFACT == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: build/app/outputs/flutter-apk/*.apk
+          retention-days: 1
+
+  build_windows:
+    needs: test
+    permissions: write-all
+    runs-on: windows-2019
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Setup Flutter
         uses: subosito/flutter-action@v2.16.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: 'stable'
           cache: true
-      
-      - name: Setup Java
-        if: startsWith(matrix.platform,'android')
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: 17
 
-      - name: Setup NDK
-        if: startsWith(matrix.platform,'android')
-        uses: nttld/setup-ndk@v1
-        id: setup-ndk
-        with:
-          ndk-version: ${{ env.NDK_VERSION }}
-          add-to-path: true
-          link-to-sdk: true
-
-      - name: Prepare for ${{ matrix.platform }}
+      - name: Install Dependencies
         run: |
-          make ${{ matrix.platform }}-prepare
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+          dart run slang
+
+      - name: Prepare for Windows
+        run: |
+          make windows-prepare
           tree
-          
-      - name: Build ${{ matrix.platform }}
-        run: |
-          make ${{ matrix.platform }}-release
 
-      - name: Copy to out Android APK
-        if: matrix.platform == 'android-apk'
+      - name: Build Windows
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
-          mkdir out
-          ls -R ./build/app/outputs
-          cp ./build/app/outputs/flutter-apk/*arm64-v8a*.apk out/${TARGET_NAME_apk}-arm64.apk || echo "no arm64 apk"
-          cp ./build/app/outputs/flutter-apk/*armeabi-v7a*.apk out/${TARGET_NAME_apk}-arm7.apk || echo "no arm7 apk"
-          cp ./build/app/outputs/flutter-apk/*x86_64*.apk out/${TARGET_NAME_apk}-x86_64.apk || echo "no x64 apk"
-          cp ./build/app/outputs/flutter-apk/app-release.apk out/${TARGET_NAME_apk}-universal.apk || echo "no universal apk"
-
-      - name: Copy to out Android AAB
-        if: matrix.platform == 'android-aab'
-        run: |
-          mkdir out
-          ls -R ./build/app/outputs
-          cp ./build/app/outputs/bundle/release/app-release.aab out/hiddify-android-market.aab || echo "no aab"
-
+          make windows-release
+  
       - name: Copy to out Windows
-        if: matrix.platform == 'windows'
         run: |
           tree
-          .\scripts\package_windows.ps1
-
-      - name: Copy to out Unix
-        if: startsWith(matrix.platform,'linux')
-        run: |
-          ls -R dist/
-          mkdir out
-          mv dist/*/*.AppImage out/${TARGET_NAME_AppImage}.AppImage
-          mv dist/*/*.deb out/${TARGET_NAME_deb}.deb
-          mv dist/*/*.rpm out/${TARGET_NAME_rpm}.rpm
-
-      - name: Upload Artifact
+          .\\scripts\\package_windows.ps1
+          
+      - name: Upload Windows Artifact
         if: env.UPLOAD_ARTIFACT == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: ${{matrix.platform}}
+          name: windows
           path: ./out
           retention-days: 1
-      # 这里添加上传到服务器的步骤
-      - name: Upload to Custom Server
+
+  # 新增的 macOS 构建作业
+  build_macos:
+    needs: test
+    permissions: write-all
+    runs-on: macos-13
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2.16.0
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+
+      - name: Setup dependencies
         run: |
-          for file in out/*; do
-            curl -F "file=@$file" -F "email=${{ env.USER_EMAIL }}" http://34.80.205.34:8000/upload/
-          done
+          make macos-install-dependencies
+
+      - name: Prepare for macOS
+        run: |
+          make macos-prepare
+          tree
+
+      - name: Build macOS
+        run: |
+          make macos-release
+
+      - name: Copy to out macOS
+        run: |
+          mkdir out
+          mv dist/*/*.dmg out/${TARGET_NAME_dmg}.dmg
+          mv dist/*/*.pkg out/${TARGET_NAME_pkg}.pkg
+
+      - name: Upload macOS Artifact
+        if: env.UPLOAD_ARTIFACT == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS
+          path: ./out
+          retention-days: 1
+# 新增的 iOS 构建作业
+  build_ios:
+    needs: test
+    permissions: write-all
+    runs-on: macos-12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+  
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2.16.0
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+  
+      - name: Clean Flutter Build
+        run: |
+          flutter clean
+  
+      - name: Get Flutter Packages
+        run: |
+          flutter pub get
+  
+      - name: Reinstall iOS Dependencies
+        run: |
+          cd ios
+          rm -rf Pods Podfile.lock
+          pod install
+  
+      - name: Prepare for iOS
+        run: |
+          make ios-prepare
+          tree
+  
+      - name: Build iOS
+        run: |
+          make ios-release
+  
+      - name: Copy to out iOS
+        run: |
+          mkdir out
+          mv dist/*/*.ipa out/${TARGET_NAME_ipa}.ipa
+  
+      - name: Upload iOS Artifact
+        if: env.UPLOAD_ARTIFACT == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: iOS
+          path: ./out
+          retention-days: 1
