@@ -90,14 +90,12 @@ jobs:
           path: build/app/outputs/flutter-apk/*.apk
           retention-days: 1
 
-  build_windows:
-    needs: test
-    permissions: write-all
+  build-windows:
     runs-on: windows-2019
     steps:
-      - name: Checkout
+      - name: Checkout the repository
         uses: actions/checkout@v3
-
+      
       - name: Setup Flutter
         uses: subosito/flutter-action@v2.16.0
         with:
@@ -105,35 +103,22 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Install Dependencies
-        run: |
-          flutter pub get
-          dart run build_runner build --delete-conflicting-outputs
-          dart run slang
-
       - name: Prepare for Windows
-        run: |
-          make windows-prepare
-          tree
+        run: make windows-prepare
 
-      - name: Build Windows
+      - name: Build Windows EXE
         env:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-        run: |
-          make windows-release
-  
-      - name: Copy to out Windows
-        run: |
-          tree
-          .\\scripts\\package_windows.ps1
-          
-      - name: Upload Windows Artifact
-        if: env.UPLOAD_ARTIFACT == 'true'
+        run: make windows-release
+
+      - name: Package Windows EXE
+        run: .\scripts\package_windows.ps1
+
+      - name: Upload Windows EXE
         uses: actions/upload-artifact@v4
         with:
-          name: windows
+          name: windows-exe
           path: ./out
-          retention-days: 1
 
   # 新增的 macOS 构建作业
   build_macos:
