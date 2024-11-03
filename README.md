@@ -180,31 +180,6 @@ distributionUrl=https://mirrors.cloud.tencent.com/gradle/gradle-7.6.1-bin.zip
   <img src="./images/connect_en.jpg" alt="Connect Example EN" width="200"/>
 </p>
 
-## 欢迎提交 Pull Request 🎉
-
-非常感谢你对本项目的关注！欢迎所有形式的贡献，无论是修复 bug、改进文档，还是增加新功能。如果你有好的想法或发现需要改进的地方，欢迎提交 PR！
-
-### 如何贡献
-
-1.Fork 仓库：点击右上角的 `Fork` 按钮，将本仓库复制到你的 GitHub 账户中。  
-2.创建分支：在你的仓库中创建一个新的分支用于你的改动。  
-``` git checkout -b feature/your-feature-name ```  
-3.进行修改：在你的分支中进行修改、添加新功能或修复问题。  
-4.提交更改：将你的修改提交到你的分支中。  
-``` git add . git commit -m "描述你的更改内容" ```  
-5.推送到 GitHub：将你的分支推送到你 Fork 的仓库中。  
-``` git push origin feature/your-feature-name ```  
-6.创建 Pull Request：在 GitHub 页面上打开你的仓库，点击 `New Pull Request` 按钮，并填写相关信息。请简要描述你的更改以及它们的作用。  
-### 注意事项
-
-- 请确保你的代码风格与项目一致。 
-- 对Hiddify源码做尽可能少的改动。
-- 请确保所有单元测试通过，并尽量增加新的测试以覆盖你的更改。
-- 在提交 PR 之前，请先同步主仓库的最新代码。
-
-### 我期待你的贡献！
-
-如果你有任何疑问或需要帮助，请随时在 Issue 中提问。我会尽快回复并协助你解决问题。感谢你的支持和贡献！🚀
 
 ### 支持本项目
 
