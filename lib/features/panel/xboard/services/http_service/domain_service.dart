@@ -20,6 +20,7 @@ class DomainService {
           final Map<String, dynamic> websiteMap =
               website as Map<String, dynamic>;
           final String domain = websiteMap['url'] as String;
+          print(domain);
           if (await _checkDomainAccessibility(domain)) {
             if (kDebugMode) {
               print('Valid domain found: $domain');
@@ -43,7 +44,7 @@ class DomainService {
   static Future<bool> _checkDomainAccessibility(String domain) async {
     try {
       final response = await http
-          .get(Uri.parse(domain))
+          .get(Uri.parse('$domain/api/v1/guest/comm/config'))
           .timeout(const Duration(seconds: 15));
 
       return response.statusCode == 200;

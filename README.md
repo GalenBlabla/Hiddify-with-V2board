@@ -212,7 +212,7 @@ distributionUrl=https://mirrors.cloud.tencent.com/gradle/gradle-7.6.1-bin.zip
 
 **钱包地址 (USDT-TRC20)：**
 ```
-TQuqe1P5G1EDQJmfqqJ6mjPNYBXW5ceKoH
+TFPvpxb5k2mYYcvABe5BrCz7Tt6BhnZxxj
 ```
 
 
