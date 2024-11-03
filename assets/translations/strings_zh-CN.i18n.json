@@ -1,6 +1,6 @@
 {
     "general": {
-        "appTitle": "qwer",
+        "appTitle": "string",
         "reset": "重置",
         "toggle": {
             "enabled": "启用",
@@ -61,7 +61,7 @@
         "threeYearPrice": "三年付价格",
         "onetimePrice": "一次性购买价格",
         "orderSuccess": "订单支付成功",
-        "total": "总计",
+        "total": "套餐价格",
         "walletDeduction": "钱包扣除",
         "amountToPay": "支付金额",
         "payNowFree": "立即支付（免费）",
@@ -124,7 +124,9 @@
         "noSubscriptionLink": "未找到订阅链接。",
         "accountStatus": "账户状态",
         "banned": "封禁",
-        "active": "正常"
+        "active": "正常",
+        "subscriptionUpdateError": "订阅更新失败",
+        "subscriptionUpdateSuccess": "订阅更新成功"
     },
     "inviteCode": {
         "inviteCodeListTitle": "邀请码列表",

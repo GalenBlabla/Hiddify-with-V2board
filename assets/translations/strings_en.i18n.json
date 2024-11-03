@@ -1,6 +1,6 @@
 {
     "general": {
-        "appTitle": "qwer",
+        "appTitle": "string",
         "reset": "Reset",
         "toggle": {
             "enabled": "Enabled",
@@ -63,7 +63,7 @@
         "twoYearPrice": "Two years",
         "threeYearPrice": "Three years",
         "onetimePrice": "One-time",
-        "total": "Total",
+        "total": "Price",
         "walletDeduction": "Wallet deduction",
         "amountToPay": "Amount to pay",
         "payNowFree": "Pay now (Free)",
@@ -124,7 +124,9 @@
         "noSubscriptionLink": "No subscription link found.",
         "accountStatus": "Account Status",
         "banned": "Banned",
-        "active": "Active"
+        "active": "Active",
+        "subscriptionUpdateError": "Subscription Update Error",
+        "subscriptionUpdateSuccess": "Subscription Update Success"
     },
     "inviteCode": {
         "inviteCodeListTitle": "Invite Codes",
