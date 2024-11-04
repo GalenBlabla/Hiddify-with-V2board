@@ -10,7 +10,7 @@ part 'directories_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class AppDirectories extends _$AppDirectories with InfraLogger {
-  final _methodChannel = const MethodChannel("com.v2hiddify.app/platform");
+  final _methodChannel = const MethodChannel("com.hiddify.app/platform");
 
   @override
   Future<Directories> build() async {
